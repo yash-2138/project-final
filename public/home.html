@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <title>Home Page</title>
+
+    <!-- own css -->
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="./img/cloudlogo.jpg" alt="" style="width: 60px;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Prices</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Profile</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <button class="btn btn-outline-success" type="submit" style="margin-right: 10px">Login</button>
+                        <button class="btn btn-outline-success" type="submit">SignUp</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section>
+        <div class="container-flex">
+            <div class="row">
+                <div class="col" style="margin-left: 10px;" id="col-1">
+                    <img src="./img/cloud.jpg" class="rounded mx-auto d-block" style="width: 100px;" alt="...">
+                    <h1 class="margin-left: 10px">Decentralized Marketplace</h1>
+                    <h2>Your own space to</h2>
+                    <h2>store and Share files Securely</h2>
+                    <div class="text-center" style="margin-top: 15px;">
+                        <button type="button" class="btn btn-primary">Get Started</button>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="./img/disk.png" style="width: 550px;" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col" style="margin-left: 10px;">
+                    <img src="cloudlogo.jpg" class="rounded mx-auto d-block" style="width: 100px;" alt="..."> 
+                    <h1>Decentralized Marketplace</h1>
+                    <h2>Your own space to</h2>
+                    <h2>store and Share files Securely</h2>
+                    <div class="text-center" style="margin-top: 15px;">
+                        <button type="button" class="btn btn-primary">Get Started</button>
+                    </div>
+                </div>
+                 <div class="col">
+                    <img src="disk.png" style="width: 550px;" alt="">
+                </div> 
+            </div>
+        </div>
+    </section> -->
+
+</body>
+
+</html>
