@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="receiver.css">
 </head>
 <body>
     <div class="app">
@@ -12,21 +12,17 @@
             <div class="form">
                 <h2>Share your files securely</h2>
                 <div class="form-input">
-                    <button id="sender-start-con-btn">Create Room</button>
+                    <label for="join-id">join-Id</label>
+                    <input type="text" id="join-Id">
                 </div>
-                <div class="form-input" id="join-id">
-                    
+                <div class="form-input">
+                    <button id="receiver-start-con-btn">Connect</button>
                 </div>
+                
             </div>
         </div>
-        <div class="screen fs-screen ">
-            <div class="file-input">
-                <label for="file-input">
-                    Click here to select files for sharing
-                </label>
-                <!-- <button class="share-button">Share</button> -->
-                <input type="file" id="file-input">
-            </div>
+        <div class="screen fs-screen">
+            
             <div class="files-list">
                 <div class="title">shared Files:</div>
                 
@@ -36,6 +32,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.1/download.min.js"></script>
     <script src="socket.io/socket.io.js"></script>
-    <script src="sender.js"></script>
+    <script src="receiver.js"></script>
 </body>
 </html>

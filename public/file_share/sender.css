@@ -1,0 +1,81 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.screen {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/*.form {
+    text-align: center
+}*/
+
+.form h1 span {
+    color: #050505;
+    text-align: left;
+    
+}
+
+.form h2 {
+    color: #343a40;
+    text-align: left;
+   
+}
+
+.form-input {
+    margin-top: 20px;
+}
+
+.btn-primary {
+    
+    background: #111;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.file-input {
+    margin-top: 20px;
+}
+
+.file-input label {
+    display: block;
+    padding: 10px;
+    background-color: #070707;
+    color: #ffffff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.file-input input {
+    display: none;
+}
+
+.files-list {
+    margin-top: 20px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.storage-form h3{
+    text-align: left;
+}
