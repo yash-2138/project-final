@@ -7,6 +7,9 @@
     color: #fff;
 
 }
+.error{
+    color: red;
+}
 
 #loginbody{
     display: flex;

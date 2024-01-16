@@ -5,6 +5,15 @@ body {
     transition: background-color 1.8s, color 1.8s;
     overflow: hidden; /* Add this line to remove the scrollbar */
 }
+.login-btn{
+    display: block;
+}
+.signup-btn{
+    display: block;
+}
+.logout-btn{
+    display: none;
+}
 .nav-item a {
     font-size: 1.2em;
     padding: 0.5rem 1rem;

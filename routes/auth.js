@@ -1,7 +1,10 @@
 const express = require('express')
 const authController = require('../controllers/auth.js')
+const {requireAuth} = require('../middleware/authMiddleware.js')
 
 const router = express.Router()
+
+router.get('/checkAuth',requireAuth, authController.getName )
 
 router.post('/register', authController.register)
 

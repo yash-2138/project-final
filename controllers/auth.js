@@ -58,10 +58,28 @@ exports.login = async(req, res)=>{
         }
     })    
 }
+exports.getName = (req, res) =>{
+    const user_id = req.user_id
+    try {
+        dbClient.query('SELECT name from users WHERE id = ?', [user_id], async(error, results)=>{
+            if(error){
+                return res.status(401).send(error);
+            }
+            else{
+                // console.log(results)
+                res.send(results[0])               
+            }
+            
+        })
+    } catch (error) {
+        res.status(500).json(error)
+    }
+    
+}
 
 exports.logout =(req, res)=>{
     res.cookie('jwt', '', {maxAge: 1})
-    res.redirect('/') //update this
+    res.redirect('/home') //update this
 }
 const createToken = (id)=>{
     return jwt.sign({id}, 'yash dhumal secret',{
