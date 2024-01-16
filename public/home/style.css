@@ -96,21 +96,30 @@ body {
     transition: background-color 1.8s, color 1.8s;
 }
 
+
+
+
+/* Media query for screens with a maximum width of 768px (adjust as needed) */
+@media (max-width: 992px) {
+    #icon {
+       
+        font-size: 36px; 
+        width: 100%;
+        float: right;
+        
+    }
+
+    .btn{
+        margin-left: 21px;
+        /* width: 100%; */
+    }
+}
+
+
+
 .disk {
     width: 550px;
 }
-
-@media((min-width:200px) and (max-width:500px)) {
-    #icon {
-        float: right;
-    }
-
-    .disk {
-        width: 350px;
-    }
-}
-
-
 
 
 .bxs-cloud:before {
@@ -122,6 +131,45 @@ body {
     color: #2783d0;
     font-size: 200px;
   }
+
+@media((min-width:200px) and (max-width:500px)) {
+   
+
+   
+
+    .disk {
+        width: 262px;
+        height: 133px;
+    }
+
+}
+
+@media((min-width:500px) and (max-width:991px))
+{
+    .btn{
+        width: 50%;
+    }
+
+    .disk {
+        width: 462px;
+        height: 233px;
+    }
+}
+
+@media ((min-width:992px)and (max-width: 1202px))
+{
+    .disk {
+        width: 462px;
+        height: 233px;
+    }
+    .container-flex
+    {
+        margin-top: -107px;
+    }
+}
+
+
+
 
   /* Add this style to hide the navbar content by default on small screens */
 @media (max-width: 992px) {
@@ -136,6 +184,12 @@ body {
     .navbar .navbar-collapse.show {
         display: block;
     }
+    .container-flex
+    {
+        margin-top: -87px;
+    }
+
+    
 }
 
 @media(min-width:200px) and (max-width:500px)
@@ -152,11 +206,7 @@ body {
     {
         margin-left: -30px;
     }
-    #icon
-    {
-        width: 363px;
-
-    }
+   
 
     .col{
         margin-top: 10px;
@@ -178,11 +228,4 @@ body {
     
 }
 
-@media(min-width:500px) and (max-width:950px)
-{
-    #icon
-    {
-        width: 363px;
 
-    }
-}
