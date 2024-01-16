@@ -26,7 +26,7 @@ loginBtn.addEventListener('click', async(event)=>{
         const data = await res.json()
         console.log(data)
         if(data.user){
-            location.assign('/home.html')
+            location.assign('index.html')
         }
     } catch (error) {
         console.log(error)
@@ -52,7 +52,7 @@ registerBtn.addEventListener('click', async(event)=>{
             return
         }
         if(data.user){
-            location.assign('/home.html')
+            location.assign('index.html')
         }
     } catch (error) {
         console.log(error)
