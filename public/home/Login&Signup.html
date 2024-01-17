@@ -6,14 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="Login&signup.css">
+    
+    <link rel="stylesheet" href="index.js">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js" defer></script>
+    
+
+
+       <!-- Icon -->
+       <link rel="stylesheet"
+       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+       <!-- <a href="#" id="icon" class="material-symbols-outlined">
+        <span>
+            dark_mode
+        </span>
+    </a> -->
 </head>
 
-<body id="loginbody">
+<body id="loginbody"  onload="onload()">
 
     <!-- MAKE A LOGIN FORM -->
+    
 
     <div class="container">
+
+        
         <div class="curved-shape"></div>
         <div class="curved-shape2"></div> 
         <div class="form-box Login">
@@ -82,6 +102,24 @@
         </div>
     </div>
     <script src="Login&signup.js"></script>
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var icon = document.getElementById("icon");
+
+            icon.onclick = function () {
+                document.body.classList.toggle("dark-theme");
+
+                // Update the icon text and style based on the theme
+                var iconSpan = icon.querySelector('span');
+                if (document.body.classList.contains("dark-theme")) {
+                    iconSpan.textContent = 'light_mode';
+                } else {
+                    iconSpan.textContent = 'dark_mode';
+                }
+            }
+        });
+    </script> -->
     
 
 </body>
