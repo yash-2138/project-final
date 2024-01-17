@@ -8,9 +8,9 @@ body {
 .login-btn{
     display: block;
 }
-.signup-btn{
+/* .signup-btn{
     display: block;
-}
+} */
 .logout-btn{
     display: none;
 }
@@ -237,4 +237,6 @@ body {
     
 }
 
-
+#username{
+    color: red;
+}
