@@ -7,6 +7,9 @@
     color: var(--secondary-color);
 
 }
+.error{
+    color: red;
+}
 
 /* :root {
     --primary-color: #edf2fc;
