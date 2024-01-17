@@ -1,9 +1,16 @@
+
 const loginBtn = document.querySelector('.login-btn')
 const logoutBtn = document.querySelector('.logout-btn')
 const displayName = document.querySelector('#display-name')
 
 
-document.addEventListener('DOMContentLoaded', async function () {
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var icon = document.getElementById("icon");
+    var currentTheme = localStorage.getItem("theme");
+    var navbarToggleBtn = document.getElementById("navbarToggleBtn");
+    var navbarContent = document.querySelector(".navbar-collapse");
     try {
         const res = await fetch('/auth/checkAuth', {
             method: 'GET',
@@ -22,28 +29,25 @@ document.addEventListener('DOMContentLoaded', async function () {
     } catch (error) {
         console.log(error)
     }
-    var icon = document.getElementById("icon");
-    var navbarToggleBtn = document.getElementById("navbarToggleBtn");
-    var navbarContent = document.querySelector(".navbar-collapse");
+    // Set the initial theme
+    if (currentTheme) {
+        document.body.classList.add(currentTheme);
+        updateIconText(currentTheme);
+    }
 
     icon.onclick = function () {
         document.body.classList.toggle("dark-theme");
-
-        // Update the icon text and style based on the theme
-        var iconSpan = icon.querySelector('span');
-        if (document.body.classList.contains("dark-theme")) {
-            iconSpan.textContent = 'light_mode';
-        } else {
-            iconSpan.textContent = 'dark_mode';
-        }
+        currentTheme = document.body.classList.contains("dark-theme") ? "dark-theme" : "";
+        localStorage.setItem("theme", currentTheme);
+        updateIconText(currentTheme);
     }
-
-    // Add a click event listener to toggle the navbar on small screens
-    navbarToggleBtn.addEventListener('click', function () {
+      navbarToggleBtn.addEventListener('click', function () {
         navbarContent.classList.toggle("show");
     });
 
-
-    //check if signed in
+    function updateIconText(theme) {
+        var iconSpan = icon.querySelector('span');
+        iconSpan.textContent = theme === "dark-theme" ? 'light_mode' : 'dark_mode';
+    }
 });
 

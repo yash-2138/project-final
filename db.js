@@ -3,7 +3,9 @@ const mysql = require('mysql2')
 const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
+
     password: '963741',
+
     database: 'decentStorage',
 });
   db.getConnection((err, connection) => {

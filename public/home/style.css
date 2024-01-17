@@ -40,7 +40,7 @@ body {
     white-space: nowrap;
     overflow: hidden;
     width: 100%;
-    animation: animtext 6s steps(80, end) infinite;
+    animation: animtext 6s steps(80, end) infinite ;
     transition: all cubic-bezier(0.1, 0.7, 1.0, 0.1);
 }
 
@@ -150,7 +150,7 @@ body {
         width: 262px;
         height: 133px;
     }
-
+  
 }
 
 @media((min-width:500px) and (max-width:991px))
@@ -236,5 +236,6 @@ body {
     }
     
 }
+
 
 
