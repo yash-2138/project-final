@@ -39,7 +39,7 @@ loginBtn.addEventListener('click', async(event)=>{
             errorMessages.innerHTML = data.error;
         }
         if(data.user){
-            location.assign('index.html')
+            location.assign('/home')
         }
     } catch (error) {
         console.log(error)
@@ -57,6 +57,8 @@ registerBtn.addEventListener('click', async(event)=>{
         return 
     }
     try {
+        let errorMessages = document.getElementById('errorMessages-register');
+        errorMessages.innerHTML = '';
         const res = await fetch('/auth/register', {
             method: 'POST',
             body: JSON.stringify({name:name,email: email, password: pass}),
@@ -65,7 +67,7 @@ registerBtn.addEventListener('click', async(event)=>{
         const data = await res.json()
         console.log(data)
         if(data.type === "already registered"){
-            container.classList.remove('active');
+            errorMessages.innerHTML += 'Email already in use.';
             return
         }
         if(data.msg == "success"){
@@ -109,7 +111,7 @@ function validateLogin(email, password) {
 }
 
 function validateRegistration(name,email, password,confirmPassword){
-    var errorMessages = document.getElementById('errorMessages-register');
+    let errorMessages = document.getElementById('errorMessages-register');
     errorMessages.innerHTML = '';
 
     // Validate name
