@@ -22,7 +22,7 @@ app.set('view engine', 'ejs')
 
 socketController(io);
 
-app.use('/', pageRouter)
+// app.use('/', pageRouter)
 app.use('/auth', authRouter)
 
 

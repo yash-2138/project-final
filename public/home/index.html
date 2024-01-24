@@ -4,8 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -22,26 +20,38 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
+        <!-- Cloud -->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <link rel="stylesheet" href="/navbar/navstyle.css">
-
-    <title>Navbar Page</title>
+    <link rel="stylesheet" href="navstyle.css">
 
 
+
+   
+    <title>Home Page</title>
+
+
+    <!-- own css -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+
+    <script src="index.js" defer></script>
+    <script src="home.js" defer></script>
 
     
-
-
-
 </head>
 
-<body>
+<body >
     <!-- Navbar -->
     <header>
+
+
+        
+
+       
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img src="/navbar/logo/2.png" alt="logo"
-                        style="height: 80px; width: 100px;"></a>
+                <a class="navbar-brand" href="#"><img src="./Logo New/2.png" alt="logo" style="height: 80px; width: 100px;"></a>
                 <button id="navbarToggleBtn" class="-outline-light d-lg-none">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -61,17 +71,17 @@
                             <a class="nav-link active" aria-current="page" href="#">About Us</a>
                     </ul>
 
-                    <!-----------------------------------Button For Dark Mode------------------------------------------------->
+
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <a href="#" id="icon" class="material-symbols-outlined">
                             <span>
                                 dark_mode
                             </span>
                         </a>
-                        <!-- ----------------------------------------------------------------------------------------------------->
+
 
                         <li class="nav-but login-btn">
-                            <a class="btn btn-outline-light" href="/login">Login</a>
+                            <a class="btn btn-outline-light" href="./Login&Signup.html">Login</a>
                         </li>
                         <li class="nav-but logout-btn">
                             <a class="btn btn-outline-light" href="/auth/logout">Logout</a>
@@ -88,7 +98,74 @@
             crossorigin="anonymous"></script>
     </header>
 
-    <script src="/navbar/navbar.js" defer></script>
+    <section>
+        <div class="container-flex">
+            <div class="row">
+                <div class="col" style="margin-left: 10px;" id="col-1">
+                    <!-- <span class="material-symbols-outlined">
+                        cloud
+                        </span> -->
+                        <!-- <i class='bx bxs-cloud centered-icon'></i> -->
+                    <!-- <img src="cloudlogo.jpg" class="rounded mx-auto d-block" style="width: 100px;" alt="..."> -->
+                    <h1 class="margin-left: 10px">Decentralized Marketplace</h1>
+                    <h2>Your own space to</h2>
+                    <h2>store and Share files Securely</h2>
+                    <div class="text-center" style="margin-top: 15px;">
+                        <button type="button" class="btn" style="height: 50px; width: 200px;">Get Started</button>
+                    </div>
+                </div>
+                <div class="col">
+                    <img class="disk" src="disk.png" >
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var icon = document.getElementById("icon");
+
+            icon.onclick = function () {
+                document.body.classList.toggle("dark-theme");
+
+                // Update the icon text and style based on the theme
+                var iconSpan = icon.querySelector('span');
+                if (document.body.classList.contains("dark-theme")) {
+                    iconSpan.textContent = 'light_mode';
+                } else {
+                    iconSpan.textContent = 'dark_mode';
+                }
+            }
+        });
+    </script> -->
+
+<!-- Toggle Button Code -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var icon = document.getElementById("icon");
+        var navbarToggleBtn = document.getElementById("navbarToggleBtn");
+        var navbarContent = document.querySelector(".navbar-collapse");
+
+        icon.onclick = function () {
+            document.body.classList.toggle("dark-theme");
+
+            // Update the icon text and style based on the theme
+            var iconSpan = icon.querySelector('span');
+            if (document.body.classList.contains("dark-theme")) {
+                iconSpan.textContent = 'light_mode';
+            } else {
+                iconSpan.textContent = 'dark_mode';
+            }
+        }
+
+        // Add a click event listener to toggle the navbar on small screens
+        navbarToggleBtn.addEventListener('click', function () {
+            navbarContent.classList.toggle("show");
+        });
+    });
+</script>
+
+
 </body>
 
 </html>

@@ -2,10 +2,22 @@
 
 body {
     background-color: var(--primary-color);
-    /* transition: background-color 1.8s, color 1.8s; */
-    overflow: scroll; /* Add this line to remove the scrollbar */
+    transition: background-color 1.8s, color 1.8s;
+    overflow: hidden; /* Add this line to remove the scrollbar */
 }
-
+.login-btn{
+    display: block;
+}
+/* .signup-btn{
+    display: block;
+} */
+.logout-btn{
+    display: none;
+}
+.nav-item a {
+    font-size: 1.2em;
+    padding: 0.5rem 1rem;
+}
 
 .row {
     margin-top: 100px;
@@ -65,12 +77,16 @@ body {
     transition: background-color 1.8s, color 1.8s;
 }
 
+.container-fluid {
+    background-color: var(--primary-color);
+    border: none;
+    transition: background-color 1.8s, color 1.8s;
+}
 
-
-/* body {
+*/ body {
     background-color: var(--primary-color);
     transition: background-color 1.8s, color 1.8s;
-} */
+}
 
 
 
@@ -78,11 +94,35 @@ body {
 
 .container-flex {
     background-color: var(--primary-color);
-    padding-top: 150px;
-    /* height: 85vh; */
+    padding-top: 10px;
+    height: 85vh;
     transition: background-color 1.8s, color 1.8s;
 }
 
+#icon {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: background-color 1.8s, color 1.8s;
+}
+
+
+
+
+/* Media query for screens with a maximum width of 768px (adjust as needed) */
+@media (max-width: 992px) {
+    #icon {
+       
+        font-size: 36px; 
+        width: 100%;
+        float: right;
+        
+    }
+
+    .btn{
+        margin-left: 21px;
+        /* width: 100%; */
+    }
+}
 
 
 
@@ -104,16 +144,7 @@ body {
 @media((min-width:200px) and (max-width:500px)) {
    
 
-    .col{
-        margin-top: 10px;
-    }
-
-  
-
-    /* .btn
-    {
-        width: 100%;
-    } */
+   
 
     .disk {
         width: 262px;
@@ -124,9 +155,9 @@ body {
 
 @media((min-width:500px) and (max-width:991px))
 {
-    /* .btn{
+    .btn{
         width: 50%;
-    } */
+    }
 
     .disk {
         width: 462px;
@@ -151,7 +182,17 @@ body {
 
   /* Add this style to hide the navbar content by default on small screens */
 @media (max-width: 992px) {
-   
+    .navbar .navbar-collapse {
+        display: none;
+    }
+
+    .navbar .navbar-toggler {
+        display: block;
+    }
+
+    .navbar .navbar-collapse.show {
+        display: block;
+    }
     .container-flex
     {
         margin-top: -87px;
@@ -160,7 +201,41 @@ body {
     
 }
 
+@media(min-width:200px) and (max-width:500px)
+{
+    #navbarToggleBtn
+    {
+        width: 20%;
+        color: var(--secondary-color);
+        background: none;
+        text-decoration: none;
+        /* margin-left: 50px; */
+    }
+    #navbarSupportedContent
+    {
+        margin-left: -30px;
+    }
+   
 
+    .col{
+        margin-top: 10px;
+    }
+
+    body {
+        overflow: hidden;
+        position: relative;
+    }
+
+    .btn
+    {
+        width: 100%;
+    }
+    .container-fluid
+    {
+        width: 100%;
+    }
+    
+}
 
 #username{
     color: red;
