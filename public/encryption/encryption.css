@@ -1,0 +1,76 @@
+
+    /* Add any additional custom styles here */
+    
+    .btn-generate {
+        margin-bottom: 40px;
+        margin-top: 40px;
+      }
+  body {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 50px; /* Adjust the top margin as needed */
+        }
+  .row {
+          display: flex;
+          justify-content: center;
+          padding:15px
+        }
+  .col-md-6 {
+          text-align: center;
+          
+          padding: 15px;
+          
+          
+          margin: 10px; 
+          border: 2px solid #3ed9d9;
+         box-shadow:0 0 10px  #3ed9d9;
+        }
+  .col-md-6 h1{
+      font-family: cursive;
+      margin-bottom: 30px;
+  }
+        .row .col-md-6 {
+           flex: 0 0 48%; 
+          max-width: 48%; /* Ensure each column does not exceed 50% of the width */
+        }
+     
+      .btn-encrypt {
+          margin-bottom: 40px;
+          position: relative;
+           width: 125px;
+           height:50px;  
+          background: transparent;
+          border-radius: 40px;
+          cursor: pointer;
+          font-size: 16px;
+          font-weight: 600;
+          border: 2px solid #3ed9d9;
+          overflow: hidden;
+          z-index: 1;
+      }
+      .btn-encrypt::before{
+          content: "";
+          position: absolute;
+          height: 300%;
+          width: 100%;
+          background: linear-gradient(#25252b,#3ed9d9,#25252b
+          ,#3ed9d9);
+          top: -100%;
+          left: 0;
+          z-index: -1;
+          transition: .5s;
+      }
+      .btn-encrypt:hover::before{
+          top: 0;
+      }
+      .col-md-6 .form-control {
+          text-align: center;
+          font-family: cursive;
+        }
+
+        #btn1
+        {
+          height: 50px;
+          width: 140px;
+        }
