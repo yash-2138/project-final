@@ -35,6 +35,9 @@ router.get('/marketplace', (req,res)=>{
 router.get('/storage-form', (req,res)=>{
     res.render('storageForm')
 })
+router.get('/aboutus', (req,res)=>{
+    res.render('aboutus')
+})
 
 
 module.exports = router
