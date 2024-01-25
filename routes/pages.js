@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/register', (req, res)=>{
-    res.render("register")
+router.get('/', (req,res)=>{
+    res.render('home')
 })
-
+router.get('/home', (req,res)=>{
+    res.render('home')
+})
 router.get('/login', (req,res)=>{
     res.render("login")
 })
@@ -13,9 +15,6 @@ router.get('/sender',(req,res)=>{
 })
 router.get('/receiver', (req,res)=>{
     res.render('receiver')
-})
-router.get('/home', (req,res)=>{
-    res.render('home')
 })
 router.get('/login', (req,res)=>{
     res.render('login')
