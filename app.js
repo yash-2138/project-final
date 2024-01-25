@@ -7,6 +7,7 @@ const socketIO = require('socket.io');
 const socketController = require('./controllers/socketController');
 const pageRouter = require('./routes/pages.js')
 const authRouter = require('./routes/auth.js')
+const blockchainRouter = require('./routes/blockchain.js')
 
 const app = express()
 const server = http.createServer(app)
