@@ -1,5 +1,5 @@
 import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
-import { address, abi } from './constants.js';
+import { address, abi } from '../constants.js';
 
 
 let signer = null;
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded',async() =>{
 
         const buyBtn = document.getElementById(`${storageOwner}`)
         buyBtn.addEventListener('click', async()=>{
+          console.log("j")
           const tx = await contract.buyStorage(storageOwner,email, "5" ,{
             value: ethers.parseEther(price.toString())
           })
