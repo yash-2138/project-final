@@ -39,15 +39,20 @@ document.addEventListener('DOMContentLoaded',async() =>{
 
         const buyBtn = document.getElementById(`${storageOwner}`)
         buyBtn.addEventListener('click', async()=>{
-          console.log("j")
-          const tx = await contract.buyStorage(storageOwner,email, "5" ,{
-            value: ethers.parseEther(price.toString())
-          })
-          console.log("Transaction Sent. Waiting for Confirmation...")
-
-          await tx.wait();
-          console.log("Transaction Confirmed");
-          alert("Storage bought successfully!")
+          try {
+            const tx = await contract.buyStorage(storageOwner,email, "5" ,{
+              value: ethers.parseEther(price.toString())
+            })
+            console.log("Transaction Sent. Waiting for Confirmation...")
+  
+            await tx.wait();
+            console.log("Transaction Confirmed");
+            
+            alert("Storage bought successfully!")
+          } catch (error) {
+            console.error("Error during transaction:", error);
+            alert("Error during transaction. Please check the console for details.");
+          }
         });
       }
       

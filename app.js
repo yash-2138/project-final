@@ -8,6 +8,7 @@ const socketController = require('./controllers/socketController');
 const pageRouter = require('./routes/pages.js')
 const authRouter = require('./routes/auth.js')
 const blockchainRouter = require('./routes/blockchain.js')
+const crudRouter = require('./routes/crud.js')
 
 const app = express()
 const server = http.createServer(app)
@@ -25,6 +26,7 @@ socketController(io);
 
 app.use('/', pageRouter)
 app.use('/auth', authRouter)
+app.use('/crud', crudRouter)
 
 
 console.log(port)
