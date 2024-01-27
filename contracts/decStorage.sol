@@ -57,7 +57,18 @@ contract StorageMarketplace {
         address orderAddress = msg.sender;
 
         // Add the sell order address to the array
-        sellOrderAddresses.push(orderAddress);
+        bool orderExists = false;
+        for(uint256 i=0;i < sellOrderAddresses.length;i++){
+            if(sellOrderAddresses[i] == orderAddress){
+                orderExists = true;
+                break;
+            }
+        }
+        require(!orderExists, "Address already in use");
+        if(!orderExists){
+            sellOrderAddresses.push(orderAddress);
+        }
+        
 
         storageSellOrders[orderAddress] = StorageSellOrder({
             storageOwner: msg.sender,
@@ -154,6 +165,9 @@ contract StorageMarketplace {
 
         // Mark the contract as completed
         storageRentalContracts[contractAddress].isCompleted = true;
+        //Mark the sell order as available again
+        storageSellOrders[storageContract.storageOwner].isAvailable = true;         
+
     }
 
     function penalizeStorageOwner(address contractAddress) external onlyDataOwner(contractAddress) {

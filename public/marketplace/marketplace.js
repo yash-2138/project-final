@@ -16,13 +16,15 @@ document.addEventListener('DOMContentLoaded',async() =>{
     console.log("connected")
 
     const sellOrderAddresses = await contract.getAllSellOrders();
-    console.log(sellOrderAddresses);
+    // console.log(sellOrderAddresses);
     const sellOrderListElement = document.querySelector('#storage-order-list')
     
     
     for (const orderAddress of sellOrderAddresses) {
+      
       const [email,storageOwner, volumeGB, price, securityDeposit, isAvailable] = await contract.getStorageSellOrderDetails(orderAddress);
       if(isAvailable){
+        console.log(orderAddress)
         let newRow = sellOrderListElement.insertRow(sellOrderListElement.rows.length);
         let cell1 = newRow.insertCell(0);
         let cell2 = newRow.insertCell(1);
@@ -47,6 +49,35 @@ document.addEventListener('DOMContentLoaded',async() =>{
   
             await tx.wait();
             console.log("Transaction Confirmed");
+
+            const requestData = {
+              // user_id: 2, //remove this
+              email: email,
+              address: storageOwner,
+              capacity:volumeGB
+            }
+            const replacer = (key, value) => {
+              if (typeof value === 'bigint') {
+                  return value.toString();
+              }
+              return value;
+            };
+            fetch('http://localhost:5000/crud/addStorage', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(requestData,replacer),
+            })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log('Success:', data);
+              })
             
             alert("Storage bought successfully!")
           } catch (error) {
