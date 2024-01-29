@@ -3,6 +3,8 @@ const cookieParser = require('cookie-parser')
 const path  = require('path')
 const http = require('http');
 const socketIO = require('socket.io');
+// const fileUpload = require('express-fileupload');
+
 // const dbClient = require("./db.js")
 const socketController = require('./controllers/socketController');
 const pageRouter = require('./routes/pages.js')
@@ -15,6 +17,7 @@ const server = http.createServer(app)
 const  io = socketIO(server)
 let port = process.env.PORT || 5000
 
+// app.use(fileUpload());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
