@@ -20,8 +20,8 @@
       <label for="originalFile"><h5>Original File:</h5></label>
       <input type="file" id="originalFile" class="form-control mb-2" style="text-align: center;" >
       <label for="key"><h5>Key:</h5> </label>
-      <input type="file" id="key" class="form-control mb-2" style="text-align: center;">
-      <button class="btn btn-encrypt" onclick="encryptFiles()" style="color: white;">Encrypt</button>
+      <input type="text" id="key-enc" class="form-control mb-2" style="text-align: center;">
+      <button class="btn btn-encrypt" id="encrypt-btn"  style="color: white;">Encrypt</button>
     </div>
     <div class="col-md-6">
       <h1>Decryption</h1>
@@ -29,8 +29,8 @@
       <label for="encryptedFile"><h5>Encryted File:</h5></label>
       <input type="file" id="encryptedFile" class="form-control mb-2" style="text-align: center;">
       <label for="key"><h5>Key:</h5> </label>
-      <input type="file" id="key" class="form-control mb-2" style="text-align: center;">
-      <button class="btn btn-encrypt" onclick="decryptFiles()" style="color: white;">Decrypt</button>
+      <input type="text" id="key-dec" class="form-control mb-2" style="text-align: center;">
+      <button class="btn btn-encrypt" id="decrypt-btn" style="color: white;">Decrypt</button>
     </div>
     </div>
   </div>
