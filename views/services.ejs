@@ -4,48 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="/services/services.css">
 </head>
 <body>
-    <div style="height: 50px; background-color: aquamarine;">
-        nav bar
-    </div>
+    <header><%- include('navbar')  %></header>
 
     <section class="cards">
         <div class="container cards-sec">
             <div class="card">
                 <div class="image">
-                    <img src="encrypt.png" alt="">
+                    <img src="/services/encrypt.png" alt="">
                 </div>
                 <h1>Encryption</h1>
                 <p>Safeguard files with strong encryption, ensuring top-notch security for your files.</p>
                 <div class="btn-align">
-                    <button class="button">Click Here</button>
+                    <button class="button"><a href="/encryption">Click here</a></button>
                 </div>
             </div>
 
             <div class="card">
                 <div class="image">
-                    <img src="send.png" alt="">
+                    <img src="/services/send.png" alt="">
                 </div>
                 <h1>Sender</h1>
                 <p>Easily transmit your files to secure storage with our easy-to-use sender feature.</p>
                 <div class="btn-align">
-                    <button class="button">Click Here</button>
+                    <button class="button"><a href="/sender">Click Here</a></button>
                 </div>
             </div>
 
             <div class="card">
                 <div class="image">
-                    <img src="receive.png" alt="">
+                    <img src="/services/receive.png" alt="">
                 </div>
                 <h1>Receiver</h1>
                 <p>Effortlessly access your stored files with seamless and secure retrieval.</p>
                 <div class="btn-align">
-                    <button class="button">Click Here</button>
+                    <button class="button"><a href="/receiver">Click Here</a></button>
                 </div>
             </div>
         </div>
     </section>
+    <footer><%- include('footer') %></footer>
 </body>
 </html>

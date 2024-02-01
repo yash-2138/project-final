@@ -37,6 +37,9 @@ router.get('/storage-form', (req,res)=>{
 router.get('/aboutus', (req,res)=>{
     res.render('aboutus')
 })
+router.get('/services', (req,res)=>{
+    res.render('services')
+})
 
 
 module.exports = router
