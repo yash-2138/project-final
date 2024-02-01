@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Roboto:wght@400;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Poppins',sans-serif;
+    color: var(--primary-text-color);
+}
+h1{
+    font-size: 2.4rem;
+}
+h2{
+    font-size: 1.7rem;
+}
+h3{
+    font-size: 1.3rem;
+}
+p{
+    font-family: "Roboto",sans-serif;
+    font-size: 1.2rem;
+    color: var(--secondary-text-color);
+    line-height: 1.8rem;
+}
+.container{
+    max-width: 1180px;
+    margin-inline: auto;
+}
+
+/* profile page */
+.cards{
+    margin-top: 130px;
+}
+.cards-sec{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+.card h1, p{
+    text-align: center;
+}
+.btn-align{
+    text-align: center;
+    margin-top: 13px;
+}
+.button{
+    background-color: #57c89f;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(118, 108, 108, 0.2);
+    transition: 0.3s;
+    padding: 40px;
+    max-width: 31%;
+}
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+
+}
+.image{
+    text-align: center;
+}
+.image img{
+    height: 50px;
+}

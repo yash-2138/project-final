@@ -34,8 +34,8 @@ const checkUser = (req, res, next) =>{
 
         })
     }else{
-        console.log('e')
-        res.locals.user = NULL
+        
+        req.user_id = null;
         
     }
 }
