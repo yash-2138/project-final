@@ -40,7 +40,7 @@ exports.encryptFile = async (req, res) => {
             }
             // Send the file content as the response
             res.set('Content-Type', 'application/octet-stream');
-            res.set('Content-Disposition', `attachment; filename=decryptedOutput.enc`);
+            res.set('Content-Disposition', `attachment; filename=encryptedOutput.enc`);
             res.send(data);
     
             
