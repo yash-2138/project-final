@@ -4,46 +4,57 @@ const dbClient = require("../db.js")
 exports.addStorage = (req, res)=>{
     try {
         const user_id = req.user_id;
-        console.log(user_id)
-        const { email, address, capacity} = req.body
-        const data = {
-            email: email,
-            address: address,
-            capacity: capacity,
-            remainingCapacity: capacity,
-            user_id: user_id 
-        };
-        dbClient.query(
-        'SELECT * FROM myStorage WHERE user_id = ? AND email = ? AND address = ?',
-        [user_id, email, address],
-        (selectError, selectResults) => {
-            if (selectError) {
-            console.error(selectError);
-            res.status(500).json(selectError);
-            } else {
-            if (selectResults.length > 0) {
-                // Record already exists, send a response indicating that it's a duplicate
-                console.log('Duplicate entry found. Not inserting again.');
-                res.status(409).json({ message: 'Duplicate entry found.' });
-            } else {
-                // Record doesn't exist, proceed with the insertion
-                dbClient.query(
-                'INSERT INTO myStorage SET ?',
-                data,
-                (insertError, insertResults) => {
-                    if (insertError) {
-                    console.error(insertError);
-                    res.status(500).json(insertError);
-                    } else {
-                    console.log('Data inserted successfully!');
-                    res.status(200).json({ message: 'Data inserted successfully!' });
-                    }
-                }
-                );
-            }
-            }
-        }
-        );
+        const {email, address, capacity} = req.body
+        let so_id;
+        // console.log(user_id)
+        dbClient.query('SELECT id FROM users where email = ?', [email], (err, result)=>{
+          if(err){
+            console.log(err);
+            res.status(500).json(err);
+          }else{
+            so_id = result[0].id
+            const data = {
+              do_id: user_id,
+              so_id: so_id,
+              address:address,
+              capacity: capacity,
+              remainingCapacity: capacity,
+            };
+
+            dbClient.query(
+              'SELECT * FROM myStorage WHERE do_id = ? AND so_id = ?',
+              [user_id, so_id],
+              (selectError, selectResults) => {
+                  if (selectError) {
+                  console.error(selectError);
+                  res.status(500).json(selectError);
+                  } else {
+                  if (selectResults.length > 0) {
+                      // Record already exists, send a response indicating that it's a duplicate
+                      console.log('Duplicate entry found. Not inserting again.');
+                      res.status(409).json({ message: 'Duplicate entry found.' });
+                  } else {
+                      // Record doesn't exist, proceed with the insertion
+                      dbClient.query(
+                      'INSERT INTO myStorage SET ?',
+                      data,
+                      (insertError, insertResults) => {
+                          if (insertError) {
+                          console.error(insertError);
+                          res.status(500).json(insertError);
+                          } else {
+                          console.log('Data inserted successfully!');
+                          res.status(200).json({ message: 'Data inserted successfully!' });
+                          }
+                      }
+                      );
+                  }
+                  }
+              }
+              );
+          }
+        })
+        
 
     } catch (error) {
         res.status(500).json(error)

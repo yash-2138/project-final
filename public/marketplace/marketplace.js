@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded',async() =>{
               })
             
             alert("Storage bought successfully!")
+            location.assign("/stats")
           } catch (error) {
             console.error("Error during transaction:", error);
             alert("Error during transaction. Please check the console for details.");

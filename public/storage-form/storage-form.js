@@ -31,8 +31,8 @@ addStorage.addEventListener('click', async (event)=>{
     })
     await tx.wait();
     console.log('created')
-    // alert("Storage Sell Order created successfully!");
-    // location.assign("/marketplace")
+    alert("Storage Sell Order created successfully!");
+    location.assign("/marketplace")
     } catch (error) {
         console.error("Error creating Storage Sell Order:", error.message);
         
