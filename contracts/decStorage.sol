@@ -246,9 +246,70 @@ contract StorageMarketplace {
             storageContract.isCompleted
         );
     }
+    
 
-    function cancelSellOrder(address orderAddress) external onlyStorageOwner(orderAddress) onlyWhileAvailable(orderAddress) {
-        storageSellOrders[orderAddress].isAvailable = false;
+    function getMysellOrder() 
+        public  
+        view 
+        returns (
+            string memory email,
+            address SO_Address,
+            uint256 volume,
+            uint256 price,
+            uint256 securityDeposit,
+            bool isAvailable
+        )
+    {
+        StorageSellOrder memory storageOrder = storageSellOrders[msg.sender];
+        return (
+            storageOrder.email,
+            storageOrder.storageOwner,
+            storageOrder.volumeGB,
+            storageOrder.price,
+            storageOrder.securityDeposit,
+            storageOrder.isAvailable
+        );   
+    }
+    
+    function cancelMySellOrder() external onlyStorageOwner(msg.sender) onlyWhileAvailable(msg.sender) {
+        storageSellOrders[msg.sender].isAvailable = false;
+    }
+
+    function editMySellOrderPrice(
+        uint256 _price
+        ) external onlyStorageOwner(msg.sender) onlyWhileAvailable(msg.sender) 
+    {
+        // Get the existing sell order
+        StorageSellOrder memory currentOrder = storageSellOrders[msg.sender];
+
+        storageSellOrders[msg.sender] = StorageSellOrder({
+            storageOwner: msg.sender,
+            email: currentOrder.email,
+            volumeGB: currentOrder.volumeGB,
+            price: _price,
+            securityDeposit: currentOrder.securityDeposit,
+            isAvailable: true
+        });
+        // Emit an event to notify the changes
+        emit StorageSellOrderCreated(msg.sender, msg.sender);
+    }
+     function editMySellOrderVolume(
+        uint256 _volumeGB
+        ) external onlyStorageOwner(msg.sender) onlyWhileAvailable(msg.sender) 
+    {
+        // Get the existing sell order
+        StorageSellOrder memory currentOrder = storageSellOrders[msg.sender];
+
+        storageSellOrders[msg.sender] = StorageSellOrder({
+            storageOwner: msg.sender,
+            email: currentOrder.email,
+            volumeGB: _volumeGB,
+            price: currentOrder.price,
+            securityDeposit: currentOrder.securityDeposit,
+            isAvailable: true
+        });
+        // Emit an event to notify the changes
+        emit StorageSellOrderCreated(msg.sender, msg.sender);
     }
 
 }
