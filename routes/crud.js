@@ -5,6 +5,7 @@ const {checkUser} = require('../middleware/authMiddleware.js')
 const router = express.Router()
 
 router.post('/addStorage',checkUser,crudController.addStorage)
+router.get('/getStats',checkUser, crudController.getStats)
 router.put('/updateCapacity', crudController.updateRemainingCapacity)
 
 

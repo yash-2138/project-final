@@ -111,3 +111,51 @@ exports.updateRemainingCapacity= (req,res)=>{
       }
       
 }
+
+exports.getStats= (req,res)=>{
+  const {user_id} = req.user_id;
+  console.log(user_id)
+  dbClient.query('SELECT type FROM users where id = ?', [user_id], (error, result) =>{
+    if(error){
+      console.log(error);
+      res.send(500).json(error);
+    }
+    else if(result.length>0){
+      let type = result[0].type
+      if(type === "DO"){
+        dbClient.query('SELECT * from myStorage where do_id = ?', [user_id], (error, result)=>{
+          if(error){
+            console.log(error)
+            res.status(500).json(error)
+          }
+          else if(result){
+            if(result.length > 0){
+              res.send(result[0])
+            }else{
+              console.log("No Storage with this user");
+              res.status(404).json("No Storage with this user")
+            }
+          }
+        })
+      }
+      else if(type === "SO"){
+        dbClient.query('SELECT * from myStorage where so_id = ?', [user_id], (error, result)=>{
+          if(error){
+            console.log(error)
+            res.status(500).json(error)
+          }
+          else if(result){
+            if(result.length > 0){
+              res.send(result[0])
+            }else{
+              console.log("No Storage with this user");
+              res.status(404).json("No Storage with this user")
+            }
+          }
+        })
+      }
+    }else{
+      res.status(404).json({"msg":"user not found"})
+    }
+  }) 
+}
