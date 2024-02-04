@@ -22,22 +22,20 @@ document.addEventListener('DOMContentLoaded',async() =>{
     
     for (const orderAddress of sellOrderAddresses) {
       
-      const [email,storageOwner, volumeGB, price, securityDeposit, isAvailable] = await contract.getStorageSellOrderDetails(orderAddress);
-      if(isAvailable){
-        console.log(orderAddress)
+      const [email,storageOwner, volumeGB, price, securityDeposit, state] = await contract.getStorageSellOrderDetails(orderAddress);
+      if(state == 0){
+        // console.log(orderAddress)
         let newRow = sellOrderListElement.insertRow(sellOrderListElement.rows.length);
         let cell1 = newRow.insertCell(0);
         let cell2 = newRow.insertCell(1);
         let cell3 = newRow.insertCell(2);
         let cell4 = newRow.insertCell(3);
         let cell5 = newRow.insertCell(4);
-        let cell6 = newRow.insertCell(5);
         cell1.innerHTML = email;
         cell2.innerHTML = storageOwner;
         cell3.innerHTML = volumeGB;
         cell4.innerHTML = price;
-        cell5.innerHTML = isAvailable
-        cell6.innerHTML = `<button class="btn btn-primary buy-btn" id=${storageOwner}>Buy</button>`;
+        cell5.innerHTML = `<button class="btn btn-primary buy-btn" id=${storageOwner}>Buy</button>`;
 
         const buyBtn = document.getElementById(`${storageOwner}`)
         buyBtn.addEventListener('click', async()=>{

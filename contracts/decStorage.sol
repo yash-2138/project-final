@@ -2,13 +2,14 @@
 pragma solidity ^0.8.20;
 
 contract StorageMarketplace {
+    enum SellOrderState { Listed, Bought, Canceled }
     struct StorageSellOrder {
         address storageOwner;
         string email;
         uint256 volumeGB;
         uint256 price;
         uint256 securityDeposit;
-        bool isAvailable;
+        SellOrderState state;
     }
 
     struct StorageRentalContract {
@@ -41,8 +42,18 @@ contract StorageMarketplace {
         _;
     }
 
-    modifier onlyWhileAvailable(address orderAddress) {
-        require(storageSellOrders[orderAddress].isAvailable, "Storage sell order is not available");
+    modifier onlyWhileListed(address orderAddress) {
+        require(storageSellOrders[orderAddress].state == SellOrderState.Listed, "Storage sell order is not Listed");
+        _;
+    }
+
+    modifier onlyWhileCanceled(address orderAddress) {
+        require(storageSellOrders[orderAddress].state == SellOrderState.Canceled, "Storage sell order is not Listed");
+        _;
+    }
+
+    modifier onlyWhileBought(address orderAddress) {
+        require(storageSellOrders[orderAddress].state == SellOrderState.Bought, "Storage sell order is not Listed");
         _;
     }
 
@@ -76,13 +87,13 @@ contract StorageMarketplace {
             volumeGB: _volumeGB,
             price: _price,
             securityDeposit: _securityDeposit,
-            isAvailable: true
+            state: SellOrderState.Listed
         });
 
         emit StorageSellOrderCreated(msg.sender, orderAddress);
     }
 
-    function buyStorage(address orderAddress, string memory _email, uint256 _tenureDays) external payable onlyWhileAvailable(orderAddress) {
+    function buyStorage(address orderAddress, string memory _email, uint256 _tenureDays) external payable onlyWhileListed(orderAddress) {
         StorageSellOrder memory storageOrder = storageSellOrders[orderAddress];
 
         uint256 totalPrice = storageOrder.price * _tenureDays;
@@ -107,7 +118,7 @@ contract StorageMarketplace {
         });
 
         // Mark storage sell order as unavailable
-        storageSellOrders[orderAddress].isAvailable = false;
+        storageSellOrders[orderAddress].state = SellOrderState.Bought;
 
         emit StorageRentalContractCreated(storageOrder.storageOwner, msg.sender, contractAddress);
 
@@ -165,8 +176,8 @@ contract StorageMarketplace {
 
         // Mark the contract as completed
         storageRentalContracts[contractAddress].isCompleted = true;
-        //Mark the sell order as available again
-        storageSellOrders[storageContract.storageOwner].isAvailable = true;         
+        //Mark the sell order as listed again
+        storageSellOrders[storageContract.storageOwner].state = SellOrderState.Listed;         
 
     }
 
@@ -206,7 +217,7 @@ contract StorageMarketplace {
             uint256 volume,
             uint256 price,
             uint256 securityDeposit,
-            bool isAvailable
+            SellOrderState state
         )
     {
         StorageSellOrder memory storageOrder = storageSellOrders[orderAddress];
@@ -216,7 +227,7 @@ contract StorageMarketplace {
             storageOrder.volumeGB,
             storageOrder.price,
             storageOrder.securityDeposit,
-            storageOrder.isAvailable
+            storageOrder.state
         );
     }
 
@@ -249,7 +260,7 @@ contract StorageMarketplace {
     
 
     function getMysellOrder() 
-        public  
+        external onlyStorageOwner(msg.sender)  
         view 
         returns (
             string memory email,
@@ -257,7 +268,7 @@ contract StorageMarketplace {
             uint256 volume,
             uint256 price,
             uint256 securityDeposit,
-            bool isAvailable
+            SellOrderState state
         )
     {
         StorageSellOrder memory storageOrder = storageSellOrders[msg.sender];
@@ -267,17 +278,20 @@ contract StorageMarketplace {
             storageOrder.volumeGB,
             storageOrder.price,
             storageOrder.securityDeposit,
-            storageOrder.isAvailable
+            storageOrder.state
         );   
     }
     
-    function cancelMySellOrder() external onlyStorageOwner(msg.sender) onlyWhileAvailable(msg.sender) {
-        storageSellOrders[msg.sender].isAvailable = false;
+    function cancelMySellOrder() external onlyStorageOwner(msg.sender) onlyWhileListed(msg.sender) {
+        storageSellOrders[msg.sender].state = SellOrderState.Canceled;
+    }
+    function activateMySellOrder() external onlyStorageOwner(msg.sender) onlyWhileCanceled(msg.sender){
+        storageSellOrders[msg.sender].state = SellOrderState.Listed;
     }
 
     function editMySellOrderPrice(
         uint256 _price
-        ) external onlyStorageOwner(msg.sender) onlyWhileAvailable(msg.sender) 
+        ) external onlyStorageOwner(msg.sender) onlyWhileListed(msg.sender) 
     {
         // Get the existing sell order
         StorageSellOrder memory currentOrder = storageSellOrders[msg.sender];
@@ -288,14 +302,15 @@ contract StorageMarketplace {
             volumeGB: currentOrder.volumeGB,
             price: _price,
             securityDeposit: currentOrder.securityDeposit,
-            isAvailable: true
+            state: currentOrder.state
         });
         // Emit an event to notify the changes
         emit StorageSellOrderCreated(msg.sender, msg.sender);
     }
-     function editMySellOrderVolume(
+
+    function editMySellOrderVolume(
         uint256 _volumeGB
-        ) external onlyStorageOwner(msg.sender) onlyWhileAvailable(msg.sender) 
+        ) external onlyStorageOwner(msg.sender) onlyWhileListed(msg.sender) 
     {
         // Get the existing sell order
         StorageSellOrder memory currentOrder = storageSellOrders[msg.sender];
@@ -306,7 +321,7 @@ contract StorageMarketplace {
             volumeGB: _volumeGB,
             price: currentOrder.price,
             securityDeposit: currentOrder.securityDeposit,
-            isAvailable: true
+            state: currentOrder.state
         });
         // Emit an event to notify the changes
         emit StorageSellOrderCreated(msg.sender, msg.sender);
