@@ -6,6 +6,7 @@ const router = express.Router()
 
 router.post('/addStorage',checkUser,crudController.addStorage)
 router.get('/getStats',checkUser, crudController.getStats)
+router.post('/addFiles',checkUser, crudController.addFiles)
 router.put('/updateCapacity', crudController.updateRemainingCapacity)
 
 

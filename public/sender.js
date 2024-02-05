@@ -1,4 +1,3 @@
-(function(){
     let receiverId;
     const socket = io()
 
@@ -18,21 +17,22 @@
 
         socket.on("init", function(uid){
             receiverId = uid;
-            document.querySelector(".join-screen").classList.remove("active")
-            document.querySelector(".fs-screen").classList.add("active")
+            document.querySelector(".fs-screen").classList.remove("inactive")
         })
     })  
     let file
+    let hash
     document.querySelector("#file-input").addEventListener("change", function (e) {
         file = e.target.files[0];
     
         if (!file) {
             return;
         }
-    
         let reader = new FileReader();
     
         reader.onload = function (e) {
+            hash = CryptoJS.SHA256(e.target.result);
+
             let buffer = new Uint8Array(reader.result);
     
             let el = document.createElement("div");
@@ -77,19 +77,45 @@
     
             const progress = (sentChunks / totalChunks) * 100;
             progress_node.innerText = progress.toFixed(2) + "%";
-    
-            if (chunk.length !== 0) {
+            if (sentChunks <= totalChunks) {
                 // Emit "file-raw" event with file buffer chunk
                 socket.emit("file-raw", {
                     uid: receiverId,
                     buffer: chunk,
                 });
-            } else {
+                
+            } 
+            if(sentChunks == totalChunks) {
                 // File transfer is completed, you can perform any cleanup or UI updates here
                 progress_node.innerText = "100%";
+                addFileHash()
             }
         });
     }
+
+    function addFileHash(){
+        let data = {
+            fileName: file.name,
+            hash: hash.toString(),
+            size: file.size
+        }
+        console.log(data)
+        fetch("http://localhost:5000/crud/addFiles", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                // Add any other headers if needed
+            },
+            body: JSON.stringify({data}),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("API response:", data);
+                // Handle the API response here
+            })
+            .catch(error => {
+                console.error("API error:", error);
+                // Handle the API error here
+            });
+    }
     
-    
-})()

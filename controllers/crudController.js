@@ -159,3 +159,77 @@ exports.getStats= (req,res)=>{
     }
   }) 
 }
+
+//only used when data owner sending files
+// check user type
+//if DO check if and storage is available with the DO
+//add the filename and hash
+exports.addFiles = (req,res) =>{
+  const user_id = req.user_id;
+  const {fileName, hash, size} = req.body.data;
+  
+  
+  try {
+    dbClient.query(
+      'SELECT so_id, remainingCapacity, active FROM myStorage where do_id = ?', 
+      [user_id],        
+      (error, result)=>{
+        if(error){
+          res.status(500).json(error)
+          return
+        }
+        if(result){
+          if(result.length ==0){
+            res.status(404).json({"msg": "No Storage Found"})
+          }
+          else{
+            if(result[0].active == 1){
+              let remainingCapacity = result[0].remainingCapacity - size;
+
+              const data = {
+                do_id: user_id,
+                so_id: result[0].so_id,
+                fileName: fileName,
+                possession: "SO",
+                fileHash: hash
+              }
+              dbClient.query('INSERT INTO files SET ?',
+                data,
+                (insertFileError,insertFileResult)=>{
+                  if(insertFileError){
+                    console.log(insertFileError)
+                    res.status(500).json(insertFileError);
+                  }
+                  else if(insertFileResult){
+                    console.log('Data inserted successfully in files table!');                          
+                  }
+                }
+              )
+              dbClient.query('UPDATE myStorage SET remainingCapacity = ? where do_id = ?',
+                [remainingCapacity, user_id],
+                (updateCapacityError, updateCapacityResult) =>{
+                  if(updateCapacityError){
+                    res.status(500).json(updateCapacityError);
+                  }
+                  else if(updateCapacityResult){
+                    console.log('Capacity updated successfully in myStorage table!');
+                    res.send({"msg": "Add Files Successfull."})                          
+                  }
+                }
+              )
+            }
+            else{
+              res.status(404).json({"msg": "Storage Found but inactive"})
+            }
+            
+          }
+        }
+
+      }
+    );
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}

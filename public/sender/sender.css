@@ -79,3 +79,7 @@ body {
 .storage-form h3{
     text-align: left;
 }
+
+.inactive{
+    display: none;
+}
