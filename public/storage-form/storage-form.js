@@ -1,3 +1,4 @@
+
 import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
 import { address, abi } from '../constants.js';
 const addStorage = document.querySelector("#submit-storage-form");
@@ -29,8 +30,9 @@ addStorage.addEventListener('click', async (event)=>{
         value: ethers.parseEther(securityDeposit)
     })
     await tx.wait();
+    console.log('created')
     alert("Storage Sell Order created successfully!");
-    location.assign("../marketplace.html")
+    location.assign("/marketplace")
     } catch (error) {
         console.error("Error creating Storage Sell Order:", error.message);
         
