@@ -1,4 +1,5 @@
 const express = require('express')
+const {requireAuth} = require('../middleware/authMiddleware')
 const router = express.Router()
 
 router.get('/', (req,res)=>{
@@ -8,30 +9,21 @@ router.get('/home', (req,res)=>{
     res.render('home')
 })
 router.get('/login', (req,res)=>{
-    res.render("login")
-})
-router.get('/sender',(req,res)=>{
-    res.render('sender')
-})
-router.get('/receiver', (req,res)=>{
-    res.render('receiver')
-})
-router.get('/login', (req,res)=>{
     res.render('login')
 })
-router.get('/sender', (req,res)=>{
+router.get('/sender', requireAuth,(req,res)=>{
     res.render('sender')
 })
-router.get('/receiver', (req,res)=>{
+router.get('/receiver',requireAuth, (req,res)=>{
     res.render('receiver')
 })
-router.get('/encryption', (req,res)=>{
+router.get('/encryption',requireAuth, (req,res)=>{
     res.render('encryption')
 })
-router.get('/marketplace', (req,res)=>{
+router.get('/marketplace',requireAuth, (req,res)=>{
     res.render('marketplace')
 })
-router.get('/storage-form', (req,res)=>{
+router.get('/storage-form',requireAuth, (req,res)=>{
     res.render('storageForm')
 })
 router.get('/aboutus', (req,res)=>{
@@ -39,6 +31,9 @@ router.get('/aboutus', (req,res)=>{
 })
 router.get('/services', (req,res)=>{
     res.render('services')
+})
+router.get('/stats',requireAuth, (req,res)=>{
+    res.render('stats')
 })
 
 

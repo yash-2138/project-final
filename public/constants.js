@@ -1,6 +1,6 @@
 
-export const address = "0x9997408F0B339fA4Fa06cC9849DC3C588100216C";
-export const abi =  [
+export const address = "0x4D20C891BBF3de1Cee080c6Df84D299E444Af0aa";
+export const abi = [
   {
     "anonymous": false,
     "inputs": [
@@ -46,6 +46,13 @@ export const abi =  [
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "activateMySellOrder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -69,14 +76,8 @@ export const abi =  [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "orderAddress",
-        "type": "address"
-      }
-    ],
-    "name": "cancelSellOrder",
+    "inputs": [],
+    "name": "cancelMySellOrder",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -123,6 +124,32 @@ export const abi =  [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_price",
+        "type": "uint256"
+      }
+    ],
+    "name": "editMySellOrderPrice",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_volumeGB",
+        "type": "uint256"
+      }
+    ],
+    "name": "editMySellOrderVolume",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "getAllRentalContracts",
     "outputs": [
@@ -143,6 +170,44 @@ export const abi =  [
         "internalType": "address[]",
         "name": "",
         "type": "address[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMysellOrder",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "SO_Address",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "volume",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "securityDeposit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum StorageMarketplace.SellOrderState",
+        "name": "state",
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",
@@ -238,9 +303,9 @@ export const abi =  [
         "type": "uint256"
       },
       {
-        "internalType": "bool",
-        "name": "isAvailable",
-        "type": "bool"
+        "internalType": "enum StorageMarketplace.SellOrderState",
+        "name": "state",
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",

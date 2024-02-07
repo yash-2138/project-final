@@ -33,15 +33,15 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
 // --------------------------------Dark Mode Code----------------------------------------------------------------------
-icon.onclick = function () {
-    document.body.classList.toggle("dark-theme");
+// icon.onclick = function () {
+//     document.body.classList.toggle("dark-theme");
 
-    // Update the icon text and style based on the theme
-    var iconSpan = icon.querySelector('span');
-    if (document.body.classList.contains("dark-theme")) {
-        iconSpan.textContent = 'light_mode';
-    } else {
-        iconSpan.textContent = 'dark_mode';
-    }
-}
+//     // Update the icon text and style based on the theme
+//     var iconSpan = icon.querySelector('span');
+//     if (document.body.classList.contains("dark-theme")) {
+//         iconSpan.textContent = 'light_mode';
+//     } else {
+//         iconSpan.textContent = 'dark_mode';
+//     }
+// }
 // ---------------------------------------------------------------------------------------------------------------

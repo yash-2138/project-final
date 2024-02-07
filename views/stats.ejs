@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/stats/stats.css">
+</head>
+<body>
+    <header><%- include('navbar')  %></header>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Address</th>
+                <th>Capacity</th>
+                <th>Cost</th>
+                <th>Status</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="address"></td>
+                <td>
+                    <span id="capacity"></span><span> GB</span>
+                    <button class="edit-button" id="edit-button-capacity" >
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </td>
+                <td>
+                    <span id="cost"></span><span> Rs</span>
+                    <button class="edit-button" id="edit-button-cost">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </td>
+                <td>
+                    <span id="status"></span>
+                    <select id="statusDropdown" style="display: none;">
+                        <option value="Listed">Listed</option>
+                        <option value="Canceled">Canceled</option>
+                    </select>
+                    <button class="edit-button" id="edit-button-status" >
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    
+    <footer><%- include('footer') %></footer>
+
+
+    <script type="module" src="/stats/stats.js"></script>
+</body>
+</html>
