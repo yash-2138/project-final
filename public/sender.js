@@ -11,6 +11,20 @@
             <b>Room Id</b>
             <span>${joinId}</span>
         `
+        
+        fetch("http://localhost:5000/utils/sendMail",{
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({joinId})
+        })
+            .then(response => response)
+            .then(data => {
+                console.log(data)
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+          
         socket.emit("sender-join", {
             uid: joinId
         })
