@@ -1,0 +1,194 @@
+
+
+body {
+    background-color: var(--primary-color);
+    transition: background-color 1.8s, color 1.8s;
+    overflow: hidden; /* Add this line to remove the scrollbar */
+}
+
+
+.row {
+    margin-top: 100px;
+}
+
+.col h2 {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 10px;
+    color: var(--secondary-color);
+}
+
+.col h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Kalam', cursive;
+    color: var(--secondary-color);
+    font-size: 3em;
+    margin: 10px 0 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    animation: animtext 6s steps(80, end) infinite;
+    transition: all cubic-bezier(0.1, 0.7, 1.0, 0.1);
+}
+
+@keyframes animtext {
+    from {
+        width: 0;
+        transition: all 3s ease-in-out;
+    }
+}
+
+
+
+.container-flex {
+    background-color: var(--primary-color);
+    padding-top: 10px;
+    height: 85vh;
+    transition: background-color 1.8s, color 1.8s;
+}
+
+
+
+
+.disk {
+    width: 550px;
+}
+
+
+.bxs-cloud:before {
+    content: "\ed4a";
+    margin-left: 83%;
+  }
+
+  .centered-icon {
+    color: #2783d0;
+    font-size: 200px;
+  }
+
+@media((min-width:200px) and (max-width:500px)) {
+   
+
+    .col{
+        margin-top: 10px;
+    }
+
+  
+
+    /* .btn
+    {
+        width: 100%;
+    } */
+
+    .disk {
+        width: 262px;
+        height: 133px;
+    }
+
+}
+
+@media((min-width:500px) and (max-width:991px))
+{
+    /* .btn{
+        width: 50%;
+    } */
+
+    .disk {
+        width: 462px;
+        height: 233px;
+    }
+}
+
+@media ((min-width:992px)and (max-width: 1202px))
+{
+    .disk {
+        width: 462px;
+        height: 233px;
+    }
+    .container-flex
+    {
+        margin-top: -107px;
+    }
+}
+
+
+
+
+  /* Add this style to hide the navbar content by default on small screens */
+@media (max-width: 992px) {
+   
+    .container-flex
+    {
+        margin-top: -87px;
+    }
+
+    
+}
+
+
+
+#username{
+    color: red;
+}
+
+/* -----------------------------------------------RESPONSIVE CSS--------------------------------------------------------------------------------------- */
+Default styles for larger screens
+body {
+    padding-top: 0px;
+    /* Adjusted for the height of the navbar */
+}
+
+/* Media query for medium-sized screens (tablets, 768px and up) */
+@media (max-width: 768px) {
+    img {
+        justify-content: space-evenly;
+        align-items: center;
+        display: flex;
+        margin:auto;
+    }
+    h1{
+        font-size: 30px;
+    }
+}
+
+/* Media query for small screens (phones, 576px and up) */
+@media (max-width: 576px) {
+    /* Adjust styles as needed for small screens */
+
+    img {
+        justify-content: space-evenly;
+        align-items: center;
+        display: flex;
+        margin:auto;
+    }
+    h1{
+        font-size: 30px;
+    }
+
+    #col-1 {
+        margin-left: 0;
+        /* Example adjustment for the left margin on small screens */
+    }
+
+    .col {
+        margin-top: 20px;
+        /* Example adjustment for the top margin on small screens */
+    }
+}
+
+/* Media query for extra-large screens (1200px and up) */
+@media (max-width: 1920px) {
+
+    /* Adjust styles as needed for extra-large screens */
+    .col {
+        margin-top: 50px;
+        /* Example adjustment for the top margin on extra-large screens */
+    }
+
+    img {
+        justify-content: space-evenly;
+        align-items: center;
+        display: flex;
+        margin:auto;
+    }
+}

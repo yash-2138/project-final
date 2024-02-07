@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Roboto:wght@400;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Poppins',sans-serif;
+    color: var(--primary-text-color);
+}
+h1{
+    font-size: 2.4rem;
+}
+h2{
+    font-size: 1.7rem;
+}
+h3{
+    font-size: 1.3rem;
+}
+p{
+    font-family: "Roboto",sans-serif;
+    font-size: 1.2rem;
+    color: var(--secondary-text-color);
+    line-height: 1.8rem;
+}
+.container{
+    max-width: 1180px;
+    margin-inline: auto;
+}
+.flex{
+    display: flex;
+    align-items: center;
+}
+
+/* aboutys section */
+.text{
+    text-align: center;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* pricing section */
+.pricing{
+    gap: 60px;
+    padding: 35px;
+}
+.image img{
+    border-radius: 50%;
+    width: 600px;
+    height: 336px;
+}
+.pricing-detail{
+    /* display: flex; */
+    flex-direction: column;
+    align-items: flex-start;
+}
