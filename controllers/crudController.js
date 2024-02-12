@@ -266,3 +266,36 @@ exports.getFilesSO =(req,res) =>{
       }
     })
 }
+
+exports.getFilesDO = (req,res)=>{
+  const user_id = req.user_id;
+  dbClient.query(
+    'SELECT so_id FROM myStorage WHERE do_id = ? AND active = 1',
+    [user_id],
+    (error, result) =>{
+      if(error){
+        return res.status(500).json(error)
+      }
+      if(result.length == 0) {
+        return res.status(404).json({"msg": "No Storage Found"})
+      }
+      else{
+        dbClient.query(
+          'SELECT id, fileName, possession FROM files where so_id = ? and do_id = ?',
+          [result[0].so_id, user_id],
+          (fileError, fileResult)=>{
+            if(fileError){
+              return res.status(500).json(fileError)
+            }
+            if(fileResult.length == 0){
+              return res.send({"msg": "No Files Rececived"})
+            }
+            else{
+              return res.send(fileResult)
+            }
+
+          }
+        )
+      }
+    })
+}
