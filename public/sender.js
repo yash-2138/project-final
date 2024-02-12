@@ -35,7 +35,7 @@
         })
     })  
     let file
-    let hash
+    let hash = ''
     document.querySelector("#file-input").addEventListener("change", function (e) {
         file = e.target.files[0];
     
@@ -45,10 +45,9 @@
         let reader = new FileReader();
     
         reader.onload = function (e) {
-            hash = CryptoJS.SHA256(e.target.result);
-
             let buffer = new Uint8Array(reader.result);
-    
+            hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(buffer));
+
             let el = document.createElement("div");
             el.classList.add("item");
             el.innerHTML = `
@@ -113,7 +112,8 @@
             hash: hash.toString(),
             size: file.size
         }
-        console.log(data)
+        hash = ''
+        // console.log(data)
         fetch("http://localhost:5000/crud/addFiles", {
             method: "POST",
             headers: {

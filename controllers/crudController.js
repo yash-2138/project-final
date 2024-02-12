@@ -6,7 +6,7 @@ exports.addStorage = (req, res)=>{
         const user_id = req.user_id;
         const {email, address, capacity} = req.body
         let so_id;
-        // console.log(user_id)
+        const capacityBytes = capacity * Math.pow(1024, 3);
         dbClient.query('SELECT id FROM users where email = ?', [email], (err, result)=>{
           if(err){
             console.log(err);
@@ -17,8 +17,8 @@ exports.addStorage = (req, res)=>{
               do_id: user_id,
               so_id: so_id,
               address:address,
-              capacity: capacity,
-              remainingCapacity: capacity,
+              capacity: capacityBytes,
+              remainingCapacity: capacityBytes,
             };
 
             dbClient.query(
@@ -113,8 +113,8 @@ exports.updateRemainingCapacity= (req,res)=>{
 }
 
 exports.getStats= (req,res)=>{
-  const {user_id} = req.user_id;
-  console.log(user_id)
+  const user_id = req.user_id;
+  // console.log(user_id)
   dbClient.query('SELECT type FROM users where id = ?', [user_id], (error, result) =>{
     if(error){
       console.log(error);
@@ -133,7 +133,7 @@ exports.getStats= (req,res)=>{
               res.send(result[0])
             }else{
               console.log("No Storage with this user");
-              res.status(404).json("No Storage with this user")
+              res.status(404).json({"msg":"No Storage with this user"})
             }
           }
         })
@@ -149,7 +149,7 @@ exports.getStats= (req,res)=>{
               res.send(result[0])
             }else{
               console.log("No Storage with this user");
-              res.status(404).json("No Storage with this user")
+              res.status(404).json({"msg": "No Storage with this user"})
             }
           }
         })
@@ -232,4 +232,37 @@ exports.addFiles = (req,res) =>{
     console.log(error)
     res.status(500).json(error)
   }
+}
+
+exports.getFilesSO =(req,res) =>{
+  const user_id = req.user_id;
+  dbClient.query(
+    'SELECT do_id FROM myStorage WHERE so_id = ? AND active = 1',
+    [user_id],
+    (error, result) =>{
+      if(error){
+        return res.status(500).json(error)
+      }
+      if(result.length == 0) {
+        return res.status(404).json({"msg": "No Storage Found"})
+      }
+      else{
+        dbClient.query(
+          'SELECT fileName, possession FROM files where do_id = ? and so_id = ?',
+          [result[0].do_id, user_id],
+          (fileError, fileResult)=>{
+            if(fileError){
+              return res.status(500).json(fileError)
+            }
+            if(fileResult.length == 0){
+              return res.send({"msg": "No Files Rececived"})
+            }
+            else{
+              return res.send(fileResult)
+            }
+
+          }
+        )
+      }
+    })
 }

@@ -52,7 +52,9 @@ exports.login = async(req, res)=>{
 
             // Login successful, you can now use the user ID
                 const userId = results[0].id;
-                const token =  createToken(userId);
+                const name = results[0].name;
+                const type = results[0].type;
+                const token =  createToken(userId, name, type);
                 res.cookie('jwt', token,{httpOnly: true, maxAge: maxAge * 1000})
                 res.status(201).json({user: userId})
         }
@@ -61,7 +63,7 @@ exports.login = async(req, res)=>{
 exports.getName = (req, res) =>{
     const user_id = req.user_id
     try {
-        dbClient.query('SELECT name from users WHERE id = ?', [user_id], async(error, results)=>{
+        dbClient.query('SELECT name, type from users WHERE id = ?', [user_id], async(error, results)=>{
             if(error){
                 return res.status(401).send(error);
             }
@@ -81,8 +83,8 @@ exports.logout =(req, res)=>{
     res.cookie('jwt', '', {maxAge: 1})
     res.redirect('/home') //update this
 }
-const createToken = (id)=>{
-    return jwt.sign({id}, 'yash dhumal secret',{
+const createToken = (id, name, type)=>{
+    return jwt.sign({id, name, type}, 'yash dhumal secret',{
         expiresIn: maxAge
     })
 }
