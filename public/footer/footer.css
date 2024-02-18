@@ -68,3 +68,14 @@
 .icons i:hover{
     color: black;
 }
+
+/* Media Queries */
+@media screen and (max-width: 991px) {
+    .footer_container{
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer_column h3{
+        margin-top: 10px;
+    }
+}
