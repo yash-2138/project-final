@@ -61,3 +61,33 @@ th {
 tbody tr:hover {
     background-color: rgba(0, 0, 0, 0.1); /* Set a light background color on hover */
 }
+
+#storagebtn{
+    margin-left: 28rem;
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#table{
+    margin-top: 0.5rem;
+}
+
+@media((min-width:200px) and (max-width:995px))
+{
+    #storagebtn{
+        margin-left: 50%;
+        width: 25%;
+    }
+}
+
+
+@media((min-width:100px) and (max-width:465px))
+{
+    #storagebtn{
+       margin-left: 40%;
+        width: 25%;
+        font-size: small;
+    }
+}
