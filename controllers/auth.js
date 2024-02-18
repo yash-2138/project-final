@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs');
 const maxAge = 3 * 34 * 60 * 60 ;
 exports.register = (req,res)=>{
-    const {name, email, password} = req.body
+    const {name, email, password, type} = req.body
 
     dbClient.query('SELECT email from users WHERE email = ?', [email], async(error, results)=>{
         if(error){
@@ -14,7 +14,7 @@ exports.register = (req,res)=>{
         }
         else{
             let hashedPass = await bcrypt.hash(password, 8)
-            dbClient.query('INSERT INTO users (name, email, password) values (?, ?, ?)', [name, email, hashedPass], (error, results)=>{
+            dbClient.query('INSERT INTO users (name, email, password, type) values (?, ?, ?, ?)', [name, email, hashedPass, type], (error, results)=>{
                 if(error){
                     console.log(error);
                 }
