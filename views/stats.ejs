@@ -9,7 +9,8 @@
 </head>
 <body>
     <header><%- include('navbar')  %></header>
-    <table class="table">
+    <div style="display: none;" id="userType"><%= type %></div>
+    <table class="table" id="editStorageTable">
         <thead>
             <tr>
                 <th>Address</th>
@@ -48,6 +49,63 @@
         </tbody>
     </table>
 
+    <div class="container mt-5" id="stats-overview-container">
+        <div class="row">
+          <!-- Box 1 -->
+          <div class="col-md-3">
+            <div class="card card-stat">
+              <div class="card-body">
+                <h8 class="card-title">  <i class="bi bi-graph-up-arrow icon"></i>  Monthly Revenue</h8>
+                <h3 class="card-text">Data </h3>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Box 2 -->
+          <div class="col-md-3">
+            <div class="card card-stat">
+              <div class="card-body">
+                <h8 class="card-title"> <i class="bi bi-database-up icon"></i>Storage Rented</h8>
+                <h3 class="card-text" id="storage-rented"></h3>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Box 3 -->
+          <div class="col-md-3">
+            <div class="card card-stat">
+              <div class="card-body">
+                <h8 class="card-title"> <i class="bi bi-folder-check icon"></i> Used Space</h8>
+                <h3 class="card-text" id="used-space"> Data </h3>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Box 4 -->
+          <div class="col-md-3">
+            <div class="card card-stat">
+              <div class="card-body">
+                <h8 class="card-title"> <i class="bi bi-hourglass-split icon "></i>Contract Time</h8>
+                <h3 class="card-text">Data </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="mt-5 table-container table-stats">
+      <!-- <h2>File Table</h2> -->
+      <table class="table" id="filesTable">
+        <thead>
+          <tr>
+            <th scope="col">Serial No</th>
+            <th scope="col">File Name</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody id="filesTableBody"></tbody>
+      </table>
+    </div>
     
     <footer><%- include('footer') %></footer>
 

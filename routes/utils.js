@@ -4,6 +4,7 @@ const {checkUser} = require('../middleware/authMiddleware.js')
 const router = express.Router()
 
 router.post('/sendMail',checkUser, utilsController.sendMailToMyStorageProvider)
+router.post('/fileRequestMail',checkUser, utilsController.requestFileMail)
 
 
 module.exports = router

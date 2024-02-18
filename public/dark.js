@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     var icon = document.getElementById("icon");
     var currentTheme = localStorage.getItem("theme");
-    console.log('e')
 
     // Set the initial theme
     if (currentTheme) {

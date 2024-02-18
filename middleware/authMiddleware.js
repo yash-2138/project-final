@@ -9,7 +9,8 @@ const requireAuth = (req, res, next)  =>{
                 console.log(err);
                 res.send({msg: "not_logged_in"})
             }else{
-                // console.log(decodedToken);
+                req.userName = decodedToken.userName
+                req.userType = decodedToken.type
                 req.user_id = decodedToken.id;
                 next()
             }
@@ -27,7 +28,10 @@ const checkUser = (req, res, next) =>{
                 console.log(err);
             }else{
                 // console.log(decodedToken.id)
+                req.userName = decodedToken.userName
+                req.userType = decodedToken.type
                 req.user_id = decodedToken.id;
+                // console.log("user_id:", decodedToken.id)
                 next()
                 
             }
