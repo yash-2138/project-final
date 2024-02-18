@@ -37,7 +37,7 @@ module.exports = db
 //   FOREIGN KEY (so_id) REFERENCES users(id)
 // );
 
-//
+
 // CREATE TABLE files (
 //   id INT PRIMARY KEY,
 //   do_id INT,
