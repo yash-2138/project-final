@@ -26,6 +26,7 @@
                     <label for="">Email</label>
                     <i class='bx bxs-user' style="color: white;"></i>
                 </div>
+               
                 <div class="input-box animation" style="--D:2; --s:23">
                     <input type="password"  id="password-login" required>
                     <label for="">Password</label>
@@ -70,12 +71,18 @@
                     <label for="">Confirm Password</label>
                     <i class='bx bxs-lock'></i>
                 </div>
+                <div class="input-box animation" style="--li:19; --s:2;">
+                    <select id="storageType" name="storageType">
+                        <option value="DO">Data Owner</option>
+                        <option value="SO">Storage Seller</option>
+                      </select>
+                </div>
                 <div class="input-box animation" style="--li:20; --s:3;">
                     <button class="btn" id="submit-btn-register" >Register</a></button>
                 </div>
                 <div id="errorMessages-register" class="error"></div>
                 <div class="regi-link animation" style="--li:21; --s:4;">
-                    <p class="signin">Don't have an account ? <a href="#" class="SignInLink">Sign In</a></p>
+                    <p class="signin" id="signin1">Don't have an account ? <a href="#" class="SignInLink">Sign In</a></p>
                 </div>
             </form>
         </div>

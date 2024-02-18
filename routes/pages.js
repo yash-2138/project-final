@@ -33,7 +33,7 @@ router.get('/services', (req,res)=>{
     res.render('services')
 })
 router.get('/stats',requireAuth, (req,res)=>{
-    res.render('stats')
+    res.render('stats',{type: req.userType})
 })
 
 

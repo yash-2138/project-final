@@ -52,7 +52,8 @@ registerBtn.addEventListener('click', async(event)=>{
     const email = document.querySelector('#email-register').value
     const pass = document.querySelector('#password-register').value
     const confirmPassword = document.querySelector("#confirm-password-register").value
-    console.log(name, email, pass)
+    const type = document.querySelector('#storageType').value
+    console.log(name, email, pass, type)
     if(!validateRegistration(name, email,pass, confirmPassword)){
         return 
     }
@@ -61,7 +62,7 @@ registerBtn.addEventListener('click', async(event)=>{
         errorMessages.innerHTML = '';
         const res = await fetch('/auth/register', {
             method: 'POST',
-            body: JSON.stringify({name:name,email: email, password: pass}),
+            body: JSON.stringify({name:name,email: email, password: pass, type: type}),
             headers: {'Content-Type': 'application/json'}
         })
         const data = await res.json()

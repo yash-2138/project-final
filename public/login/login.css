@@ -22,8 +22,8 @@
 .container
 {
     position: relative;
-    width: 780px;
-    height: 500px;
+    width: 802px;
+    height: 573px;
     border: 2px solid #3ed9d9;
     box-shadow:0 0 10px  #3ed9d9;
     overflow: hidden;
@@ -307,13 +307,13 @@
     position: absolute;
     right: 0;
     top: -5px;
-    height: 600px;
-    width: 850px;
+    height: 705px;
+    width: 878px;
     background: linear-gradient(45deg,var(--primary-color),#3ed9d9);
-    transform: rotate(10deg) skewY(40deg) ;
+    transform: rotate(10deg) skewY(42deg);
     transform-origin: bottom right;
     transition: 1.5s ease;
-    transition-delay:  1.6s;
+    transition-delay: 1.6s;
 }
 
 .container.active .curved-shape{
@@ -325,7 +325,7 @@
     position: absolute;
     left: 250px;
     top: 100%;
-    height: 700px;
+    height: 818px;
     width: 850px;
     background: var(--primary-color);
     border-top: 3px solid #3ed9d9;
@@ -336,7 +336,7 @@
 }
 
 .container.active .curved-shape2{
-    transform: rotate(-11deg) skewY(-41deg) ;
+    transform: rotate(-10deg) skewY(-46deg) ;
     transition-delay: 1.2s;
 }
 
@@ -348,6 +348,21 @@
     margin: 25px 0px 0px 0px;
 } */
 
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    background-color: var(--primary-color);
+  }
+
+  #signin1
+  {
+    margin-top: -16px;
+    margin-left: -70px;
+  }
 
 @media((min-width:200px) and (max-width:500px))
 {
