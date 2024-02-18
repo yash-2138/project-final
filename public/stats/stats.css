@@ -80,6 +80,11 @@ tbody tr {
 
 }
 
+.card-body
+{
+  background-color:var(--primary-color);
+  color: var(--secondary-color);
+}
 
 
 @media (min-width: 200px) and (max-width: 500px) {

@@ -72,6 +72,12 @@ tbody tr:hover {
 
 #table{
     margin-top: 0.5rem;
+    
+}
+
+.table th,
+.table td {
+    color: var(--secondary-color);
 }
 
 @media((min-width:200px) and (max-width:995px))
@@ -90,4 +96,16 @@ tbody tr:hover {
         width: 25%;
         font-size: small;
     }
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.btn-marketplace {
+    background-color: #007bff;
+}
+
+.btn-marketplace:hover {
+    background-color: #0056b3;
 }
