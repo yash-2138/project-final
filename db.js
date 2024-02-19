@@ -3,7 +3,7 @@ const mysql = require('mysql2')
 const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: '963741',
+    password: '1234567890',
     database: 'decentStorage',
 });
   db.getConnection((err, connection) => {
@@ -37,7 +37,7 @@ module.exports = db
 //   FOREIGN KEY (so_id) REFERENCES users(id)
 // );
 
-//
+
 // CREATE TABLE files (
 //   id INT PRIMARY KEY,
 //   do_id INT,

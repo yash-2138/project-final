@@ -11,14 +11,12 @@
     <link rel="stylesheet" href="/dark.css">
 </head>
 
-<body>
-    <header>
-        <%- include('navbar') %>
-    </header>
-
-    <div class="container mt-5">
+<body>    
+    <header><%- include('navbar')  %></header>
+    
+    <div class="container-fluid1 mt-5 text-center">
         <!-- Button to link to another page -->
-        <a href="/storage-form" class="btn btn-marketplace mb-3 text-white" id="storagebtn">New Storage +</a>
+        <a href="/storage-form" class="btn btn-marketplace mb-3" id="button" style="color: white;">New Storage + </a>
 
         <div class="table-responsive" id="table">
             <table class="table" id="storage-order-list">
