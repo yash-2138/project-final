@@ -68,9 +68,24 @@
     padding: 0 10px 0 10px;
 }
 .icons i:hover{
+<<<<<<< HEAD
     color: var(--secondary-color);
 }
 
 #dark{
     color: var(--secondary-color);
+=======
+    color: black;
+}
+
+/* Media Queries */
+@media screen and (max-width: 991px) {
+    .footer_container{
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer_column h3{
+        margin-top: 10px;
+    }
+>>>>>>> 90b4d651aec25dfd0829a75f314af30b210e438a
 }
