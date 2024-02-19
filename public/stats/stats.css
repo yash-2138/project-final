@@ -92,3 +92,9 @@ tbody tr {
     overflow: auto; 
   }
 }
+
+.table th,
+.table td {
+    color: var(--secondary-color);
+    opacity: 0.8;
+}

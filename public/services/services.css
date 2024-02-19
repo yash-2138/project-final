@@ -31,7 +31,7 @@ p{
 
 /* profile page */
 .cards{
-    margin-top: 130px;
+    margin-top: 80px;
 }
 .cards-sec{
     display: flex;
@@ -57,7 +57,20 @@ p{
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 10px;
+    box-shadow: 0 0 6px black;
 }
+
+.button a {
+    text-decoration: none; /* Remove underline */
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    color: black;
+}
+
+.button:hover {
+    box-shadow: 0 0 10px black;
+}
+
 .card {
     /* Add shadows to create the "card" effect */
     /* box-shadow: 0 4px 8px 0 rgba(118, 108, 108, 0.2); */
@@ -67,6 +80,7 @@ p{
     box-shadow: 0 0 10px #3ed9d9;
     background-color: var(--primary-color);
     color: var(--secondary-color);
+   
 }
 .card:hover {
     box-shadow: 0px 0px 16px #3ed9d9;
@@ -83,3 +97,26 @@ p{
 {
     background-color: var(--primary-color);
 }
+
+@media only screen and (max-width: 768px) {
+    .cards-sec {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+       
+    }
+
+    .card {
+        max-width: 100%; /* Adjusted max-width for responsiveness */
+    }
+
+    .button {
+        padding: 12px 20px; /* Adjusted padding for better mobile experience */
+        font-size: 14px; /* Adjusted font size for better mobile experience */
+    }
+
+}
+
+@media (min-width: 200px) and (max-width: 500px) {
+    #respo {
+      overflow: auto; 
+    }
+  }

@@ -45,6 +45,8 @@
 .copyright{
     text-align: center;
     /* min-width: 90%; */
+    color: var(--secondary-color);
+    opacity: 0.6;
 }
 .icons{
     display: flex;
@@ -66,5 +68,9 @@
     padding: 0 10px 0 10px;
 }
 .icons i:hover{
-    color: black;
+    color: var(--secondary-color);
+}
+
+#dark{
+    color: var(--secondary-color);
 }
