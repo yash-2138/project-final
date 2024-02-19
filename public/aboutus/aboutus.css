@@ -11,12 +11,18 @@ body{
 }
 h1{
     font-size: 2.4rem;
+    color: var(--secondary-color);
+    opacity: 0.8;
 }
 h2{
     font-size: 1.7rem;
+    color: var(--secondary-color);
+    opacity: 0.8;
 }
 h3{
     font-size: 1.3rem;
+    color: var(--secondary-color);
+    opacity: 0.8;
 }
 p{
     font-family: "Roboto",sans-serif;

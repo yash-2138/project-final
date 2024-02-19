@@ -92,6 +92,10 @@ tbody tr:hover {
         margin-left: 50%;
         width: 25%;
     }
+    #marketbtn
+    {
+        width: 100%;
+    }
 }
 
 

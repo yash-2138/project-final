@@ -29,7 +29,7 @@ p{
     margin-inline: auto;
 }
 
-/* profile page */
+
 .cards{
     margin-top: 80px;
 }
@@ -57,23 +57,22 @@ p{
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 10px;
-    box-shadow: 0 0 6px black;
+    box-shadow: 0 0 4px var(--secondary-color);
 }
 
 .button a {
-    text-decoration: none; /* Remove underline */
+    text-decoration: none; 
     font-family: "Playfair Display", serif;
     font-optical-sizing: auto;
     color: black;
 }
 
 .button:hover {
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px var(--secondary-color);
 }
 
 .card {
-    /* Add shadows to create the "card" effect */
-    /* box-shadow: 0 4px 8px 0 rgba(118, 108, 108, 0.2); */
+    
     transition: 0.3s;
     padding: 40px;
     max-width: 31%;
@@ -100,17 +99,17 @@ p{
 
 @media only screen and (max-width: 768px) {
     .cards-sec {
-        flex-direction: column; /* Stack cards vertically on smaller screens */
+        flex-direction: column; 
        
     }
 
     .card {
-        max-width: 100%; /* Adjusted max-width for responsiveness */
+        max-width: 100%; 
     }
 
     .button {
-        padding: 12px 20px; /* Adjusted padding for better mobile experience */
-        font-size: 14px; /* Adjusted font size for better mobile experience */
+        padding: 12px 20px; 
+        font-size: 14px; 
     }
 
 }

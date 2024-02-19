@@ -117,7 +117,6 @@ nav ul{
 
 
 
-
 body {
     background-color: var(--primary-color);
     transition: background-color 1.8s, color 1.8s;
@@ -223,9 +222,7 @@ body {
     }
    
 
-    /* .col{
-        margin-top: 10px;
-    } */
+    
 
     body {
         overflow: hidden;
@@ -242,3 +239,25 @@ body {
     }
     
 }
+
+/* ------------------------------------------------------------------------------------------------------------ */
+.navbar-nav {
+    display: flex;
+    /* align-items: center; */
+  }
+  
+  .navbar-nav .nav-item {
+    white-space: nowrap;
+    margin-right: 15px; 
+  }
+  
+  @media (max-width: 767px) {
+    .navbar-nav {
+      flex-direction: column; 
+    }
+  
+    .navbar-nav .nav-item {
+      margin-right: 0; 
+    }
+  }
+  
