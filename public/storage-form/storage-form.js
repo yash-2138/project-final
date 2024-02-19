@@ -20,15 +20,17 @@ document.addEventListener('DOMContentLoaded',async ()=>{
 })
 
 addStorage.addEventListener('click', async (event)=>{
-    event.preventDefault()
-    const email = document.querySelector("#email").value
+    event.preventDefault(); 
+    const email = document.querySelector('#userEmail').innerHTML
+    const tenure = document.querySelector("#tenure").value
     const capacity = document.querySelector("#capacity").value
     const price = document.querySelector("#price").value
-    const securityDeposit = '1';
+    console.log(email, tenure, capacity, price)
+    const securityDeposit = '0.1';
     try {
-    const tx = await contract.createStorageSellOrder(email, capacity, price,securityDeposit ,{
+    const tx = await contract.createStorageSellOrder(email, capacity, ethers.parseEther(price),ethers.parseEther(securityDeposit), tenure ,{
         value: ethers.parseEther(securityDeposit)
-    })
+    });
     await tx.wait();
     console.log('created')
     alert("Storage Sell Order created successfully!");
