@@ -3,9 +3,11 @@ const dbClient = require("../db.js")
 
 exports.addStorage = (req, res)=>{
     try {
+      
         const user_id = req.user_id;
-        const {email, address, capacity} = req.body
+        const {email, address, capacity, startDate, endDate, price} = req.body
         let so_id;
+       
         const capacityBytes = capacity * Math.pow(1024, 3);
         dbClient.query('SELECT id FROM users where email = ?', [email], (err, result)=>{
           if(err){
@@ -19,6 +21,9 @@ exports.addStorage = (req, res)=>{
               address:address,
               capacity: capacityBytes,
               remainingCapacity: capacityBytes,
+              startDate:startDate ,
+              endDate: endDate,
+              price: price
             };
 
             dbClient.query(

@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded',async() =>{
         cell5.innerHTML = `<button class="btn btn-primary buy-btn" id=${storageOwner}>Buy</button>`;
     
         const finalPrice = ethers.formatEther(price) * tenureDays.toString()
+        const currentDate = new Date();
+        const currentFormatedDate =  formatDate(currentDate)
+        const endDate = formatDate(addDaysToDate(currentDate, parseInt(tenureDays.toString(), 10)))
+        
         
         const buyBtn = document.getElementById(`${storageOwner}`)
         buyBtn.addEventListener('click', async()=>{
@@ -55,7 +59,10 @@ document.addEventListener('DOMContentLoaded',async() =>{
               // user_id: 2, //remove this
               email: email,
               address: storageOwner,
-              capacity:volumeGB
+              capacity:volumeGB,
+              startDate: currentFormatedDate,
+              endDate: endDate,
+              price: ethers.formatEther(price)
             }
             const replacer = (key, value) => {
               if (typeof value === 'bigint') {
@@ -81,7 +88,7 @@ document.addEventListener('DOMContentLoaded',async() =>{
               })
             
             alert("Storage bought successfully!")
-            location.assign("/stats")
+            // location.assign("/stats")
           } catch (error) {
             console.error("Error during transaction:", error);
             alert("Error during transaction. Please check the console for details.");
@@ -99,7 +106,18 @@ document.addEventListener('DOMContentLoaded',async() =>{
 
 
 
+function addDaysToDate(currentDate, daysToAdd) {
+  let newDate = new Date(currentDate);
+  newDate.setDate(newDate.getDate() + daysToAdd);
+  return newDate;
+}
 
+function formatDate(date) {
+  let year = date.getFullYear();
+  let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+  let day = date.getDate().toString().padStart(2, '0');
+  return year + '-' + month + '-' + day;
+}
 
 
   
