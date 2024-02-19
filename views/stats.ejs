@@ -6,8 +6,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/stats/stats.css">
+    <link rel="stylesheet" href="/dark.css">
 </head>
-<body>
+<body id="respo">
     <header><%- include('navbar')  %></header>
     <div style="display: none;" id="userType"><%= type %></div>
     <table class="table" id="editStorageTable">
@@ -63,10 +64,10 @@
       
           <!-- Box 2 -->
           <div class="col-md-3">
-            <div class="card card-stat">
+            <div class="card card-stat"id="storagerent">
               <div class="card-body">
                 <h8 class="card-title"> <i class="bi bi-database-up icon"></i>Storage Rented</h8>
-                <h3 class="card-text" id="storage-rented"></h3>
+                <h3 class="card-text" id="storage-rented">Data</h3>
               </div>
             </div>
           </div>
