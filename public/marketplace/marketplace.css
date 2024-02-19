@@ -6,12 +6,17 @@ body {
 .container {
     max-width: 800px; /* Set a maximum width for the content */
 }
-
+.container-fliud{
+    float: none;
+}
+#button{
+    width: 150px;
+    /* height: 50px; */
+}
 .btn-marketplace {
-    
     position: relative;
-     /* width: 100px; */
-     height:45px;  
+    /* width: 100px; */
+    /* height:45px;   */
     background: transparent;
     border-radius: 40px;
     cursor: pointer;
@@ -60,4 +65,52 @@ th {
 
 tbody tr:hover {
     background-color: rgba(0, 0, 0, 0.1); /* Set a light background color on hover */
+}
+
+#storagebtn{
+    margin-left: 28rem;
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#table{
+    margin-top: 0.5rem;
+    
+}
+
+.table th,
+.table td {
+    color: var(--secondary-color);
+}
+
+@media((min-width:200px) and (max-width:995px))
+{
+    #storagebtn{
+        margin-left: 50%;
+        width: 25%;
+    }
+}
+
+
+@media((min-width:100px) and (max-width:465px))
+{
+    #storagebtn{
+       margin-left: 40%;
+        width: 25%;
+        font-size: small;
+    }
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.btn-marketplace {
+    background-color: #007bff;
+}
+
+.btn-marketplace:hover {
+    background-color: #0056b3;
 }
