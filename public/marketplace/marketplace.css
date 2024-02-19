@@ -5,6 +5,7 @@ body {
 
 .container {
     max-width: 800px; /* Set a maximum width for the content */
+    float: none;
 }
 .container-fliud{
     float: none;
