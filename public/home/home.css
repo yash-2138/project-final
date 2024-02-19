@@ -88,6 +88,7 @@ body {
 
 .disk {
     width: 550px;
+    margin-top: 3rem;
 }
 
 
@@ -118,8 +119,18 @@ body {
     .disk {
         width: 262px;
         height: 133px;
+        margin-left: 0;
+        
     }
 
+    #decmarket
+    {
+        
+        font-size: medium;
+        margin-left: 15%;
+    }
+
+   
 }
 
 @media((min-width:500px) and (max-width:991px))
@@ -160,8 +171,17 @@ body {
     
 }
 
+@media(max-width:1132px)
+{
+    .disk
+    {
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+}
 
 
 #username{
     color: red;
+    
 }
