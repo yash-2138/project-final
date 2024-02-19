@@ -9,6 +9,9 @@
 </head>
 <body>
   <header><%- include('navbar')  %></header>
+  <!-- getting user email from middleware -->
+  <div style="display: none;" id="userEmail"><%= email %></div>
+  <!-- ************************************************************************************** -->
 
   <div class="container mt-5">
     <div class="card col-md-6 mx-auto">
@@ -16,10 +19,10 @@
         <h3 class="card-title">List Your Storage</h3>
         
         <form>
-          <div class="form-group">
-            <label for="email">Email:</label>
+          <!-- <div class="form-group">
+            <label for="teny">Email:</label>
             <input type="email" class="form-control" id="email" placeholder="Enter your email">
-          </div>
+          </div> -->
   
           <div class="form-group">
             <label for="capacity">Capacity:</label>
@@ -27,10 +30,13 @@
           </div>
   
           <div class="form-group">
-            <label for="price">Price:</label>
+            <label for="price">Price:ETH (per month)</label>
             <input type="number" class="form-control" id="price" placeholder="Enter price">
           </div>
-  
+          <div class="form-group">
+            <label for="tenure">Tenure:</label>
+            <input type="number" class="form-control" id="tenure" placeholder="Enter tenure (in days)">
+          </div>
           <button id="submit-storage-form" class="btn btn-str"  style="display: block; margin: 0 auto; color: white;" >Submit</button>
         </form>
         

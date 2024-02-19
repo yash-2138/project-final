@@ -12,6 +12,7 @@ const requireAuth = (req, res, next)  =>{
                 req.userName = decodedToken.userName
                 req.userType = decodedToken.type
                 req.user_id = decodedToken.id;
+                req.email = decodedToken.email;
                 next()
             }
 
@@ -31,6 +32,7 @@ const checkUser = (req, res, next) =>{
                 req.userName = decodedToken.userName
                 req.userType = decodedToken.type
                 req.user_id = decodedToken.id;
+                req.email = decodedToken.email;
                 // console.log("user_id:", decodedToken.id)
                 next()
                 
