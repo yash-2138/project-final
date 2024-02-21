@@ -8,8 +8,8 @@ body {
   margin-bottom: 20px;
   border-radius: 10px;
   /* Adjust the value for rounded corners */
-  box-shadow: 0 0 10px #3ed9d9;
-  border: 2px solid #3ed9d9;
+  box-shadow: 0 0 10px var(--secondary-color);
+  border: 2px solid var(--secondary-color);
   text-align: center;
 
 

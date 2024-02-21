@@ -134,3 +134,20 @@
             });
     }
     
+
+    // ----------------------------------------------------------------------------------------------------------------------------
+    document.querySelector("#join-id").addEventListener("click", function() {
+        copyRoomIdToClipboard();
+    });
+
+    function copyRoomIdToClipboard() {
+        const joinIdElement = document.querySelector("#join-id span");
+        const textToCopy = joinIdElement.textContent;
+        const textArea = document.createElement('textarea');
+        textArea.value = textToCopy;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Room ID copied to clipboard!');
+    }
