@@ -63,8 +63,7 @@
                     </div>
                     </div>
                 </div>
-            </div>
-    
+            
             <!-- Second Column -->
             <div class="col-md-6">
                 <div class="screen fs-screen inactive">
@@ -82,6 +81,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
     
     
@@ -91,6 +91,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.1/download.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/sender.js"></script>
+
+    <script>
+        // Add a click event listener to the copy icon
+        document.querySelector("#join-id").addEventListener("click", function() {
+            copyRoomIdToClipboard();
+        });
+
+        function copyRoomIdToClipboard() {
+            const joinIdElement = document.querySelector("#join-id span");
+            const textToCopy = joinIdElement.textContent;
+            const textArea = document.createElement('textarea');
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            alert('Room ID copied to clipboard!');
+        }
+    </script>
    
   </body>
 </html>

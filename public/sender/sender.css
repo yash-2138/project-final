@@ -73,8 +73,8 @@ body {
 .file-input label {
     display: block;
     padding: 10px;
-    background-color: #070707;
-    color: #ffffff;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
     border-radius: 10px;
     cursor: pointer;
 }
@@ -111,6 +111,11 @@ body {
 #join-id b
 {
     color: var(--secondary-color);
+   
+}
+#join-id span
+{
+    cursor: pointer;
 }
 /* --------------------------------------------------------- */
 

@@ -84,6 +84,7 @@ tbody tr {
 {
   background-color:var(--primary-color);
   color: var(--secondary-color);
+  transition: background-color 1.8s, color 1.8s;
 }
 
 
@@ -97,4 +98,11 @@ tbody tr {
 .table td {
     color: var(--secondary-color);
     opacity: 0.8;
+   
 }
+/* 
+#filesTable
+{
+  margin-bottom: 100px;
+  margin-top: 100px;
+} */

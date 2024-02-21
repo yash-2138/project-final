@@ -8,8 +8,9 @@
     document.querySelector("#sender-start-con-btn").addEventListener("click", function(){
         let joinId =generateId()
         document.querySelector("#join-id").innerHTML = `
-            <b>Room Id</b>
+            <b>Room Id :</b>
             <span>${joinId}</span>
+            
         `
         
         fetch("http://localhost:5000/utils/sendMail",{
