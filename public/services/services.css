@@ -76,13 +76,13 @@ p{
     transition: 0.3s;
     padding: 40px;
     max-width: 31%;
-    box-shadow: 0 0 10px #3ed9d9;
+    box-shadow: 0 0 10px var(--secondary-color);
     background-color: var(--primary-color);
     color: var(--secondary-color);
    
 }
 .card:hover {
-    box-shadow: 0px 0px 16px #3ed9d9;
+    box-shadow: 0px 0px 16px var(--secondary-color);
 
 }
 .image{

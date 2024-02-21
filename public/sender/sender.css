@@ -107,6 +107,11 @@ body {
     margin-left: 30%;
 }
 
+#join-id span,
+#join-id b
+{
+    color: var(--secondary-color);
+}
 /* --------------------------------------------------------- */
 
 

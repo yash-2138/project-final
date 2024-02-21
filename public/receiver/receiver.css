@@ -1,21 +1,24 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     background: #f5f5f5;
     font-family: "Roboto", sans-serif;
 }
-.screen{
+
+.screen {
     display: none;
 }
-.screen.active{
+
+.screen.active {
     display: block;
     padding: 50px;
 }
-.app{
+
+.app {
     /* position: fixed; */
     display: flex;
     align-items: center;
@@ -30,39 +33,48 @@ body{
     border-right: 1px soid #ddd;
     border-left: 1px soid #ddd;
 }
-.join-screen .form{
+
+.join-screen .form {
     /* position: absolute; */
-    border: 5px solid;
+    /* border: 5px solid; */
+    box-shadow: 0 0 8px var(--secondary-color);
     top: 30%;
-    left: 35%;  /**/
+    left: 35%;
+    /**/
     /* transform: translateX(-50%); */
     padding: 50px;
 }
-.join-screen .form .form-input{
+
+
+.join-screen .form .form-input {
     margin: 10px 0px;
 }
-.join-screen .form h2{
+
+.join-screen .form h2 {
     font-size: 40px;
     line-height: 45px;
     color: #222;
     margin-bottom: 20px;
 }
-.join-screen .form button{
-    background: #111;
+
+.join-screen .form button {
+    /* background: var(--secondary-color); */
     padding: 10px 20px;
     font-size: 18px;
-    border-radius: 20px;
-    color: #fff;
+    /* border-radius: 20px; */
+    color: #000;
     border: none;
     outline: none;
     cursor: pointer;
 }
-.join-screen .form #join-id b{
+
+.join-screen .form #join-id b {
     color: #222;
     display: block;
     margin-top: 20px;
 }
-.join-screen .form #join-id span{
+
+.join-screen .form #join-id span {
     display: inline-block;
     font-size: 25px;
     font-family: monospace;
@@ -72,29 +84,32 @@ body{
     margin-top: 5px;
 }
 
-.join-screen .form label{
+.join-screen .form label {
     color: #222;
     font-size: 18px;
 }
-.join-screen .form input{
+
+.join-screen .form input {
     display: block;
     margin: 10px 0px;
     width: 100%;
     max-width: 200px;
     border: 1px solid #111;
-    color: #111;
+    color: var(--secondary-color);
     font-size: 20px;
     padding: 10px;
 }
 
-.fs-screen{
+.fs-screen {
     padding: 20px;
 }
-.fs-screen .file-input{
+
+.fs-screen .file-input {
     width: 100%;
     border: 2px dashed #555;
 }
-.fs-screen .file-input label{
+
+.fs-screen .file-input label {
     display: block;
     width: 100%;
     padding: 40px 50px;
@@ -102,37 +117,91 @@ body{
     color: #111;
     font-size: 18px;
 }
-.fs-screen .file-input input{
+
+.fs-screen .file-input input {
     display: none;
 }
-.fs-screen .files-list{
+
+.fs-screen .files-list {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
 }
-.fs-screen .files-list .title{
+
+.fs-screen .files-list .title {
     width: 100%;
     font-size: 18px;
     color: #555;
     margin-bottom: 20px;
 }
-.fs-screen .files-list .item{
+
+.fs-screen .files-list .item {
     width: 33.33%;
     min-width: 200px;
     border: 1px solid #eee;
     box-shadow: 0px 0px 5px 2x rgba(0, 0, 0, 0.05);
 }
-.fs-screen .files-list .item .progress{
-    padding: 30px;
+
+.fs-screen .files-list .item .progress {
+    padding: 25px 40px 70px 40px;
     text-align: center;
     font-size: 50px;
     font-family: monospace;
-    color: #222;
+    color: var(--secondary-color);
 }
-.fs-screen .files-list .item .filename{
+
+.fs-screen .files-list .item .filename {
     font-size: 16px;
     padding: 5px;
     border: 1px solid #eee;
+}
+
+#share label,
+#share h2 {
+    color: var(--secondary-color);
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+.form-input input {
+    background-color: transparent;
+    box-shadow: 0 0 4px var(--secondary-color);
+    border-radius: 3%;
+    color: var(--secondary-color);
+    
+}
+
+.form-input input:hover {
+    box-shadow: 0px 0px 10px var(--secondary-color);
+}
+
+.button{
+   
+    background-color: #57c89f;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0px 2px;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 0 0 4px var(--secondary-color);
+    margin-top: 0.8rem;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+  
+  
+}
+.button:hover {
+    box-shadow: 0 0 10px var(--secondary-color);
 }
