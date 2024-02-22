@@ -41,7 +41,7 @@ body {
 
 .form h2 {
     color: var(--secondary-color);
-    opacity: 0.5;
+    opacity: 1;
     text-align: center;
    
 }
@@ -96,6 +96,10 @@ body {
 
 .storage-form h3{
     text-align: left;
+    opacity: 1;
+    color: var(--secondary-color);
+    text-align: center;
+    
 }
 
 .inactive{
@@ -112,6 +116,7 @@ body {
 #join-id b
 {
     color: var(--secondary-color);
+    font-size: 20px;
    
 }
 #join-id span

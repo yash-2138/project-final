@@ -37,7 +37,7 @@ body {
 .join-screen .form {
     /* position: absolute; */
     /* border: 5px solid; */
-    box-shadow: 0 0 8px var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color);
     top: 30%;
     left: 35%;
     /**/
@@ -213,3 +213,13 @@ body {
     color: var(--secondary-color);
     font-size: 40px;
 }
+
+@media (min-width: 200px) and (max-width: 500px) {
+    #respo {
+      overflow: auto; 
+    }
+    .fs-screen .files-list
+    {
+        margin-left: 45px;
+    }
+  }
