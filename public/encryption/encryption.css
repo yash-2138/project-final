@@ -113,7 +113,7 @@ body {
 
 .col-md-5 .form-control {
   text-align: center;
-  font-family: cursive;
+  /* font-family: cursive; */
 }
 
 #btn1 {
@@ -149,6 +149,7 @@ body {
 
   #btn1{
     margin-top: 10px;
+    width: 40%;
   }
 
 }
