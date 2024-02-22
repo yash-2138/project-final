@@ -8,6 +8,7 @@
 body{
     font-family: 'Poppins',sans-serif;
     color: var(--primary-text-color);
+   
     
 }
 h1{
@@ -34,6 +35,7 @@ p{
 .container1{
     max-width: 1180px;
     margin-inline: auto;
+   
 }
 .flex{
     display: flex;

@@ -8,13 +8,12 @@
   <title>Encryption and Decryption</title>
   
 </head>
-<body>
+<body id="respo">
 <header><%- include('navbar')  %></header>
-<div class="container" id="con" style="width: 100%;">
+<div class="container" >
   <button class="btn btn-encrypt btn-generate" id="btn1"  >Generate Key</button>
-
   <div class="row" id="cont">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <h1>Encryption</h1>
       <!-- Add encryption content here -->
       <label for="originalFile"><h5>Original File:</h5></label>
@@ -23,7 +22,7 @@
       <input type="text" id="key-enc" class="form-control mb-2" style="text-align: center;">
       <button class="btn btn-encrypt" id="encrypt-btn"  style="color: white;">Encrypt</button>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
       <h1>Decryption</h1>
       <!-- Add decryption content here -->
       <label for="encryptedFile"><h5>Encryted File:</h5></label>
