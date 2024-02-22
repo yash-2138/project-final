@@ -1,6 +1,6 @@
 body {
     background-color: var(--primary-color);
-    /* transition: background-color 1.8s, color 1.8s; */
+    transition: background-color 1.8s, color 1.8s;
     overflow: scroll; /* Add this line to remove the scrollbar */
 }
 .homepg{
@@ -58,7 +58,7 @@ body {
 .navbar-dark .navbar-nav .nav-link.active,
 .navbar-dark .navbar-nav .show>.nav-link {
     color: var(--secondary-color);
-    /* transition: background-color 1.8s, color 1.8s; */
+    transition: background-color 1.8s, color 1.8s;
 }
 
 .bg-dark {
