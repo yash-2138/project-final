@@ -13,7 +13,7 @@
     <title>Sender</title>
     <link rel="stylesheet" href="/sender/sender.css">
   </head>
-  <body>
+  <body id="respo">
     <header><%- include('navbar')  %></header>
     <div class="container">
         <div class="row">
@@ -29,12 +29,8 @@
                         </div>
                         <div class="form-input" id="join-id">
                             <!-- Your content for the 'join-id' goes here -->
+                            </div>
                         </div>
-                        
-
-
-
-
                        <!-- Storage Owner Details Form -->
                        <div class="storage-form">
                         <h3>Storage Owner Details:</h3>
@@ -67,8 +63,7 @@
                     </div>
                     </div>
                 </div>
-            </div>
-    
+
             <!-- Second Column -->
             <div class="col-md-6">
                 <div class="screen fs-screen inactive">
@@ -86,6 +81,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
     
     
@@ -95,6 +91,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.1/download.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/sender.js"></script>
+
+    
    
   </body>
 </html>

@@ -6,19 +6,19 @@
     <title>Document</title>
     <link rel="stylesheet" href="/receiver/receiver.css">
 </head>
-<body>
-    <!-- <header><%-// include('navbar')  %></header> -->
+<body id="respo">
+    <header><%- include('navbar')  %></header>
     
     <div class="app">
         <div class="screen join-screen active">
-            <div class="form">
+            <div class="form" id="share">
                 <h2>Share your files securely</h2>
                 <div class="form-input">
                     <label for="join-id">join-Id</label>
                     <input type="text" id="join-Id">
                 </div>
                 <div class="form-input">
-                    <button id="receiver-start-con-btn">Connect</button>
+                    <button id="receiver-start-con-btn" class="button">Connect</button>
                 </div>
                 
             </div>
@@ -26,13 +26,13 @@
         <div class="screen fs-screen">
             
             <div class="files-list">
-                <div class="title">shared Files:</div>
+                <div class="title" id="sharedfile">Shared Files :</div>
                 
             </div>
         </div>
     </div>
 
-    <!-- <footer><%-// include('footer')  %></footer> -->
+    <footer><%- include('footer')  %></footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.1/download.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>

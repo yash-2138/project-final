@@ -7,30 +7,48 @@ body {
 
 .container {
     margin-top: 50px;
-}
-
-.screen {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-/*.form {
-    text-align: center
-}*/
-
-.form h1 span {
-    color: #050505;
-    text-align: left;
     
 }
 
+.screen {
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    /* margin-bottom: 20px; */
+    margin:1rem;
+    width: 100%;
+    box-shadow: 0 0 6px var(--secondary-color);
+    margin-top: 0px;
+}
+.screen:hover
+{
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+
+
+.form h1 span {
+    color: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
+
+
 .form h2 {
-    color: #343a40;
-    text-align: left;
+    color: var(--secondary-color);
+    opacity: 1;
+    text-align: center;
    
+}
+
+.form h3{
+    color: var(--secondary-color);
+    opacity: 0.5;
 }
 
 .form-input {
@@ -56,8 +74,8 @@ body {
 .file-input label {
     display: block;
     padding: 10px;
-    background-color: #070707;
-    color: #ffffff;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
     border-radius: 10px;
     cursor: pointer;
 }
@@ -78,8 +96,96 @@ body {
 
 .storage-form h3{
     text-align: left;
+    opacity: 1;
+    color: var(--secondary-color);
+    text-align: center;
+    
 }
 
 .inactive{
     display: none;
 }
+
+#sender-start-con-btn
+{
+    width: 30%;
+    margin-left: 30%;
+}
+
+#join-id span,
+#join-id b
+{
+    color: var(--secondary-color);
+    font-size: 20px;
+   
+}
+#join-id span
+{
+    cursor: pointer;
+}
+/* --------------------------------------------------------- */
+
+
+#address,
+#storage-capacity,
+#price,
+#email {
+    width: 100%; 
+    padding: 10px; 
+    border: 2px solid var(--secondary-color); 
+    opacity: 0.6;
+    border-radius: 8px; 
+    box-sizing: border-box;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+
+#address:focus,
+#storage-capacity:focus,
+#price:focus,
+#email:focus {
+    outline: none; 
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+
+
+.mb-3 label
+{
+    color: var(--secondary-color);
+    font-size: large;
+}
+
+
+@media (min-width: 200px) and (max-width: 580px) {
+    #respo {
+      overflow: auto; 
+    }
+    .screen
+    {
+        width: 90%;
+    }
+  }
+
+  @media (min-width: 200px) and (max-width: 992px) {
+    #sender-start-con-btn
+    {
+        margin-left: 21%;
+        width: 50%;
+    }
+  }
+
+  @media (max-width:338px)
+  {
+    #sender-start-con-btn
+    {
+        margin-left: 21%;
+        width: 70%;
+        font-size: small;
+    }
+
+  }
+
+  

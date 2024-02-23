@@ -5,6 +5,7 @@ body {
 
 .container {
     max-width: 800px; /* Set a maximum width for the content */
+    float: none;
 }
 .container-fliud{
     float: none;
@@ -91,6 +92,10 @@ tbody tr:hover {
         margin-left: 50%;
         width: 25%;
     }
+    #marketbtn
+    {
+        width: 100%;
+    }
 }
 
 
@@ -114,3 +119,9 @@ body {
 .btn-marketplace:hover {
     background-color: #0056b3;
 }
+
+@media (min-width: 200px) and (max-width: 500px) {
+    #respo {
+      overflow: auto; 
+    }
+  }

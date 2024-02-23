@@ -1,9 +1,13 @@
 :root {
+    
     --primary-color: #edf2fc;
     --secondary-color: #212121;
 }
 
 .dark-theme {
+   
     --primary-color: #000106;
     --secondary-color: #fff;
 }
+
+/* transition: background-color 1.8s, color 1.8s; add this line with other container....to see transition properly*/ 

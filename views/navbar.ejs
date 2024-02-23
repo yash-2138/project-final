@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -29,9 +29,9 @@
 
 
 
-    
 
-    
+
+
     <link rel="stylesheet" href="/dark.css">
     <script src="/dark.js"></script>
 
@@ -67,25 +67,46 @@
                         </li>
                     </ul>
 
-                    <!-----------------------------------Button For Dark Mode------------------------------------------------->
+<!----------------------------------------------------Button For Dark Mode------------------------------------------------------------------------------------->
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <a href="#"  >
+                        <a href="#">
                             <span id="icon" class="material-symbols-outlined">
                                 dark_mode
                             </span>
                         </a>
-                        <!-- ----------------------------------------------------------------------------------------------------->
+<!-- ---------------------------------------------------Drop Down Profile-------------------------------------------------------------------------------------->
 
-                        <li class="nav-but login-btn">
+                        <li class="nav-but login-btn" id="loginBtn">
                             <a class="btn btn-outline-light" href="/login">Login</a>
                         </li>
-                        <li class="nav-but logout-btn">
-                            <a class="btn btn-outline-light" href="/auth/logout">Logout</a>
-                            <!-- <a href="#" class="SignUpLink">Sign Up</a> -->
-                        </li>
-                        <div id="display-name"></div>
-                    </ul>
-                </div>
+                        
+<!------------------------------------------ Profile icon and dropdown for authenticated users-------------------------------------------------------------- -->
+                        <div class="nav-but logout-btn" style="transition: none; display: none;" id="profileSection">
+                            <div class="profile-icon" onclick="toggleProfileDropdown()">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        
+                            <div class="profile-dropdown" id="profileDropdown">
+                                <div class="profile-dropdown-item">
+                                    <h2>Username :</h2>
+                                    <div id="display-name" style="display: inline-block;"></div>
+                                </div>
+                                <div class="profile-dropdown-item">
+                                    <strong>Email:</strong> john.doe@example.com
+                                </div>
+                                <div class="profile-dropdown-item">
+                                    <strong>User Type:</strong> Regular User
+                                </div>
+                                <div class="profile-dropdown-item">
+                                    <a class="btn btn-outline-light" href="/auth/logout" onclick="logout()">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+                
+                </ul>
+            </div>
             </div>
         </nav>
         <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -95,6 +116,7 @@
     </header>
 
     <script src="/navbar/navbar.js" defer></script>
+    
 </body>
 
 </html>
