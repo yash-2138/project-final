@@ -1,4 +1,4 @@
-exports.address = "0x54c88eb6a7CB8207f5e2dEB2ecAe278e734FCF76";
+exports.address = "0x0E5BCe7F9aDac15b625d9275BF6037957DeAe142";
 exports.abi =  [
   {
     "anonymous": false,
