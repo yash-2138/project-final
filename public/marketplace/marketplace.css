@@ -119,3 +119,9 @@ body {
 .btn-marketplace:hover {
     background-color: #0056b3;
 }
+
+@media (min-width: 200px) and (max-width: 500px) {
+    #respo {
+      overflow: auto; 
+    }
+  }

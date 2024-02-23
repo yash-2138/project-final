@@ -8,8 +8,9 @@
     document.querySelector("#sender-start-con-btn").addEventListener("click", function(){
         let joinId =generateId()
         document.querySelector("#join-id").innerHTML = `
-            <b>Room Id</b>
+            <b>Room Id :</b>
             <span>${joinId}</span>
+            
         `
         
         fetch("http://localhost:5000/utils/sendMail",{
@@ -133,3 +134,20 @@
             });
     }
     
+
+    // ----------------------------------------------------------------------------------------------------------------------------
+    document.querySelector("#join-id").addEventListener("click", function() {
+        copyRoomIdToClipboard();
+    });
+
+    function copyRoomIdToClipboard() {
+        const joinIdElement = document.querySelector("#join-id span");
+        const textToCopy = joinIdElement.textContent;
+        const textArea = document.createElement('textarea');
+        textArea.value = textToCopy;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Room ID copied to clipboard!');
+    }

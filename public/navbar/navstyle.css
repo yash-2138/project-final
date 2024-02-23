@@ -220,6 +220,7 @@ body {
     {
         margin-left: -30px;
     }
+    
    
 
     
@@ -236,11 +237,12 @@ body {
     .container-fluid
     {
         width: 100%;
+        
     }
+
     
 }
 
-/* ------------------------------------------------------------------------------------------------------------ */
 .navbar-nav {
     display: flex;
     /* align-items: center; */
@@ -260,4 +262,60 @@ body {
       margin-right: 0; 
     }
   }
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */
+/* ... existing CSS code ... */
+
+.profile-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    cursor: pointer;
+    position: relative;
+    margin-top: 0px;
+  }
+  
+  .profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 15px; /* Adjust the distance from the right */
+    width: 250px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 1000; /* Ensure it appears above other elements */
+    
+  }
+  
+  .profile-dropdown-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    color: #000;
+   
+  }
+
+  .profile-dropdown-item h2
+  {
+    font-size: 20px;
+    display: inline-block;
+  }
+  #username
+  {
+    font-size: 20px;
+    display: inline-block;
+  }
+  
+
+  
+  .btn-outline-light
+  {
+    margin-left: 30%;
+  }
+  
   

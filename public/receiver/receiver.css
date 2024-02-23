@@ -37,7 +37,7 @@ body {
 .join-screen .form {
     /* position: absolute; */
     /* border: 5px solid; */
-    box-shadow: 0 0 8px var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color);
     top: 30%;
     left: 35%;
     /**/
@@ -149,13 +149,15 @@ body {
     text-align: center;
     font-size: 50px;
     font-family: monospace;
-    color: var(--secondary-color);
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
 }
 
 .fs-screen .files-list .item .filename {
     font-size: 16px;
     padding: 5px;
-    border: 1px solid #eee;
+    /* border: 1px solid #eee; */
+    background-color: aliceblue;
 }
 
 #share label,
@@ -205,3 +207,19 @@ body {
 .button:hover {
     box-shadow: 0 0 10px var(--secondary-color);
 }
+
+#sharedfile
+{
+    color: var(--secondary-color);
+    font-size: 40px;
+}
+
+@media (min-width: 200px) and (max-width: 500px) {
+    #respo {
+      overflow: auto; 
+    }
+    .fs-screen .files-list
+    {
+        margin-left: 45px;
+    }
+  }

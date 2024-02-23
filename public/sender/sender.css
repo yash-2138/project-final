@@ -19,6 +19,7 @@ body {
     margin:1rem;
     width: 100%;
     box-shadow: 0 0 6px var(--secondary-color);
+    margin-top: 0px;
 }
 .screen:hover
 {
@@ -40,8 +41,8 @@ body {
 
 .form h2 {
     color: var(--secondary-color);
-    opacity: 0.5;
-    text-align: left;
+    opacity: 1;
+    text-align: center;
    
 }
 
@@ -73,8 +74,8 @@ body {
 .file-input label {
     display: block;
     padding: 10px;
-    background-color: #070707;
-    color: #ffffff;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
     border-radius: 10px;
     cursor: pointer;
 }
@@ -95,6 +96,10 @@ body {
 
 .storage-form h3{
     text-align: left;
+    opacity: 1;
+    color: var(--secondary-color);
+    text-align: center;
+    
 }
 
 .inactive{
@@ -111,6 +116,12 @@ body {
 #join-id b
 {
     color: var(--secondary-color);
+    font-size: 20px;
+   
+}
+#join-id span
+{
+    cursor: pointer;
 }
 /* --------------------------------------------------------- */
 
@@ -139,9 +150,12 @@ body {
     box-shadow: 0 0 10px var(--secondary-color);
 }
 
-.col-form-label
+
+
+.mb-3 label
 {
     color: var(--secondary-color);
+    font-size: large;
 }
 
 

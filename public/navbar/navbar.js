@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         if(data.name){
             loginBtn.style.display = 'none'
             logoutBtn.style.display = 'block'
-            displayName.innerHTML = `<h3 id="username">Hello ${data.name}</h3>`
+            displayName.innerHTML = `<h3 id="username">${data.name}</h3>`
+           
         }
         
     } catch (error) {
@@ -45,3 +46,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 //     }
 // }
 // ---------------------------------------------------------------------------------------------------------------
+
+// ------------------------------------------------------Code For DropDown Profile---------------------------------------------------------
+
+function toggleProfileDropdown() {
+    var profileDropdown = document.getElementById("profileDropdown");
+    profileDropdown.style.display = (profileDropdown.style.display === "block") ? "none" : "block";
+  }
+  
+  function logout() {
+    // Add logout functionality here
+    alert("Logout successful");
+  }
+  
+  
+  
