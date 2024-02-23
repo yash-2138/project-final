@@ -88,14 +88,14 @@
                         
                             <div class="profile-dropdown" id="profileDropdown">
                                 <div class="profile-dropdown-item">
-                                    <h2>Username :</h2>
+                                    <h2>Name: <%= name  %> </h2>
                                     <div id="display-name" style="display: inline-block;"></div>
                                 </div>
                                 <div class="profile-dropdown-item">
-                                    <strong>Email:</strong> john.doe@example.com
+                                    <strong>Email:</strong><%= email  %>
                                 </div>
                                 <div class="profile-dropdown-item">
-                                    <strong>User Type:</strong> Regular User
+                                    <strong>User Type:</strong> <%= userType %>
                                 </div>
                                 <div class="profile-dropdown-item">
                                     <a class="btn btn-outline-light" href="/auth/logout" onclick="logout()">Logout</a>

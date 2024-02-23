@@ -14,9 +14,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         console.log(data) 
         if(data.name){
             loginBtn.style.display = 'none'
-            logoutBtn.style.display = 'block'
-            displayName.innerHTML = `<h3 id="username">${data.name}</h3>`
-           
+            logoutBtn.style.display = 'block'  
         }
         
     } catch (error) {
