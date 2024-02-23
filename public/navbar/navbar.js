@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         
     } catch (error) {
         console.log(error)
+        loginBtn.style.display = 'block'
     }
     //----------------- logout button code end -----------------------------------------------------
 
