@@ -1,5 +1,5 @@
 
-export const address = "0x43fe6514AbF12cB26b2531bb52A3626cCF15E8EB";
+export const address = "0x00e2A53934f66F6e8Dd303516EFC55ADd1442227";
 export const abi = [
   {
     "anonymous": false,
@@ -63,11 +63,6 @@ export const abi = [
         "internalType": "string",
         "name": "_email",
         "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_tenureDays",
-        "type": "uint256"
       }
     ],
     "name": "buyStorage",
@@ -116,6 +111,11 @@ export const abi = [
         "internalType": "uint256",
         "name": "_securityDeposit",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tenureDays",
+        "type": "uint256"
       }
     ],
     "name": "createStorageSellOrder",
@@ -132,6 +132,19 @@ export const abi = [
       }
     ],
     "name": "editMySellOrderPrice",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tenureDays",
+        "type": "uint256"
+      }
+    ],
+    "name": "editMySellOrderTenure",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -300,6 +313,11 @@ export const abi = [
       {
         "internalType": "uint256",
         "name": "securityDeposit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tenureDays",
         "type": "uint256"
       },
       {

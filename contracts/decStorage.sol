@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
-
 contract StorageMarketplace {
     enum SellOrderState { Listed, Bought, Canceled }
     struct StorageSellOrder {
@@ -9,6 +8,7 @@ contract StorageMarketplace {
         uint256 volumeGB;
         uint256 price;
         uint256 securityDeposit;
+        uint256 tenureDays;
         SellOrderState state;
     }
 
@@ -61,7 +61,8 @@ contract StorageMarketplace {
         string memory _email,
         uint256 _volumeGB,
         uint256 _price,
-        uint256 _securityDeposit
+        uint256 _securityDeposit,
+        uint256 _tenureDays
     ) external payable {
         require(msg.value >= _securityDeposit, "Insufficient security deposit");
 
@@ -87,20 +88,22 @@ contract StorageMarketplace {
             volumeGB: _volumeGB,
             price: _price,
             securityDeposit: _securityDeposit,
-            state: SellOrderState.Listed
+            state: SellOrderState.Listed,
+            tenureDays: _tenureDays
+            
         });
 
         emit StorageSellOrderCreated(msg.sender, orderAddress);
     }
 
-    function buyStorage(address orderAddress, string memory _email, uint256 _tenureDays) external payable onlyWhileListed(orderAddress) {
+    function buyStorage(address orderAddress, string memory _email) external payable onlyWhileListed(orderAddress) {
         StorageSellOrder memory storageOrder = storageSellOrders[orderAddress];
 
-        uint256 totalPrice = storageOrder.price * _tenureDays;
+        uint256 totalPrice = storageOrder.price * storageOrder.tenureDays;
         require(msg.value >= totalPrice, "Insufficient payment");
 
         address contractAddress = msg.sender;
-        uint256 endTime = block.timestamp + (_tenureDays * 1 days);
+        uint256 endTime = block.timestamp + (storageOrder.tenureDays * 1 days);
 
         // Add the rental contract address to the array
         rentalContractAddresses.push(contractAddress);
@@ -111,7 +114,7 @@ contract StorageMarketplace {
             emailDataOwner: _email,
             emailStorageOwner: storageOrder.email,
             startTime: block.timestamp,
-            tenureDays:_tenureDays,
+            tenureDays:storageOrder.tenureDays,
             securityDeposit: storageOrder.securityDeposit,
             storageFees: totalPrice,
             isCompleted: false
@@ -217,6 +220,7 @@ contract StorageMarketplace {
             uint256 volume,
             uint256 price,
             uint256 securityDeposit,
+            uint256 tenureDays,
             SellOrderState state
         )
     {
@@ -227,6 +231,7 @@ contract StorageMarketplace {
             storageOrder.volumeGB,
             storageOrder.price,
             storageOrder.securityDeposit,
+            storageOrder.tenureDays,
             storageOrder.state
         );
     }
@@ -302,7 +307,8 @@ contract StorageMarketplace {
             volumeGB: currentOrder.volumeGB,
             price: _price,
             securityDeposit: currentOrder.securityDeposit,
-            state: currentOrder.state
+            state: currentOrder.state,
+            tenureDays: currentOrder.tenureDays
         });
         // Emit an event to notify the changes
         emit StorageSellOrderCreated(msg.sender, msg.sender);
@@ -321,10 +327,29 @@ contract StorageMarketplace {
             volumeGB: _volumeGB,
             price: currentOrder.price,
             securityDeposit: currentOrder.securityDeposit,
-            state: currentOrder.state
+            state: currentOrder.state,
+            tenureDays: currentOrder.tenureDays
         });
         // Emit an event to notify the changes
         emit StorageSellOrderCreated(msg.sender, msg.sender);
     }
+    function editMySellOrderTenure(
+        uint256 _tenureDays
+        ) external onlyStorageOwner(msg.sender) onlyWhileListed(msg.sender) 
+    {
+        // Get the existing sell order
+        StorageSellOrder memory currentOrder = storageSellOrders[msg.sender];
 
+        storageSellOrders[msg.sender] = StorageSellOrder({
+            storageOwner: msg.sender,
+            email: currentOrder.email,
+            volumeGB: currentOrder.volumeGB,
+            price: currentOrder.price,
+            securityDeposit: currentOrder.securityDeposit,
+            state: currentOrder.state,
+            tenureDays: _tenureDays
+        });
+        // Emit an event to notify the changes
+        emit StorageSellOrderCreated(msg.sender, msg.sender);
+    }
 }

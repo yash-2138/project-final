@@ -3,7 +3,7 @@ const mysql = require('mysql2')
 const db = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: '963741',
     database: 'decentStorage',
 });
   db.getConnection((err, connection) => {
@@ -32,10 +32,14 @@ module.exports = db
 //   capacity BIGINT,
 //   remainingCapacity BIGINT,
 //   active BOOLEAN DEFAULT true,
-//   address VARCHAR(255), -- Adjust the length based on your requirements
+//   address VARCHAR(255),
+//   startDate DATE,
+//   endDate DATE,
+//   price FLOAT, -- Adding the new column for storing price
 //   FOREIGN KEY (do_id) REFERENCES users(id),
 //   FOREIGN KEY (so_id) REFERENCES users(id)
 // );
+
 
 
 // CREATE TABLE files (

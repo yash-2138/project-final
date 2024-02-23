@@ -24,7 +24,7 @@ router.get('/marketplace',requireAuth, (req,res)=>{
     res.render('marketplace')
 })
 router.get('/storage-form',requireAuth, (req,res)=>{
-    res.render('storageForm')
+    res.render('storageForm',{email: req.email})
 })
 router.get('/aboutus', (req,res)=>{
     res.render('aboutus')

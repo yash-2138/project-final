@@ -19,10 +19,11 @@ document.addEventListener('DOMContentLoaded',async() =>{
     // console.log(sellOrderAddresses);
     const sellOrderListElement = document.querySelector('#storage-order-list')
     
-    
+  
     for (const orderAddress of sellOrderAddresses) {
       
-      const [email,storageOwner, volumeGB, price, securityDeposit, state] = await contract.getStorageSellOrderDetails(orderAddress);
+      const [email,storageOwner, volumeGB, price, securityDeposit, tenureDays, state] = await contract.getStorageSellOrderDetails(orderAddress);
+
       if(state == 0){
         // console.log(orderAddress)
         let newRow = sellOrderListElement.insertRow(sellOrderListElement.rows.length);
@@ -34,14 +35,20 @@ document.addEventListener('DOMContentLoaded',async() =>{
         cell1.innerHTML = email;
         cell2.innerHTML = storageOwner;
         cell3.innerHTML = volumeGB;
-        cell4.innerHTML = price;
+        cell4.innerHTML = ethers.formatEther(price);
         cell5.innerHTML = `<button class="btn btn-primary buy-btn" id=${storageOwner}>Buy</button>`;
-
+    
+        const finalPrice = ethers.formatEther(price) * tenureDays.toString()
+        const currentDate = new Date();
+        const currentFormatedDate =  formatDate(currentDate)
+        const endDate = formatDate(addDaysToDate(currentDate, parseInt(tenureDays.toString(), 10)))
+        
+        
         const buyBtn = document.getElementById(`${storageOwner}`)
         buyBtn.addEventListener('click', async()=>{
           try {
-            const tx = await contract.buyStorage(storageOwner,email, "5" ,{
-              value: ethers.parseEther(price.toString())
+            const tx = await contract.buyStorage(storageOwner,email ,{
+              value: ethers.parseEther(finalPrice.toString())
             })
             console.log("Transaction Sent. Waiting for Confirmation...")
   
@@ -52,7 +59,10 @@ document.addEventListener('DOMContentLoaded',async() =>{
               // user_id: 2, //remove this
               email: email,
               address: storageOwner,
-              capacity:volumeGB
+              capacity:volumeGB,
+              startDate: currentFormatedDate,
+              endDate: endDate,
+              price: ethers.formatEther(price)
             }
             const replacer = (key, value) => {
               if (typeof value === 'bigint') {
@@ -96,7 +106,18 @@ document.addEventListener('DOMContentLoaded',async() =>{
 
 
 
+function addDaysToDate(currentDate, daysToAdd) {
+  let newDate = new Date(currentDate);
+  newDate.setDate(newDate.getDate() + daysToAdd);
+  return newDate;
+}
 
+function formatDate(date) {
+  let year = date.getFullYear();
+  let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+  let day = date.getDate().toString().padStart(2, '0');
+  return year + '-' + month + '-' + day;
+}
 
 
   

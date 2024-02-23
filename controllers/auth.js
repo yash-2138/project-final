@@ -54,7 +54,8 @@ exports.login = async(req, res)=>{
                 const userId = results[0].id;
                 const name = results[0].name;
                 const type = results[0].type;
-                const token =  createToken(userId, name, type);
+                const email = results[0].email;
+                const token =  createToken(userId, name, type, email);
                 res.cookie('jwt', token,{httpOnly: true, maxAge: maxAge * 1000})
                 res.status(201).json({user: userId})
         }
@@ -83,8 +84,8 @@ exports.logout =(req, res)=>{
     res.cookie('jwt', '', {maxAge: 1})
     res.redirect('/home') //update this
 }
-const createToken = (id, name, type)=>{
-    return jwt.sign({id, name, type}, 'yash dhumal secret',{
+const createToken = (id, name, type, email)=>{
+    return jwt.sign({id, name, type, email}, 'yash dhumal secret',{
         expiresIn: maxAge
     })
 }

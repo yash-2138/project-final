@@ -10,7 +10,11 @@
 </head>
 <body id="respo">
     <header><%- include('navbar')  %></header>
+    <!-- getting user type form middleware -->
     <div style="display: none;" id="userType"><%= type %></div>
+    <!-- ******************************************************************************** -->
+
+
     <table class="table" id="editStorageTable">
         <thead>
             <tr>
@@ -53,10 +57,18 @@
     <div class="container mt-5" id="stats-overview-container">
         <div class="row">
           <!-- Box 1 -->
-          <div class="col-md-3">
+          <div class="col-md-3" id="monthly-revenue">
+            <div class="card card-stat" >
+              <div class="card-body">
+                <h8 class="card-title"> <i class="bi bi-graph-up-arrow icon"></i>  Monthly Revenue</h8>
+                <h3 class="card-text">Data </h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3" id="daily-cost">
             <div class="card card-stat">
               <div class="card-body">
-                <h8 class="card-title">  <i class="bi bi-graph-up-arrow icon"></i>  Monthly Revenue</h8>
+                <h8 class="card-title"> <i class="bi bi-graph-up-arrow icon"></i>  Daily Cost</h8>
                 <h3 class="card-text">Data </h3>
               </div>
             </div>
@@ -86,8 +98,8 @@
           <div class="col-md-3">
             <div class="card card-stat">
               <div class="card-body">
-                <h8 class="card-title"> <i class="bi bi-hourglass-split icon "></i>Contract Time</h8>
-                <h3 class="card-text">Data </h3>
+                <h8 class="card-title"> <i class="bi bi-hourglass-split icon "></i>Contract Tenure</h8>
+                <h3 class="card-text" id="end-date">Data </h3>
               </div>
             </div>
           </div>

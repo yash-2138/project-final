@@ -50,9 +50,11 @@ const getFilesSO = ()=>{
         
 }
 
-const getStorageOverview = ()=>{
+const getStorageOverview = (forDO)=>{
     const storageRentedText = document.querySelector('#storage-rented')
     const usedSpaceText = document.querySelector('#used-space')
+    const endDate = document.querySelector('#end-date')
+    
     fetch('http://localhost:5000/crud/getStats',{
         method: "GET",
     })
@@ -68,9 +70,20 @@ const getStorageOverview = ()=>{
             
         })
         .then(data=>{
-            // console.log(data)
+            console.log(data)
+            if(forDO){
+                const dailyCostData = document.querySelector('#daily-cost > div > div > h3')
+                dailyCostData.innerHTML = `${data.price} ETH`
+            }
+            else{
+                const monthlyRevenueData = document.querySelector('#monthly-revenue > div >div > h3')
+                monthlyRevenueData.innerHTML = `${data.price} ETH`
+            }
+            
+            endDate.innerHTML = formatDateString(data.endDate)
             storageRentedText.innerHTML = `${data.capacity / (1024 ** 3)} GB`
             const usedBytes = data.capacity - data.remainingCapacity
+
             
             if (usedBytes >= 1024 ** 3) {
                 // Convert to GB if greater than or equal to 1 GB
@@ -166,6 +179,8 @@ if(userType.innerHTML === "SO"){
         const cost = document.querySelector('#cost')
         const capacity = document.querySelector('#capacity')
         const status = document.querySelector('#status')
+        const dailyCost = document.querySelector('#daily-cost')
+        dailyCost.style.display = 'none'
         if(window.ethereum){
             try {
                 provider = new ethers.BrowserProvider(window.ethereum)
@@ -182,7 +197,7 @@ if(userType.innerHTML === "SO"){
                 }else if(mySellOrder[5] == 1){
                     status.innerHTML = "Bought"
                     editStorageTable.style.display = 'none'
-                    getStorageOverview()
+                    getStorageOverview(0)
                     getFilesSO()
                 }
                 else {
@@ -203,10 +218,10 @@ if(userType.innerHTML === "SO"){
 }
 else{
     editStorageTable.style.display = 'none'
-    const monthlyCostText = document.querySelector('#stats-overview-container > div > div >div >div > h8')
-    monthlyCostText.innerText = "Monthly Cost"
+    const monthlyRevenue = document.querySelector('#monthly-revenue')
+    monthlyRevenue.style.display = 'none'
     if(window.ethereum){
-        getStorageOverview()
+        getStorageOverview(1)
         getFilesDO()
         
     }else{
@@ -286,3 +301,8 @@ statusDropdown.addEventListener('change', async () => {
     statusElement.style.display = 'inline-block';
 });
 
+function formatDateString(inputDateString) {
+    let inputDate = new Date(inputDateString);
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return inputDate.toLocaleDateString('en-US', options);
+  }
