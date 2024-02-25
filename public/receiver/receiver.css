@@ -9,9 +9,6 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
-.screen {
-    display: none;
-}
 
 .screen.active {
     display: block;
@@ -223,3 +220,19 @@ body {
         margin-left: 45px;
     }
   }
+
+.progress-container {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0;
+    height: 30px;
+    background-color: #4CAF50;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+}

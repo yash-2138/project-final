@@ -6,7 +6,7 @@ const socketIO = require('socket.io');
 // const fileUpload = require('express-fileupload');
 
 // const dbClient = require("./db.js")
-const socketController = require('./controllers/socketController');
+// const socketController = require('./controllers/socketController');
 const pageRouter = require('./routes/pages.js')
 const authRouter = require('./routes/auth.js')
 const blockchainRouter = require('./routes/blockchain.js')
@@ -15,8 +15,7 @@ const encryptionRouter = require('./routes/encryption.js')
 const utilsRouter = require('./routes/utils.js')
 
 const app = express()
-const server = http.createServer(app)
-const  io = socketIO(server)
+
 let port = process.env.PORT || 5000
 
 // app.use(fileUpload());
@@ -27,8 +26,6 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname+"/public")))
 app.set('view engine', 'ejs')
 
-socketController(io);
-
 app.use('/', pageRouter)
 app.use('/auth', authRouter)
 app.use('/crud', crudRouter)
@@ -37,4 +34,4 @@ app.use('/utils',utilsRouter)
 
 
 console.log(port)
-server.listen(port)
+app.listen(port)

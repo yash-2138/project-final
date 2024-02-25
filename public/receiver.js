@@ -1,77 +1,90 @@
+const connectionButton = document.querySelector('#receiver-start-con-btn')
+const email = document.querySelector('#email').innerText
+const myId = email.split('@')[0] + '-receiver'
+// console.log(myId)
+const peer = new Peer(myId);
+const receivedChunks = [];
+let totalBytes = 0;
+let receivedBytes = 0;
 
+peer.on('open', (id) => {
+    console.log('My peer ID is: ' + id);
+    document.querySelector('#myId').innerHTML = id;
+});
 
-(function(){
-    let senderId;
-    const socket = io()
+peer.on('connection', (conn) => {
+    console.log('Sender added: ', conn.peer);
+    document.querySelector('#connected-peer').innerHTML = `
+        <b>Connected Peer Id: </b>
+        <span>${conn.peer}</span>
+    `;
 
-    function generateId(){
-        return `${Math.trunc(Math.random()*999)}-${Math.trunc(Math.random()*999)}-${Math.trunc(Math.random()*999)}`
+    conn.on('data', (data) => {
+        if (data.type === 'metadata') {
+            totalBytes = data.fileSize;
+        } else if (data.type === 'file') {
+            handleData(data);
+        }
+    });
+});
+
+function updateProgressBar() {
+    const progressBar = document.getElementById('file-progress');
+    
+    // Check if totalBytes is 0 to avoid division by zero
+    if(totalBytes === 0){
+        progressBar.style.width = '100%';
+        progressBar.innerHTML = '100%'
     }
+    else if (receivedBytes === 0) {
+        progressBar.style.width = '0%';
+        progressBar.innerHTML = '0%';
+    } 
+    else {
+        const percentage = (receivedBytes / totalBytes) * 100;
+        // console.log(percentage, receivedBytes, totalBytes);
+        progressBar.style.width = percentage.toFixed(2) + '%';
+        progressBar.innerHTML = `${percentage.toFixed(2)}%`;
+    }
+}
 
-    document.querySelector("#receiver-start-con-btn").addEventListener("click", function(){
-        senderId = document.querySelector("#join-Id").value;
-        if(senderId.length == 0){
-            return ;
-        }
-        let joinId =generateId()
-       
-        socket.emit("receiver-join", {
-            uid: joinId,
-            sender_uid: senderId
-        })
-        document.querySelector(".join-screen").classList.remove("active")
-         document.querySelector(".fs-screen").classList.add("active")
-    })
 
-    let fileShare = {};
+function handleData(data) {
+    // console.log('Received file data:', data);
 
-    socket.on("fs-meta", function(metadata){
-        fileShare.metadata = metadata
-        fileShare.transmited = 0
-        fileShare.buffer = []
+    receivedChunks.push(data.content);
+    receivedBytes += data.content.byteLength;
 
-        let el = document.createElement("div")
-        el.classList.add("item")
-        el.innerHTML = `
-            <div class="progress">0%</div>
-            <div class="filename">${metadata.filename}</div>
-        `
-        document.querySelector(".files-list").appendChild(el)
-        fileShare.progress_node = el.querySelector(".progress");
-        socket.emit("fs-start", {
-            uid: senderId
-        })
-    })
-    function downloadBlob(blob, filename) {
+    if (receivedBytes === totalBytes) {
+        // All chunks received, assemble the file
+        const mergedArrayBuffer = new Uint8Array(receivedBytes);
+        let offset = 0;
+
+        receivedChunks.forEach((chunk) => {
+            mergedArrayBuffer.set(new Uint8Array(chunk), offset);
+            offset += chunk.byteLength;
+        });
+
+        const blob = new Blob([mergedArrayBuffer]);
         const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename; // Set the desired filename here
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      }
-      
-      
-      
-      
 
-    socket.on("fs-share", function(buffer){
-        fileShare.buffer.push(buffer)
-        fileShare.transmited += buffer.byteLength
-        fileShare.progress_node.innerText = Math.trunc(fileShare.transmited/  fileShare.metadata.total_buffer_size *100) + "%"
-        if(fileShare.transmited == fileShare.metadata.total_buffer_size){
-            // download(new Blob(fileShare.buffer), fileShare.metadata.filename)
-            downloadBlob(new Blob(fileShare.buffer), fileShare.metadata.filename);
+        // Create a list item with a link to trigger the download
+        const filesList = document.querySelector('.files-list');
+        const listItem = document.createElement('li');
+        const downloadLink = document.createElement('a');
+        
+        downloadLink.href = url;
+        downloadLink.download = data.fileName;
+        downloadLink.textContent = data.fileName;
 
-                
-        }
-        else{
-            socket.emit("fs-start",{
-                uid: senderId
-            })
-        }
-    })
-})()
+        listItem.appendChild(downloadLink);
+        filesList.appendChild(listItem);
+
+        // Optionally, you can also reset the progress bar
+        updateProgressBar();
+    } else {
+        // Update progress bar for partial file reception
+        updateProgressBar();
+    }
+}
+

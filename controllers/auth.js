@@ -64,7 +64,7 @@ exports.login = async(req, res)=>{
 exports.getName = (req, res) =>{
     const user_id = req.user_id
     try {
-        dbClient.query('SELECT name, type from users WHERE id = ?', [user_id], async(error, results)=>{
+        dbClient.query('SELECT name, type, email from users WHERE id = ?', [user_id], async(error, results)=>{
             if(error){
                 return res.status(401).send(error);
             }

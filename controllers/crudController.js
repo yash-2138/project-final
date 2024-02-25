@@ -304,3 +304,75 @@ exports.getFilesDO = (req,res)=>{
       }
     })
 }
+
+exports.getMyStorageProvider = (req,res) =>{
+  const user_id = req.user_id
+  try{
+      dbClient.query('SELECT so_id from myStorage WHERE do_id = ?',
+          [user_id],
+          async (error, results) =>{
+              if(error){
+                  return res.status(401).send(error)
+              }
+              else{
+                if(results.length == 0){
+                  res.send({"msg": "no storage found"})
+                }
+                else{
+                  dbClient.query('SELECT email from users WHERE id = ?',
+                    [results[0].so_id],
+                    (error2nd, ressult2nd) =>{
+                      if(error2nd){
+                        return res.status(401).send(error)
+                      }
+                      else{
+                        res.send(ressult2nd[0])
+                      }
+                    }
+                  )
+                }
+                
+              }
+          }
+      )
+  }
+  catch(error){
+      res.status(500).json(error)
+  }
+}
+
+exports.getMyDataOwner = (req,res) =>{
+  try {
+    const user_id = req.user_id
+    dbClient.query('SELECT do_id from myStorage WHERE so_id = ?',
+          [user_id],
+          async (error, results) =>{
+              if(error){
+                  return res.status(401).send(error)
+              }
+              else{
+                if(results.length == 0){
+                  res.send({"msg": "no storage found"})
+                }
+                else{
+                  dbClient.query('SELECT email from users WHERE id = ?',
+                    [results[0].do_id],
+                    (error2nd, ressult2nd) =>{
+                      if(error2nd){
+                        return res.status(401).send(error)
+                      }
+                      else{
+                        res.send(ressult2nd[0])
+                      }
+                    }
+                  )
+                }
+                
+              }
+          }
+      )
+
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
