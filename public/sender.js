@@ -3,11 +3,24 @@
 let myId
 let receiverId
 let peer
+let conn
+let receiverEmail
 let email = document.querySelector('#email').innerText
 let type = document.querySelector('#type').innerText
+const reqConnBtn = document.querySelector('#request-conn-btn')
+const connectedPeerText = document.querySelector('#connected-peer')
+const fsScreen = document.querySelector('.fs-screen')
+
+myId = email.split('@')[0] + '-sender'
+peer = new Peer(myId);
+peer.on('open', (id) => {
+    console.log('My peer ID is: ' + id);
+    document.querySelector("#join-id").innerHTML = myId
+});
+
 
 if(type == 'DO'){
-    const receiverEmail = () =>{
+    receiverEmail = () =>{
         return new Promise(async (resolve, reject) =>{
             try {
                 const res = await fetch('/crud/getMyStorageProvider',{
@@ -22,17 +35,9 @@ if(type == 'DO'){
             }
         })
     }
-    
-    receiverEmail()
-        .then((data) =>{
-            receiverId = data.split('@')[0] + '-receiver'
-        })
-        .catch((error) =>{
-            console.log(error)
-        })
 }
 else if(type == 'SO'){
-    const receiverEmail = () =>{
+    receiverEmail = () =>{
         return new Promise(async (resolve, reject) =>{
             try {
                 const res = await fetch('/crud/getMyDataOwner',{
@@ -48,29 +53,52 @@ else if(type == 'SO'){
         })
     }
     
-    receiverEmail()
+}
+
+receiverEmail()
         .then((data) =>{
             receiverId = data.split('@')[0] + '-receiver'
             // console.log(receiverId)
+            // receiverId = 'd-receiver' //this is temporary remove it
+            reqConnBtn.addEventListener('click', async() =>{
+                console.log('Sending Connection request....')
+                try {
+                    const connection = await Promise.race([
+                        new Promise((resolve, reject) => {
+                          try {
+                            conn = peer.connect(receiverId);
+                            conn.on('open', () => {
+                              console.log("Connection established: ", receiverId);
+                              connectedPeerText.innerHTML = receiverId
+                              fsScreen.classList.remove('inactive')
+                              resolve(conn);
+                            });
+                          } catch (error) {
+                            reject(error);
+                          }
+                        }),
+                        new Promise((_, reject) => {
+                          setTimeout(() => {
+                            reject(new Error('Connection timed out'));
+                            alert(new Error('Connection timed out'))
+                          }, 5000); // 5 seconds timeout
+                        }),
+                    ]);
+                } catch (error) {
+                    console.error(error)
+                }
+                
+                
+                
+            })
         })
         .catch((error) =>{
             console.log(error)
         })
-}
-
 
 
 
 // console.log(email)
-myId = email.split('@')[0] + '-sender'
-peer = new Peer(myId);
-peer.on('open', (id) => {
-    console.log('My peer ID is: ' + id);
-    document.querySelector("#join-id").innerHTML = `
-        <b>My Id :</b>
-        <span>${myId}</span>
-    `
-});
 
     
 peer.on('connection', (conn) => {
@@ -96,62 +124,58 @@ document.querySelector("#file-input").addEventListener("change", function (e) {
         return;
     }
 
-    const conn = peer.connect(receiverId);
-    conn.on('open', () => {
-        console.log('Connected to peer:', receiverId);
+    let el = document.createElement("div");
+    el.classList.add("item");
+    el.innerHTML = `
+        <div class="progress">0%</div>
+        <div class="filename">${file.name}</div>
+    `;
+    document.querySelector(".files-list").appendChild(el);
 
-        let el = document.createElement("div");
-        el.classList.add("item");
-        el.innerHTML = `
-            <div class="progress">0%</div>
-            <div class="filename">${file.name}</div>
-        `;
-        document.querySelector(".files-list").appendChild(el);
+    const metadata = {
+        type: 'metadata',
+        fileName: file.name,
+        fileSize: file.size,
+    };
 
-        const metadata = {
-            type: 'metadata',
+    conn.send(metadata);
+
+    const reader = new FileReader();
+    let offset = 0;
+
+    reader.onload = function (event) {
+        let buffer = new Uint8Array(reader.result);
+        hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(buffer));
+        const fileData = {
+            type: 'file',
             fileName: file.name,
             fileSize: file.size,
+            content: event.target.result,
+            offset: offset,
         };
+        conn.send(fileData);
 
-        conn.send(metadata);
+        offset += event.target.result.byteLength;
 
-        const reader = new FileReader();
-        let offset = 0;
-
-        reader.onload = function (event) {
-            let buffer = new Uint8Array(reader.result);
-            hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(buffer));
-            const fileData = {
-                type: 'file',
-                fileName: file.name,
-                fileSize: file.size,
-                content: event.target.result,
-                offset: offset,
-            };
-            conn.send(fileData);
-
-            offset += event.target.result.byteLength;
-
-            if (offset < file.size) {
-                readSlice(offset);
-            }
-            if(offset === file.size){
-                updateProgressBar(100)
-                addFileHash()
-            }
-        };
-
-        function readSlice(start) {
-            const slice = file.slice(start, start + chunkSize);
-            reader.readAsArrayBuffer(slice);
-        
-            // Calculate the percentage and call updateProgressBar
-            const percentage = (start / file.size) * 100;
-            updateProgressBar(percentage);
+        if (offset < file.size) {
+            readSlice(offset);
         }
-        readSlice(0);
-    });
+        if(offset === file.size){
+            updateProgressBar(100)
+            addFileHash()
+        }
+    };
+
+    function readSlice(start) {
+        const slice = file.slice(start, start + chunkSize);
+        reader.readAsArrayBuffer(slice);
+    
+        // Calculate the percentage and call updateProgressBar
+        const percentage = (start / file.size) * 100;
+        updateProgressBar(percentage);
+    }
+    readSlice(0);
+ 
 });
 
 // Add the following function in sender.js

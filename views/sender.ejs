@@ -26,17 +26,16 @@
                         <h1><span>Send Files</span></h1>
                         <hr>
                         <h2>Share your files securely</h2>
-                        
-                        <div class="form-input" id="join-id">
-                            <!-- Your content for the 'join-id' goes here -->
-                            </div>
-                        </div>
+                        <div class="form-input" ><b>My Id :</b><span id="join-id"></span></div>
+                        <div class="form-input" ><b>Connected Peer:</b><span id="connected-peer">Not Connected</span></div>
                         <div class="form-input">
-                            <button class="btn btn-primary" id="sender-start-con-btn">Request Connection</button>
+                            <button class="btn btn-primary" id="request-conn-btn">Request Connection</button>
                         </div>
-                        <div class="form-input" id="connected-peer"></div>
+                    </div>
+                    
+                        
                        <!-- Storage Owner Details Form -->
-                       <div class="storage-form">
+                       <!-- <div class="storage-form">
                         <h3>Storage Owner Details:</h3>
                         <form id="storage-owner-details-form">
                             <div class="mb-3 row">
@@ -64,13 +63,13 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div> -->
                     </div>
                 </div>
 
             <!-- Second Column -->
             <div class="col-md-6">
-                <div class="screen fs-screen">
+                <div class="screen fs-screen inactive">
                     <div class="file-input">
                         <label for="file-input">
                             Click here to select files for sharing
