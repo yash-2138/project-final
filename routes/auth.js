@@ -4,7 +4,7 @@ const {requireAuth} = require('../middleware/authMiddleware.js')
 
 const router = express.Router()
 
-router.get('/checkAuth',requireAuth, authController.getName )
+router.get('/getName', authController.getName )
 
 router.post('/register', authController.register)
 

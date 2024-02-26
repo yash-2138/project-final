@@ -7,7 +7,7 @@ const displayName = document.querySelector('#display-name')
 document.addEventListener('DOMContentLoaded', async function () {
     //----------------- logout button code start -----------------------------------------------------
     try {
-        const res = await fetch('/auth/checkAuth', {
+        const res = await fetch('/auth/getName', {
             method: 'GET',
         })
         const data = await res.json()
