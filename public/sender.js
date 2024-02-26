@@ -80,12 +80,12 @@ receiverEmail()
                         new Promise((_, reject) => {
                           setTimeout(() => {
                             reject(new Error('Connection timed out'));
-                            alert(new Error('Connection timed out'))
                           }, 5000); // 5 seconds timeout
                         }),
                     ]);
                 } catch (error) {
                     console.error(error)
+                    alert(error)
                 }
                 
                 
@@ -142,10 +142,14 @@ document.querySelector("#file-input").addEventListener("change", function (e) {
 
     const reader = new FileReader();
     let offset = 0;
+    let buffer = new Uint8Array(reader.result);
+    hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(buffer));
+    // if(type == 'SO'){
+    //     checkHash()
+    // }
 
-    reader.onload = function (event) {
-        let buffer = new Uint8Array(reader.result);
-        hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(buffer));
+    reader.onload =async function (event) {
+        
         const fileData = {
             type: 'file',
             fileName: file.name,
@@ -212,4 +216,34 @@ function addFileHash(){
         });
 }
 
-
+const checkHash = ()=>{
+    try {
+        new Promise((resolve, reject) =>{
+            try {
+                fetch("http://localhost:5000/crud/checkFileHash", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({hash}),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("API response:", data);
+                        resolve(data)
+                       
+                    })
+                    .catch(error => {
+                        console.error("API error:", error);
+                        new Error(error)
+                        reject(error)
+                        // Handle the API error here
+                    });
+            } catch (error) {
+                reject(error)
+            }
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}

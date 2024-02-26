@@ -141,7 +141,7 @@ const getFilesDO = ()=>{
             if(file.possession == 'SO'){
                 const requestBtn = document.getElementById(`${file.id}`)
                 requestBtn.addEventListener('click',()=>{
-                    fetch('http://localhost:5000/utils/fileRequestMail',{
+                    fetch('http://localhost:5000/utils/fileRequest',{
                         method: 'POST',
                         headers:{ 'Content-Type': 'application/json'},
                         body: JSON.stringify({file: file.fileName})
@@ -150,6 +150,10 @@ const getFilesDO = ()=>{
                         .then(data =>{
                             if(data.msg == 'Success'){
                                 alert("Request Send Successfully!!")
+                                requestBtn.innerText = "Requested"
+                            }
+                            if(data.msg == 'duplicate request'){
+                                alert("Request already send before!!")
                                 requestBtn.innerText = "Requested"
                             }
                             console.log(data)

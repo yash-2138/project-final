@@ -50,3 +50,14 @@ module.exports = db
 //   fileHash VARCHAR(255),
 //   possession ENUM('DO', 'SO')
 // );
+
+// create table filerequests(
+//    id INT Primary key auto_increment,
+//    do_id INT,
+//    so_id INT,
+//    file_id INT,
+//    state boolean default false,
+//    foreign key (do_id) references users(id),
+//    foreign key (so_id) references users(id),
+//    foreign key (file_id) references files(id)
+//    );

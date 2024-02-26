@@ -58,10 +58,10 @@ exports.sendMailToMyStorageProvider = (req, res) => {
     });
 };
 
-exports.requestFileMail = (req,res)=>{
+exports.requestFile = (req,res)=>{
     const user_id = req.user_id;
     const {file} = req.body
-    let so_id, receiverEmail;
+    let so_id, receiverEmail, file_id;
 
     
     dbClient.query('SELECT so_id FROM myStorage where do_id = ?', [user_id], (error, result) => {
@@ -75,6 +75,45 @@ exports.requestFileMail = (req,res)=>{
             so_id = result[0].so_id;
         }
 
+        dbClient.query('SELECT id FROM files where fileName = ? and do_id = ? and so_id = ?',
+            [file, user_id, so_id],
+            (filesError, filesResult) =>{
+                if(filesError) {
+                    console.log(filesError);
+                    return res.status(500).json(filesError);
+                }
+                if(filesResult == 0) {
+                    return res.status(404).json({"msg": "no files found"});
+                }
+                if(filesResult.length > 0){
+                    file_id = filesResult[0].id
+                    const data = {
+                        do_id: user_id,
+                        so_id: so_id,
+                        file_id: file_id,
+                        state: 'active'
+                    }
+                    //insert data into filerequests table
+                    dbClient.query('INSERT into filerequests set ?',
+                        [data],
+                        (fileRequestError, fileRequestResults)=>{
+                            if(fileRequestError){
+                                console.log(fileRequestError)
+                                if(fileRequestError.sqlState == 23000){
+                                    return res.status(409).json({"msg": "duplicate request"})
+                                }
+                                return res.status(500).json(fileRequestError)
+                            }
+                            if(fileRequestResults){
+                                console.log('Request Added Successfully')
+                            }
+
+                        }
+                    )                    
+                }
+            }
+        )
+        
         
         dbClient.query('SELECT email FROM users where id = ?', [so_id], (errorGettingEmail, resultEmail) => {
             if (errorGettingEmail) {
