@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             loginBtn.style.display = 'none'
             logoutBtn.style.display = 'block'  
         }
+        else if(data.msg == "not logged in"){
+            loginBtn.style.display = 'block'
+        }
         
     } catch (error) {
         console.log(error)
