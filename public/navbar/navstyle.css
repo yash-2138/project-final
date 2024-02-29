@@ -8,7 +8,10 @@
 
 }
 
-
+.navbar-brand img{
+    height: 60px;
+    margin-left: 30px;
+}
 
 
 .btn{
@@ -119,14 +122,14 @@ nav ul{
 
 body {
     background-color: var(--primary-color);
-    transition: background-color 1.8s, color 1.8s;
+    /* transition: background-color 1.8s, color 1.8s; */
     overflow-x: hidden; /*Add this line to remove the scrollbar*/
 }
 
 .container-fluid {
     background-color: var(--primary-color);
     border: none;
-    transition: background-color 1.8s, color 1.8s;
+    /* transition: background-color 1.8s, color 1.8s; */
 }
 
 
@@ -147,7 +150,7 @@ body {
 #icon {
     color: var(--secondary-color);
     text-decoration: none;
-    transition: background-color 1.8s, color 1.8s;
+    /* transition: background-color 1.8s, color 1.8s; */
 }
 
 
@@ -162,7 +165,7 @@ body {
     /* Set the background color to white */
     color: var(--secondary-color) !important;
     /* Set the text color to black (optional, adjust as needed) */
-    transition: background-color 1.8s, color 1.8s;
+    /* transition: background-color 1.8s, color 1.8s; */
 }
 
 @media (max-width: 992px) {

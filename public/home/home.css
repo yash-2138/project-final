@@ -1,6 +1,6 @@
 body {
     background-color: var(--primary-color);
-    transition: background-color 1.8s, color 1.8s;
+    /* transition: background-color 1.8s, color 1.8s; */
     overflow: scroll; /* Add this line to remove the scrollbar */
 }
 .homepg{
@@ -35,11 +35,35 @@ body {
     animation: animtext 6s steps(80, end) infinite;
     transition: all cubic-bezier(0.1, 0.7, 1.0, 0.1);
 }
-
+.button {
+    background-color: #57c89f;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 0 4px var(--secondary-color);
+}
+.button a {
+    text-decoration: none;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    color: black;
+}
+.button:hover {
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+#decmarket{
+    height: 65px;
+}
 @keyframes animtext {
     from {
         width: 0;
-        transition: all 3s ease-in-out;
+        /* transition: all 3s ease-in-out; */
     }
 }
 
@@ -58,7 +82,7 @@ body {
 .navbar-dark .navbar-nav .nav-link.active,
 .navbar-dark .navbar-nav .show>.nav-link {
     color: var(--secondary-color);
-    transition: background-color 1.8s, color 1.8s;
+    /* transition: background-color 1.8s, color 1.8s; */
 }
 
 .bg-dark {
@@ -66,7 +90,7 @@ body {
     /* Set the background color to white */
     color: var(--secondary-color) !important;
     /* Set the text color to black (optional, adjust as needed) */
-    transition: background-color 1.8s, color 1.8s;
+    /* transition: background-color 1.8s, color 1.8s; */
 }
 
 
@@ -78,7 +102,7 @@ body {
 
 .container-flex {
     background-color: var(--primary-color);
-    transition: background-color 1.8s, color 1.8s;
+    /* transition: background-color 1.8s, color 1.8s; */
 }
 
 
@@ -103,23 +127,23 @@ body {
 
 @media((min-width:200px) and (max-width:500px)) {
    
-
     .col{
         margin-top: 10px;
     }
-
+    .col h2{
+        font-size: 1.4rem;
+    }
     .disk {
         width: 262px;
         height: 133px;
         margin-left: 0;
         
     }
-
     #decmarket 
     {
-        
-        font-size:20px;
-        margin-left: 15%;
+        font-size: 2rem;
+        height: 45px;
+        /* margin-left: 15%; */
     }
 
    
