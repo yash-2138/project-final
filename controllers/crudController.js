@@ -253,7 +253,7 @@ exports.getFilesSO =(req,res) =>{
       }
       else{
         dbClient.query(
-          'SELECT fileName, possession FROM files where do_id = ? and so_id = ?',
+          'SELECT fileName, possession, request FROM files where do_id = ? and so_id = ?',
           [result[0].do_id, user_id],
           (fileError, fileResult)=>{
             if(fileError){
@@ -262,9 +262,10 @@ exports.getFilesSO =(req,res) =>{
             if(fileResult.length == 0){
               return res.send({"msg": "No Files Rececived"})
             }
-            else{
-              return res.send(fileResult)
+            else {
+              res.send(fileResult)
             }
+            
 
           }
         )

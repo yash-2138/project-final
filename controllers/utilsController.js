@@ -75,52 +75,26 @@ exports.requestFile = (req,res)=>{
             so_id = result[0].so_id;
         }
 
-        dbClient.query('SELECT id FROM files where fileName = ? and do_id = ? and so_id = ?',
-            [file, user_id, so_id],
+        dbClient.query('UPDATE files SET request = ? where fileName = ? and do_id = ? and so_id = ?',
+            ['active', file, user_id, so_id],
             (filesError, filesResult) =>{
                 if(filesError) {
                     console.log(filesError);
                     return res.status(500).json(filesError);
                 }
-                if(filesResult == 0) {
-                    return res.status(404).json({"msg": "no files found"});
-                }
-                if(filesResult.length > 0){
-                    file_id = filesResult[0].id
-                    const data = {
-                        do_id: user_id,
-                        so_id: so_id,
-                        file_id: file_id,
-                        state: 'active'
-                    }
-                    //insert data into filerequests table
-                    dbClient.query('INSERT into filerequests set ?',
-                        [data],
-                        (fileRequestError, fileRequestResults)=>{
-                            if(fileRequestError){
-                                console.log(fileRequestError)
-                                if(fileRequestError.sqlState == 23000){
-                                    return res.status(409).json({"msg": "duplicate request"})
-                                }
-                                return res.status(500).json(fileRequestError)
-                            }
-                            if(fileRequestResults){
-                                console.log('Request Added Successfully')
-                            }
-
-                        }
-                    )                    
-                }
+                res.send({'msg': 'Success'})
             }
         )
         
         
         dbClient.query('SELECT email FROM users where id = ?', [so_id], (errorGettingEmail, resultEmail) => {
             if (errorGettingEmail) {
-                return res.status(500).json(errorGettingEmail);
+                console.log(errorGettingEmail)
+                // return res.status(500).json(errorGettingEmail);
             }
             if (resultEmail.length == 0) {
-                return res.status(404).json({ "msg": "No User Found" });
+                console.log('No User Found to send mail!')
+                // return res.status(404).json({ "msg": "No User Found" });
             }
             if (resultEmail.length > 0) {
                 receiverEmail = resultEmail[0].email;
@@ -135,10 +109,8 @@ exports.requestFile = (req,res)=>{
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
                         console.error('Error sending email:', error.message);
-                        return res.status(500).json(error);
                     } else {
                         console.log('Email sent:', info.response);
-                        return res.send({ "msg": "Success" });
                     }
                 });
             }

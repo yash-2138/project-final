@@ -5,6 +5,7 @@ let receiverId
 let peer
 let conn
 let receiverEmail
+let fileName
 let email = document.querySelector('#email').innerText
 let type = document.querySelector('#type').innerText
 const reqConnBtn = document.querySelector('#request-conn-btn')
@@ -52,7 +53,10 @@ else if(type == 'SO'){
             }
         })
     }
-    
+    const currentURL = window.location.href;
+    const url = new URL(currentURL);
+    const searchParams = url.searchParams;
+    fileName = searchParams.get('filename')
 }
 
 receiverEmail()
@@ -123,6 +127,24 @@ document.querySelector("#file-input").addEventListener("change", function (e) {
     if (!file) {
         return;
     }
+    let offset = 0;
+    const reader = new FileReader();
+    let buffer = new Uint8Array(reader.result);
+    hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(buffer));
+    if(type == 'SO'){
+        if(file.name == fileName){
+            if(checkHash()){
+                
+            }else{
+                alert('wrong file selected!! (hash unmatched)')
+                return
+            }
+        }else{
+            alert('wrong file selected!!')
+            return 
+        } 
+        
+    }
 
     let el = document.createElement("div");
     el.classList.add("item");
@@ -139,15 +161,7 @@ document.querySelector("#file-input").addEventListener("change", function (e) {
     };
 
     conn.send(metadata);
-
-    const reader = new FileReader();
-    let offset = 0;
-    let buffer = new Uint8Array(reader.result);
-    hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(buffer));
-    // if(type == 'SO'){
-    //     checkHash()
-    // }
-
+    
     reader.onload =async function (event) {
         
         const fileData = {
@@ -166,7 +180,13 @@ document.querySelector("#file-input").addEventListener("change", function (e) {
         }
         if(offset === file.size){
             updateProgressBar(100)
-            addFileHash()
+            if(type == 'DO'){
+                addFileHash()
+            }
+            else if(type == 'SO'){
+                //
+            }
+            
         }
     };
 

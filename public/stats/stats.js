@@ -29,7 +29,10 @@ const getFilesSO = ()=>{
 
             th.innerHTML = cnt;
             td1.innerHTML = file.fileName
-            if(file.possession == 'SO'){
+            if(file.request == 'active'){
+                td2.innerHTML = `<b style="color: red;">Requested</b>`
+            }
+            else if(file.possession == 'SO'){
                 td2.innerHTML = `With Me`
             }
             else{
@@ -70,7 +73,7 @@ const getStorageOverview = (forDO)=>{
             
         })
         .then(data=>{
-            console.log(data)
+            // console.log(data)
             if(forDO){
                 const dailyCostData = document.querySelector('#daily-cost > div > div > h3')
                 dailyCostData.innerHTML = `${data.price} ETH`
@@ -150,10 +153,6 @@ const getFilesDO = ()=>{
                         .then(data =>{
                             if(data.msg == 'Success'){
                                 alert("Request Send Successfully!!")
-                                requestBtn.innerText = "Requested"
-                            }
-                            if(data.msg == 'duplicate request'){
-                                alert("Request already send before!!")
                                 requestBtn.innerText = "Requested"
                             }
                             console.log(data)
