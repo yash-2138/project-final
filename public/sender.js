@@ -113,6 +113,7 @@ peer.on('connection', (conn) => {
         <span>${conn.peer}</span>
     `
     
+    
 });
 
     
@@ -169,7 +170,7 @@ document.querySelector("#file-input").addEventListener("change",async function (
                 readSlice(offset);
             }
             if(offset === file.size){
-                updateProgressBar(100, progressId)
+                // updateProgressBar(100, progressId)
                 if(type == 'DO'){
                     addFileHash()
                 }
@@ -191,9 +192,15 @@ document.querySelector("#file-input").addEventListener("change",async function (
         
             // Calculate the percentage and call updateProgressBar
             const percentage = (start / file.size) * 100;
-            updateProgressBar(percentage, progressId);
+            // updateProgressBar(percentage, progressId);
         }
         readSlice(0);
+        conn.on('data',(data)=>{
+            if(data.type == 'progress'){
+                // console.log(data)
+                updateProgressBar(data.percentage, progressId) 
+            }
+        })
     }
 
     if(type == 'SO'){

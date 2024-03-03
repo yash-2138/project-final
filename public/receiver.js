@@ -3,7 +3,8 @@ const email = document.querySelector('#email').innerText
 const myId = email.split('@')[0] + '-receiver'
 // console.log(myId)
 const peer = new Peer(myId);
-const receivedChunks = [];
+let receivedChunks = [];
+let receivedFiles = [];
 let totalBytes = 0;
 let receivedBytes = 0;
 
@@ -23,7 +24,7 @@ peer.on('connection', (conn) => {
         if (data.type === 'metadata') {
             totalBytes = data.fileSize;
         } else if (data.type === 'file') {
-            handleData(data);
+            handleData(data, conn);
         }
     });
 });
@@ -49,14 +50,13 @@ function updateProgressBar() {
 }
 
 
-function handleData(data) {
-    // console.log('Received file data:', data);
+
+function handleData(data, conn) {
 
     receivedChunks.push(data.content);
     receivedBytes += data.content.byteLength;
 
     if (receivedBytes === totalBytes) {
-        // All chunks received, assemble the file
         const mergedArrayBuffer = new Uint8Array(receivedBytes);
         let offset = 0;
 
@@ -68,23 +68,37 @@ function handleData(data) {
         const blob = new Blob([mergedArrayBuffer]);
         const url = window.URL.createObjectURL(blob);
 
-        // Create a list item with a link to trigger the download
-        const filesList = document.querySelector('.files-list');
+        receivedFiles.push({ url, fileName: data.fileName });
+
+        displayReceivedFiles();
+        updateProgressBar();
+        conn.send({ type: 'progress', percentage: 100 });
+        receivedChunks = [];
+        receivedBytes = 0;
+    } else {
+        updateProgressBar();
+        const percentage = (receivedBytes / totalBytes) * 100;
+        conn.send({ type: 'progress', percentage });
+    }
+}
+
+function displayReceivedFiles() {
+    const fileListElement = document.getElementById('file-list');
+    fileListElement.innerHTML = ''; // Clear the existing list
+
+    receivedFiles.forEach((file) => {
+        console.log(file)
         const listItem = document.createElement('li');
         const downloadLink = document.createElement('a');
         
-        downloadLink.href = url;
-        downloadLink.download = data.fileName;
-        downloadLink.textContent = data.fileName;
+        downloadLink.href = file.url;
+        downloadLink.download = file.fileName;
+        downloadLink.textContent = file.fileName;
 
         listItem.appendChild(downloadLink);
-        filesList.appendChild(listItem);
-
-        // Optionally, you can also reset the progress bar
-        updateProgressBar();
-    } else {
-        // Update progress bar for partial file reception
-        updateProgressBar();
-    }
+        fileListElement.appendChild(listItem);
+    });
 }
+
+
 
