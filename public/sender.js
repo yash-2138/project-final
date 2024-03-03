@@ -136,9 +136,10 @@ document.querySelector("#file-input").addEventListener("change",async function (
 
     const sendFile = ()=>{
         let el = document.createElement("div");
+        const progressId = `file-progress-${file.name}`;
         el.classList.add("item");
         el.innerHTML = `
-            <div class="progress">0%</div>
+            <div class="progress" id="${progressId}">0%</div>
             <div class="filename">${file.name}</div>
         `;
         document.querySelector(".files-list").appendChild(el);
@@ -168,7 +169,7 @@ document.querySelector("#file-input").addEventListener("change",async function (
                 readSlice(offset);
             }
             if(offset === file.size){
-                updateProgressBar(100)
+                updateProgressBar(100, progressId)
                 if(type == 'DO'){
                     addFileHash()
                 }
@@ -190,7 +191,7 @@ document.querySelector("#file-input").addEventListener("change",async function (
         
             // Calculate the percentage and call updateProgressBar
             const percentage = (start / file.size) * 100;
-            updateProgressBar(percentage);
+            updateProgressBar(percentage, progressId);
         }
         readSlice(0);
     }
@@ -220,8 +221,8 @@ document.querySelector("#file-input").addEventListener("change",async function (
 });
 
 // Add the following function in sender.js
-function updateProgressBar(percentage) {
-    const progressBar = document.querySelector('.progress');
+function updateProgressBar(percentage, progressId) {
+    const progressBar = document.getElementById(progressId);
     progressBar.innerHTML = percentage.toFixed(2) + '%';
     // console.log(progressBar.innerHTML)
 }
