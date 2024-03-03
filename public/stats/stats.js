@@ -28,7 +28,8 @@ const getFilesSO = ()=>{
             const td2 = document.createElement('td')
 
             th.innerHTML = cnt;
-            td1.innerHTML = file.fileName
+            td1.innerHTML = `<a href="/sender/?file=${file.fileName}">${file.fileName}</a>`
+            
             if(file.request == 'active'){
                 td2.innerHTML = `<b style="color: red;">Requested</b>`
             }

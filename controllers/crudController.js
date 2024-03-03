@@ -377,3 +377,58 @@ exports.getMyDataOwner = (req,res) =>{
     res.status(500).json(error)
   }
 }
+
+exports.checkHash = (req,res)=>{
+  const user_id = req.user_id
+  const {fileName, fileHash} = req.body
+  console.log(fileHash)
+  try {
+    dbClient.query('SELECT fileHash from files where so_id = ? and fileName = ?',
+      [user_id, fileName],
+      (error, results) =>{
+        if(error){
+          console.log(error);
+          return res.status(500).json(error)
+        }
+        if(results.length == 0){
+          return res.status(404).json({"msg": "no file found"})
+        }
+        else{
+          // console.log(results[0])
+          if(results[0].fileHash == fileHash){
+            return res.send({'msg': 'Hash Matched'})
+          }
+          else{
+            
+            return res.send({"msg": "wrong"})
+          }
+        }
+      }  
+    )
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+exports.updatePossession = (req, res) => {
+  try {
+    const user_id = req.user_id
+    const {fileName} = req.body
+
+    dbClient.query(
+      'UPDATE files SET possession = "DO"  where so_id = ? and fileName = ?',
+      [user_id, fileName],
+      (error, results) =>{
+        if(error){
+          console.log(error)
+          return res.status(500).json(error)
+        }
+        res.send({'msg':"updated success"})
+      }
+    )
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}

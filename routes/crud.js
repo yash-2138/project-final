@@ -12,6 +12,8 @@ router.post('/addFiles',checkUser, crudController.addFiles)
 router.get('/getMyStorageProvider',checkUser, crudController.getMyStorageProvider)
 router.get('/getMyDataOwner',checkUser, crudController.getMyDataOwner)
 router.put('/updateCapacity', crudController.updateRemainingCapacity)
+router.post('/checkHash',checkUser, crudController.checkHash)
+router.post('/updatePossession',checkUser, crudController.updatePossession)
 
 
 module.exports = router

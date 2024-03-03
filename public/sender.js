@@ -56,7 +56,7 @@ else if(type == 'SO'){
     const currentURL = window.location.href;
     const url = new URL(currentURL);
     const searchParams = url.searchParams;
-    fileName = searchParams.get('filename')
+    fileName = searchParams.get('file')
 }
 
 receiverEmail()
@@ -121,85 +121,97 @@ let file
 let hash = ''
 let chunkSize = 16384; // 16 KB chunks, you can adjust this size based on your requirements
 
-document.querySelector("#file-input").addEventListener("change", function (e) {
+document.querySelector("#file-input").addEventListener("change",async function (e) {
     file = e.target.files[0];
 
     if (!file) {
         return;
     }
     let offset = 0;
-    const reader = new FileReader();
-    let buffer = new Uint8Array(reader.result);
-    hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(buffer));
+    
+    const buffer = await file.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    hash = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
     if(type == 'SO'){
         if(file.name == fileName){
-            if(checkHash()){
+            checkHash()
+                .then((data) =>{
+                    if(data.msg == 'wrong'){
+                        alert('The Hash does not match!!')
+                        return
+                    }
+                    if(data.msg == 'Hash Matched'){
+                        sendFile()
+                    }
+                })
                 
-            }else{
-                alert('wrong file selected!! (hash unmatched)')
-                return
-            }
         }else{
             alert('wrong file selected!!')
             return 
         } 
         
     }
+    const sendFile = ()=>{
+        let el = document.createElement("div");
+        el.classList.add("item");
+        el.innerHTML = `
+            <div class="progress">0%</div>
+            <div class="filename">${file.name}</div>
+        `;
+        document.querySelector(".files-list").appendChild(el);
 
-    let el = document.createElement("div");
-    el.classList.add("item");
-    el.innerHTML = `
-        <div class="progress">0%</div>
-        <div class="filename">${file.name}</div>
-    `;
-    document.querySelector(".files-list").appendChild(el);
-
-    const metadata = {
-        type: 'metadata',
-        fileName: file.name,
-        fileSize: file.size,
-    };
-
-    conn.send(metadata);
-    
-    reader.onload =async function (event) {
-        
-        const fileData = {
-            type: 'file',
+        const metadata = {
+            type: 'metadata',
             fileName: file.name,
             fileSize: file.size,
-            content: event.target.result,
-            offset: offset,
         };
-        conn.send(fileData);
 
-        offset += event.target.result.byteLength;
-
-        if (offset < file.size) {
-            readSlice(offset);
-        }
-        if(offset === file.size){
-            updateProgressBar(100)
-            if(type == 'DO'){
-                addFileHash()
-            }
-            else if(type == 'SO'){
-                //
-            }
+        conn.send(metadata);
+        const reader = new FileReader();
+        reader.onload =async function (event) {
             
-        }
-    };
+            const fileData = {
+                type: 'file',
+                fileName: file.name,
+                fileSize: file.size,
+                content: event.target.result,
+                offset: offset,
+            };
+            conn.send(fileData);
 
-    function readSlice(start) {
-        const slice = file.slice(start, start + chunkSize);
-        reader.readAsArrayBuffer(slice);
-    
-        // Calculate the percentage and call updateProgressBar
-        const percentage = (start / file.size) * 100;
-        updateProgressBar(percentage);
+            offset += event.target.result.byteLength;
+
+            if (offset < file.size) {
+                readSlice(offset);
+            }
+            if(offset === file.size){
+                updateProgressBar(100)
+                if(type == 'DO'){
+                    addFileHash()
+                }
+                else if(type == 'SO'){
+                    updateFilePossession()
+                        .then((data) =>{
+                            if(data.msg == 'updated success'){
+                                console.log('Possession updated')
+                            }
+                        })
+                }
+                
+            }
+        };
+
+        function readSlice(start) {
+            const slice = file.slice(start, start + chunkSize);
+            reader.readAsArrayBuffer(slice);
+        
+            // Calculate the percentage and call updateProgressBar
+            const percentage = (start / file.size) * 100;
+            updateProgressBar(percentage);
+        }
+        readSlice(0);
     }
-    readSlice(0);
- 
 });
 
 // Add the following function in sender.js
@@ -236,34 +248,45 @@ function addFileHash(){
         });
 }
 
-const checkHash = ()=>{
+const checkHash = async () => {
     try {
-        new Promise((resolve, reject) =>{
-            try {
-                fetch("http://localhost:5000/crud/checkFileHash", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({hash}),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log("API response:", data);
-                        resolve(data)
-                       
-                    })
-                    .catch(error => {
-                        console.error("API error:", error);
-                        new Error(error)
-                        reject(error)
-                        // Handle the API error here
-                    });
-            } catch (error) {
-                reject(error)
-            }
-        })
+        const response = await fetch("http://localhost:5000/crud/checkHash", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ fileName, fileHash: hash.toString() }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        // console.log("API response:", data);
+        return data;
     } catch (error) {
-        console.log(error)
+        console.error("API error:", error);
     }
-}
+};
+
+const updateFilePossession = async () => {
+    try {
+        const response = await fetch("http://localhost:5000/crud/updatePossession", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({fileName}),
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        // console.log("API response:", data);
+        return data;
+    } catch (error) {
+        console.error("API error:", error);
+    }
+};
+
