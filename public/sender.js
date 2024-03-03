@@ -133,25 +133,7 @@ document.querySelector("#file-input").addEventListener("change",async function (
     const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     hash = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-    if(type == 'SO'){
-        if(file.name == fileName){
-            checkHash()
-                .then((data) =>{
-                    if(data.msg == 'wrong'){
-                        alert('The Hash does not match!!')
-                        return
-                    }
-                    if(data.msg == 'Hash Matched'){
-                        sendFile()
-                    }
-                })
-                
-        }else{
-            alert('wrong file selected!!')
-            return 
-        } 
-        
-    }
+
     const sendFile = ()=>{
         let el = document.createElement("div");
         el.classList.add("item");
@@ -212,6 +194,29 @@ document.querySelector("#file-input").addEventListener("change",async function (
         }
         readSlice(0);
     }
+
+    if(type == 'SO'){
+        if(file.name == fileName){
+            checkHash()
+                .then((data) =>{
+                    if(data.msg == 'wrong'){
+                        alert('The Hash does not match!!')
+                        return
+                    }
+                    if(data.msg == 'Hash Matched'){
+                        sendFile()
+                    }
+                })
+                
+        }else{
+            alert('wrong file selected!!')
+            return 
+        } 
+        
+    }else{
+        sendFile()
+    }
+    
 });
 
 // Add the following function in sender.js
