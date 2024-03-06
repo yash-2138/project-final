@@ -48,6 +48,6 @@ module.exports = db
 //   so_id INT,
 //   fileName VARCHAR(255),
 //   fileHash VARCHAR(255),
-//   possession ENUM('DO', 'SO')
+//   possession ENUM('DO', 'SO'),
 //   request ENUM('active', 'completed')
 // );
