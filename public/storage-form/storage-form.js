@@ -26,7 +26,7 @@ addStorage.addEventListener('click', async (event)=>{
     const capacity = document.querySelector("#capacity").value
     const price = document.querySelector("#price").value
     console.log(email, tenure, capacity, price)
-    const securityDeposit = '0.1';
+    const securityDeposit = '0.00001';
     try {
     const tx = await contract.createStorageSellOrder(email, capacity, ethers.parseEther(price),ethers.parseEther(securityDeposit), tenure ,{
         value: ethers.parseEther(securityDeposit)
