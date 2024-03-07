@@ -58,10 +58,10 @@ exports.sendMailToMyStorageProvider = (req, res) => {
     });
 };
 
-exports.requestFileMail = (req,res)=>{
+exports.requestFile = (req,res)=>{
     const user_id = req.user_id;
     const {file} = req.body
-    let so_id, receiverEmail;
+    let so_id, receiverEmail, file_id;
 
     
     dbClient.query('SELECT so_id FROM myStorage where do_id = ?', [user_id], (error, result) => {
@@ -75,13 +75,26 @@ exports.requestFileMail = (req,res)=>{
             so_id = result[0].so_id;
         }
 
+        dbClient.query('UPDATE files SET request = ? where fileName = ? and do_id = ? and so_id = ?',
+            ['active', file, user_id, so_id],
+            (filesError, filesResult) =>{
+                if(filesError) {
+                    console.log(filesError);
+                    return res.status(500).json(filesError);
+                }
+                res.send({'msg': 'Success'})
+            }
+        )
+        
         
         dbClient.query('SELECT email FROM users where id = ?', [so_id], (errorGettingEmail, resultEmail) => {
             if (errorGettingEmail) {
-                return res.status(500).json(errorGettingEmail);
+                console.log(errorGettingEmail)
+                // return res.status(500).json(errorGettingEmail);
             }
             if (resultEmail.length == 0) {
-                return res.status(404).json({ "msg": "No User Found" });
+                console.log('No User Found to send mail!')
+                // return res.status(404).json({ "msg": "No User Found" });
             }
             if (resultEmail.length > 0) {
                 receiverEmail = resultEmail[0].email;
@@ -96,10 +109,8 @@ exports.requestFileMail = (req,res)=>{
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
                         console.error('Error sending email:', error.message);
-                        return res.status(500).json(error);
                     } else {
                         console.log('Email sent:', info.response);
-                        return res.send({ "msg": "Success" });
                     }
                 });
             }

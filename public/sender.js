@@ -1,153 +1,311 @@
-    let receiverId;
-    const socket = io()
+// let myId = 'yash-gmail-com'
+// let receiverId = '222-222-222'
+let myId
+let receiverId
+let peer
+let conn
+let receiverEmail
+let fileName
+let email = document.querySelector('#email').innerText
+let type = document.querySelector('#type').innerText
+const reqConnBtn = document.querySelector('#request-conn-btn')
+const connectedPeerText = document.querySelector('#connected-peer')
+const fsScreen = document.querySelector('.fs-screen')
 
-    function generateId(){
-        return `${Math.trunc(Math.random()*999)}-${Math.trunc(Math.random()*999)}-${Math.trunc(Math.random()*999)}`
-    }
+myId = email.split('@')[0] + '-sender'
+peer = new Peer(myId);
+peer.on('open', (id) => {
+    console.log('My peer ID is: ' + id);
+    document.querySelector("#join-id").innerHTML = myId
+});
 
-    document.querySelector("#sender-start-con-btn").addEventListener("click", function(){
-        let joinId =generateId()
-        document.querySelector("#join-id").innerHTML = `
-            <b>Room Id :</b>
-            <span>${joinId}</span>
-            
-        `
-        
-        fetch("http://localhost:5000/utils/sendMail",{
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({joinId})
-        })
-            .then(response => response)
-            .then(data => {
-                console.log(data)
-            })
-            .catch(error=>{
+
+if(type == 'DO'){
+    receiverEmail = () =>{
+        return new Promise(async (resolve, reject) =>{
+            try {
+                const res = await fetch('/crud/getMyStorageProvider',{
+                    method: 'GET'
+                })
+    
+                const data = await res.json()
+                resolve(data.email)
+            } catch (error) {
                 console.log(error)
-            })
-          
-        socket.emit("sender-join", {
-            uid: joinId
-        })
-
-        socket.on("init", function(uid){
-            receiverId = uid;
-            document.querySelector(".fs-screen").classList.remove("inactive")
-        })
-    })  
-    let file
-    let hash = ''
-    document.querySelector("#file-input").addEventListener("change", function (e) {
-        file = e.target.files[0];
-    
-        if (!file) {
-            return;
-        }
-        let reader = new FileReader();
-    
-        reader.onload = function (e) {
-            let buffer = new Uint8Array(reader.result);
-            hash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(buffer));
-
-            let el = document.createElement("div");
-            el.classList.add("item");
-            el.innerHTML = `
-                <div class="progress">0%</div>
-                <div class="filename">${file.name}</div>
-            `;
-    
-            document.querySelector(".files-list").appendChild(el);
-    
-            // Emit "file-meta" event with file metadata
-            socket.emit("file-meta", {
-                uid: receiverId,
-                metadata: {
-                    filename: file.name,
-                    total_buffer_size: buffer.length,
-                    buffer_size: 1024,
-                },
-            });
-    
-            shareFile(buffer, el.querySelector(".progress"));
-        };
-    
-        // Start reading the file as an ArrayBuffer
-        reader.readAsArrayBuffer(file);
-    });
-    
-    function shareFile(buffer, progress_node) {
-        // Calculate the total number of chunks
-        const totalChunks = Math.ceil(buffer.length / 1024);
-        
-        // Counter to keep track of the chunks sent
-        let sentChunks = 0;
-    
-        // Listens for "fs-share" event and shares the file in chunks
-        socket.on("fs-share", function () {
-            let chunk = buffer.slice(0, 1024); // Adjust the chunk size as needed
-            buffer = buffer.slice(chunk.length, buffer.length);
-    
-            sentChunks++;
-    
-            const progress = (sentChunks / totalChunks) * 100;
-            progress_node.innerText = progress.toFixed(2) + "%";
-            if (sentChunks <= totalChunks) {
-                // Emit "file-raw" event with file buffer chunk
-                socket.emit("file-raw", {
-                    uid: receiverId,
-                    buffer: chunk,
-                });
-                
-            } 
-            if(sentChunks == totalChunks) {
-                // File transfer is completed, you can perform any cleanup or UI updates here
-                progress_node.innerText = "100%";
-                addFileHash()
+                reject(error)
             }
-        });
+        })
+    }
+}
+else if(type == 'SO'){
+    receiverEmail = () =>{
+        return new Promise(async (resolve, reject) =>{
+            try {
+                const res = await fetch('/crud/getMyDataOwner',{
+                    method: 'GET'
+                })
+    
+                const data = await res.json()
+                resolve(data.email)
+            } catch (error) {
+                console.log(error)
+                reject(error)
+            }
+        })
+    }
+    const currentURL = window.location.href;
+    const url = new URL(currentURL);
+    const searchParams = url.searchParams;
+    fileName = searchParams.get('file')
+}
+
+receiverEmail()
+        .then((data) =>{
+            receiverId = data.split('@')[0] + '-receiver'
+            // console.log(receiverId)
+            // receiverId = 'd-receiver' //this is temporary remove it
+            reqConnBtn.addEventListener('click', async() =>{
+                console.log('Sending Connection request....')
+                try {
+                    const connection = await Promise.race([
+                        new Promise((resolve, reject) => {
+                          try {
+                            conn = peer.connect(receiverId);
+                            conn.on('open', () => {
+                              console.log("Connection established: ", receiverId);
+                              connectedPeerText.innerHTML = receiverId
+                              fsScreen.classList.remove('inactive')
+                              resolve(conn);
+                            });
+                          } catch (error) {
+                            reject(error);
+                          }
+                        }),
+                        new Promise((_, reject) => {
+                          setTimeout(() => {
+                            reject(new Error('Connection timed out'));
+                          }, 5000); // 5 seconds timeout
+                        }),
+                    ]);
+                } catch (error) {
+                    console.error(error)
+                    alert(error)
+                }
+                
+                
+                
+            })
+        })
+        .catch((error) =>{
+            console.log(error)
+        })
+
+
+
+// console.log(email)
+
+    
+peer.on('connection', (conn) => {
+    console.log('Connected to peer:', conn.peer);
+    // document.querySelector(".fs-screen").classList.remove("inactive")
+    document.querySelector('#connected-peer').innerHTML =   `
+        <b>Connected Peer Id: </b>
+        <span>${conn.peer}</span>
+    `
+    
+    
+});
+
+    
+      
+let file
+let hash = ''
+let chunkSize = 16384; // 16 KB chunks, you can adjust this size based on your requirements
+
+document.querySelector("#file-input").addEventListener("change",async function (e) {
+    file = e.target.files[0];
+
+    if (!file) {
+        return;
+    }
+    let offset = 0;
+    
+    const buffer = await file.arrayBuffer();
+    if (window.crypto && window.crypto.subtle) {
+        const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        hash = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+    } else {
+        console.error('Web Cryptography API not supported');
+    }
+    
+    
+
+    const sendFile = ()=>{
+        let el = document.createElement("div");
+        const progressId = `file-progress-${file.name}`;
+        el.classList.add("item");
+        el.innerHTML = `
+            <div class="progress" id="${progressId}">0%</div>
+            <div class="filename">${file.name}</div>
+        `;
+        document.querySelector(".files-list").appendChild(el);
+
+        const metadata = {
+            type: 'metadata',
+            fileName: file.name,
+            fileSize: file.size,
+        };
+
+        conn.send(metadata);
+        const reader = new FileReader();
+        reader.onload =async function (event) {
+            
+            const fileData = {
+                type: 'file',
+                fileName: file.name,
+                fileSize: file.size,
+                content: event.target.result,
+                offset: offset,
+            };
+            conn.send(fileData);
+
+            offset += event.target.result.byteLength;
+
+            if (offset < file.size) {
+                readSlice(offset);
+            }
+            if(offset === file.size){
+                // updateProgressBar(100, progressId)
+                if(type == 'DO'){
+                    addFileHash()
+                }
+                else if(type == 'SO'){
+                    updateFilePossession()
+                        .then((data) =>{
+                            if(data.msg == 'updated success'){
+                                console.log('Possession updated')
+                            }
+                        })
+                }
+                
+            }
+        };
+
+        function readSlice(start) {
+            const slice = file.slice(start, start + chunkSize);
+            reader.readAsArrayBuffer(slice);
+        
+            // Calculate the percentage and call updateProgressBar
+            const percentage = (start / file.size) * 100;
+            // updateProgressBar(percentage, progressId);
+        }
+        readSlice(0);
+        conn.on('data',(data)=>{
+            if(data.type == 'progress'){
+                // console.log(data)
+                updateProgressBar(data.percentage, progressId) 
+            }
+        })
     }
 
-    function addFileHash(){
-        let data = {
-            fileName: file.name,
-            hash: hash.toString(),
-            size: file.size
-        }
-        hash = ''
-        // console.log(data)
-        fetch("http://localhost:5000/crud/addFiles", {
+    if(type == 'SO'){
+        if(file.name == fileName){
+            checkHash()
+                .then((data) =>{
+                    if(data.msg == 'wrong'){
+                        alert('The Hash does not match!!')
+                        return
+                    }
+                    if(data.msg == 'Hash Matched'){
+                        sendFile()
+                    }
+                })
+                
+        }else{
+            alert('wrong file selected!!')
+            return 
+        } 
+        
+    }else{
+        sendFile()
+    }
+    
+});
+
+// Add the following function in sender.js
+function updateProgressBar(percentage, progressId) {
+    const progressBar = document.getElementById(progressId);
+    progressBar.innerHTML = percentage.toFixed(2) + '%';
+    // console.log(progressBar.innerHTML)
+}
+
+function addFileHash(){
+    let data = {
+        fileName: file.name,
+        hash: hash.toString(),
+        size: file.size
+    }
+    hash = ''
+    // console.log(data)
+    fetch("/crud/addFiles", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            // Add any other headers if needed
+        },
+        body: JSON.stringify({data}),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("API response:", data);
+            // Handle the API response here
+        })
+        .catch(error => {
+            console.error("API error:", error);
+            // Handle the API error here
+        });
+}
+
+const checkHash = async () => {
+    try {
+        const response = await fetch("/crud/checkHash", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                // Add any other headers if needed
             },
-            body: JSON.stringify({data}),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("API response:", data);
-                // Handle the API response here
-            })
-            .catch(error => {
-                console.error("API error:", error);
-                // Handle the API error here
-            });
-    }
-    
+            body: JSON.stringify({ fileName, fileHash: hash.toString() }),
+        });
 
-    // ----------------------------------------------------------------------------------------------------------------------------
-    document.querySelector("#join-id").addEventListener("click", function() {
-        copyRoomIdToClipboard();
-    });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-    function copyRoomIdToClipboard() {
-        const joinIdElement = document.querySelector("#join-id span");
-        const textToCopy = joinIdElement.textContent;
-        const textArea = document.createElement('textarea');
-        textArea.value = textToCopy;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        alert('Room ID copied to clipboard!');
+        const data = await response.json();
+        // console.log("API response:", data);
+        return data;
+    } catch (error) {
+        console.error("API error:", error);
     }
+};
+
+const updateFilePossession = async () => {
+    try {
+        const response = await fetch("/crud/updatePossession", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({fileName}),
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        // console.log("API response:", data);
+        return data;
+    } catch (error) {
+        console.error("API error:", error);
+    }
+};
+

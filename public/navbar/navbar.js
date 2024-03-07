@@ -7,20 +7,22 @@ const displayName = document.querySelector('#display-name')
 document.addEventListener('DOMContentLoaded', async function () {
     //----------------- logout button code start -----------------------------------------------------
     try {
-        const res = await fetch('/auth/checkAuth', {
+        const res = await fetch('/auth/getName', {
             method: 'GET',
         })
         const data = await res.json()
         console.log(data) 
         if(data.name){
             loginBtn.style.display = 'none'
-            logoutBtn.style.display = 'block'
-            displayName.innerHTML = `<h3 id="username">${data.name}</h3>`
-           
+            logoutBtn.style.display = 'block'  
+        }
+        else if(data.msg == "not logged in"){
+            loginBtn.style.display = 'block'
         }
         
     } catch (error) {
         console.log(error)
+        loginBtn.style.display = 'block'
     }
     //----------------- logout button code end -----------------------------------------------------
 

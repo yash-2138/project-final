@@ -4,7 +4,7 @@ const encryptBtn = document.querySelector("#encrypt-btn")
 const decryptBtn = document.querySelector("#decrypt-btn")
 
 generateBtn.addEventListener('click', ()=>{
-    fetch('http://localhost:5000/service/getKey',{
+    fetch('/service/getKey',{
         method: "GET"
     })
     .then(response =>{
@@ -41,7 +41,7 @@ encryptBtn.addEventListener('click',async ()=>{
     formData.append('inputFile', inputFile)
 
     try {
-        fetch('http://localhost:5000/service/encryptFile', {
+        fetch('/service/encryptFile', {
             method: 'POST',
             
             body: formData
@@ -83,7 +83,7 @@ decryptBtn.addEventListener('click',async ()=>{
     formData.append('encryptedFile', encryptedFile)
 
     try {
-        fetch('http://localhost:5000/service/decryptFile', {
+        fetch('/service/decryptFile', {
             method: 'POST',
             
             body: formData

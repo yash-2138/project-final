@@ -7,9 +7,9 @@ const requireAuth = (req, res, next)  =>{
         jwt.verify(token, 'yash dhumal secret', (err, decodedToken) =>{
             if(err){
                 console.log(err);
-                res.send({msg: "not_logged_in"})
+                res.render('login')
             }else{
-                req.userName = decodedToken.userName
+                req.userName = decodedToken.name
                 req.userType = decodedToken.type
                 req.user_id = decodedToken.id;
                 req.email = decodedToken.email;
@@ -18,7 +18,7 @@ const requireAuth = (req, res, next)  =>{
 
         })
     }else{
-        res.send({msg: "not_logged_in"})
+        res.render('login')
     }
 }
 const checkUser = (req, res, next) =>{
@@ -29,7 +29,7 @@ const checkUser = (req, res, next) =>{
                 console.log(err);
             }else{
                 // console.log(decodedToken.id)
-                req.userName = decodedToken.userName
+                req.userName = decodedToken.name
                 req.userType = decodedToken.type
                 req.user_id = decodedToken.id;
                 req.email = decodedToken.email;
@@ -42,6 +42,7 @@ const checkUser = (req, res, next) =>{
     }else{
         
         req.user_id = null;
+        next()
         
     }
 }

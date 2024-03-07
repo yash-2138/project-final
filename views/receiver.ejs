@@ -8,26 +8,21 @@
 </head>
 <body id="respo">
     <header><%- include('navbar')  %></header>
-    
+    <div id="email" style="display: none;"><%= email %></div>
     <div class="app">
-        <div class="screen join-screen active">
-            <div class="form" id="share">
-                <h2>Share your files securely</h2>
-                <div class="form-input">
-                    <label for="join-id">join-Id</label>
-                    <input type="text" id="join-Id">
-                </div>
-                <div class="form-input">
-                    <button id="receiver-start-con-btn" class="button">Connect</button>
-                </div>
-                
-            </div>
+        <div class="form-input">
+            <b>My Id</b>
+            <span id="myId"></span>
+        </div>
+        <div id="connected-peer"></div>
+        <div class="progress-container">
+            <div class="progress-bar" id="file-progress">0%</div>
         </div>
         <div class="screen fs-screen">
             
             <div class="files-list">
                 <div class="title" id="sharedfile">Shared Files :</div>
-                
+                <ul id="file-list"></ul>
             </div>
         </div>
     </div>
@@ -35,7 +30,7 @@
     <footer><%- include('footer')  %></footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.1/download.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
     <script src="/receiver.js"></script>
 </body>
 </html>

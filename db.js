@@ -43,10 +43,11 @@ module.exports = db
 
 
 // CREATE TABLE files (
-//   id INT PRIMARY KEY,
+//   id INT PRIMARY KEY AUTO_INCREMENT,
 //   do_id INT,
 //   so_id INT,
 //   fileName VARCHAR(255),
 //   fileHash VARCHAR(255),
-//   possession ENUM('DO', 'SO')
+//   possession ENUM('DO', 'SO'),
+//   request ENUM('active', 'completed')
 // );

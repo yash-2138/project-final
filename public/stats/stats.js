@@ -14,7 +14,7 @@ const userType = document.querySelector('#userType')
 
 const getFilesSO = ()=>{
     const filesTable = document.querySelector('#filesTableBody')
-    fetch('http://localhost:5000/crud/getFilesSO',{
+    fetch('/crud/getFilesSO',{
         method: "GET",
     })
     .then(response => response.json())
@@ -28,8 +28,12 @@ const getFilesSO = ()=>{
             const td2 = document.createElement('td')
 
             th.innerHTML = cnt;
-            td1.innerHTML = file.fileName
-            if(file.possession == 'SO'){
+            td1.innerHTML = `<a href="/sender/?file=${file.fileName}">${file.fileName}</a>`
+            
+            if(file.request == 'active'){
+                td2.innerHTML = `<b style="color: red;">Requested</b>`
+            }
+            else if(file.possession == 'SO'){
                 td2.innerHTML = `With Me`
             }
             else{
@@ -55,7 +59,7 @@ const getStorageOverview = (forDO)=>{
     const usedSpaceText = document.querySelector('#used-space')
     const endDate = document.querySelector('#end-date')
     
-    fetch('http://localhost:5000/crud/getStats',{
+    fetch('/crud/getStats',{
         method: "GET",
     })
         .then(response =>{
@@ -70,7 +74,7 @@ const getStorageOverview = (forDO)=>{
             
         })
         .then(data=>{
-            console.log(data)
+            // console.log(data)
             if(forDO){
                 const dailyCostData = document.querySelector('#daily-cost > div > div > h3')
                 dailyCostData.innerHTML = `${data.price} ETH`
@@ -108,7 +112,7 @@ const getStorageOverview = (forDO)=>{
 
 const getFilesDO = ()=>{
     const filesTable = document.querySelector('#filesTableBody')
-    fetch('http://localhost:5000/crud/getFilesDO',{
+    fetch('/crud/getFilesDO',{
         method: "GET",
     })
     .then(response => response.json())
@@ -141,7 +145,7 @@ const getFilesDO = ()=>{
             if(file.possession == 'SO'){
                 const requestBtn = document.getElementById(`${file.id}`)
                 requestBtn.addEventListener('click',()=>{
-                    fetch('http://localhost:5000/utils/fileRequestMail',{
+                    fetch('/utils/fileRequest',{
                         method: 'POST',
                         headers:{ 'Content-Type': 'application/json'},
                         body: JSON.stringify({file: file.fileName})

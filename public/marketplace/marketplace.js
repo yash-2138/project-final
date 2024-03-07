@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded',async() =>{
               }
               return value;
             };
-            fetch('http://localhost:5000/crud/addStorage', {
+            fetch('/crud/addStorage', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
