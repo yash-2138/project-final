@@ -1,5 +1,5 @@
 
-export const address = "0xdf4840855a9654ADB7b7e5Fa16fAe086445b19f6";
+export const address = "0x2cC90E6a5c522F3356232c067BEf42326591787B";
 export const abi = [
   {
     "anonymous": false,
