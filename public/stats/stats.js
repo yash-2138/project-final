@@ -14,7 +14,7 @@ const userType = document.querySelector('#userType')
 
 const getFilesSO = ()=>{
     const filesTable = document.querySelector('#filesTableBody')
-    fetch('http://localhost:5000/crud/getFilesSO',{
+    fetch('/crud/getFilesSO',{
         method: "GET",
     })
     .then(response => response.json())
@@ -59,7 +59,7 @@ const getStorageOverview = (forDO)=>{
     const usedSpaceText = document.querySelector('#used-space')
     const endDate = document.querySelector('#end-date')
     
-    fetch('http://localhost:5000/crud/getStats',{
+    fetch('/crud/getStats',{
         method: "GET",
     })
         .then(response =>{
@@ -112,7 +112,7 @@ const getStorageOverview = (forDO)=>{
 
 const getFilesDO = ()=>{
     const filesTable = document.querySelector('#filesTableBody')
-    fetch('http://localhost:5000/crud/getFilesDO',{
+    fetch('/crud/getFilesDO',{
         method: "GET",
     })
     .then(response => response.json())
@@ -145,7 +145,7 @@ const getFilesDO = ()=>{
             if(file.possession == 'SO'){
                 const requestBtn = document.getElementById(`${file.id}`)
                 requestBtn.addEventListener('click',()=>{
-                    fetch('http://localhost:5000/utils/fileRequest',{
+                    fetch('/utils/fileRequest',{
                         method: 'POST',
                         headers:{ 'Content-Type': 'application/json'},
                         body: JSON.stringify({file: file.fileName})

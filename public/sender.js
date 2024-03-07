@@ -242,7 +242,7 @@ function addFileHash(){
     }
     hash = ''
     // console.log(data)
-    fetch("http://localhost:5000/crud/addFiles", {
+    fetch("/crud/addFiles", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -263,7 +263,7 @@ function addFileHash(){
 
 const checkHash = async () => {
     try {
-        const response = await fetch("http://localhost:5000/crud/checkHash", {
+        const response = await fetch("/crud/checkHash", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -285,7 +285,7 @@ const checkHash = async () => {
 
 const updateFilePossession = async () => {
     try {
-        const response = await fetch("http://localhost:5000/crud/updatePossession", {
+        const response = await fetch("/crud/updatePossession", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
