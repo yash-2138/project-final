@@ -131,9 +131,15 @@ document.querySelector("#file-input").addEventListener("change",async function (
     let offset = 0;
     
     const buffer = await file.arrayBuffer();
-    const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    hash = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+    if (window.crypto && window.crypto.subtle) {
+        const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        hash = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+    } else {
+        console.error('Web Cryptography API not supported');
+    }
+    
+    
 
     const sendFile = ()=>{
         let el = document.createElement("div");
