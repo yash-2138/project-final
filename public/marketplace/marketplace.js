@@ -32,11 +32,13 @@ document.addEventListener('DOMContentLoaded',async() =>{
         let cell3 = newRow.insertCell(2);
         let cell4 = newRow.insertCell(3);
         let cell5 = newRow.insertCell(4);
+        let cell6 = newRow.insertCell(5);
         cell1.innerHTML = email;
         cell2.innerHTML = storageOwner;
         cell3.innerHTML = volumeGB;
         cell4.innerHTML = ethers.formatEther(price);
-        cell5.innerHTML = `<button class="btn btn-primary buy-btn" id=${storageOwner}>Buy</button>`;
+        cell5.innerHTML = tenureDays
+        cell6.innerHTML = `<button class="btn btn-primary buy-btn" id=${storageOwner}>Buy</button>`;
     
         const finalPrice = ethers.formatEther(price) * tenureDays.toString()
         const currentDate = new Date();
