@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded',async() =>{
         let cell6 = newRow.insertCell(5);
         cell1.innerHTML = email;
         cell2.innerHTML = storageOwner;
-        cell3.innerHTML = volumeGB;
-        cell4.innerHTML = ethers.formatEther(price);
+        cell3.innerHTML = `${volumeGB} <span>GB</span>`;
+        cell4.innerHTML = `${ethers.formatEther(price)} <span>ETH</span>`;
         cell5.innerHTML = tenureDays
         cell6.innerHTML = `<button class="btn btn-primary buy-btn" id=${storageOwner}>Buy</button>`;
     

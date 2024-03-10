@@ -414,7 +414,7 @@ exports.checkHash = (req,res)=>{
 exports.updatePossession = (req, res) => {
   try {
     const user_id = req.user_id
-    const {fileName} = req.body
+    const {fileName, size} = req.body
 
     dbClient.query(
       'UPDATE files SET possession = "DO"  where so_id = ? and fileName = ?',
@@ -424,7 +424,28 @@ exports.updatePossession = (req, res) => {
           console.log(error)
           return res.status(500).json(error)
         }
-        res.send({'msg':"updated success"})
+        dbClient.query(
+          'SELECT remainingCapacity FROM myStorage where so_id = ?',
+          [user_id],
+          (error, result) => {
+            if(error){
+              return res.status(500).json(error)
+            }
+            if(result){
+              // console.log(result)
+              dbClient.query(
+                'UPDATE myStorage SET remainingCapacity = ? where so_id = ?',
+                [(result[0].remainingCapacity + size), user_id],
+                (updateError, updateResult) => {
+                  if(updateError){
+                    return res.status(500).json(error)
+                  }
+                  res.send({'msg':"update success"})
+                }
+              )
+            }
+          }
+        )
       }
     )
   } catch (error) {
@@ -432,3 +453,4 @@ exports.updatePossession = (req, res) => {
     res.status(500).json(error)
   }
 }
+

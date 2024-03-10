@@ -184,8 +184,8 @@ document.querySelector("#file-input").addEventListener("change",async function (
                 else if(type == 'SO'){
                     updateFilePossession()
                         .then((data) =>{
-                            if(data.msg == 'updated success'){
-                                console.log('Possession updated')
+                            if(data.msg == 'update success'){
+                                console.log('Possession and space updated')
                             }
                         })
                 }
@@ -297,7 +297,7 @@ const updateFilePossession = async () => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({fileName}),
+            body: JSON.stringify({fileName, size: file.size}),
         });
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);

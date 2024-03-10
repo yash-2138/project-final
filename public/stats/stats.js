@@ -31,14 +31,14 @@ const getFilesSO = ()=>{
             th.innerHTML = cnt;
             td1.innerHTML = `<a href="/sender/?file=${file.fileName}">${file.fileName}</a>`
             
-            if(file.request == 'active'){
+            if(file.possession == 'DO'){
+                td2.innerHTML = "Returned"
+            }
+            else if(file.request == 'active'){
                 td2.innerHTML = `<b style="color: red;">Requested</b>`
             }
             else if(file.possession == 'SO'){
                 td2.innerHTML = `With Me`
-            }
-            else{
-                td2.innerHTML = "Returned"
             }
 
             tr.appendChild(th);
