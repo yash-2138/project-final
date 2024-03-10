@@ -273,6 +273,7 @@ contract StorageMarketplace {
             uint256 volume,
             uint256 price,
             uint256 securityDeposit,
+            uint256 tenure,
             SellOrderState state
         )
     {
@@ -283,6 +284,7 @@ contract StorageMarketplace {
             storageOrder.volumeGB,
             storageOrder.price,
             storageOrder.securityDeposit,
+            storageOrder.tenureDays,
             storageOrder.state
         );   
     }

@@ -10,6 +10,7 @@ const editCost = document.querySelector('#edit-button-cost')
 const editCapacity = document.querySelector('#edit-button-capacity')
 const editStauts = document.querySelector('#edit-button-status')
 const editStorageTable = document.querySelector('#editStorageTable')
+const editTenure = document.querySelector('#edit-button-tenure')
 const userType = document.querySelector('#userType')
 
 const getFilesSO = ()=>{
@@ -184,6 +185,7 @@ if(userType.innerHTML === "SO"){
         const capacity = document.querySelector('#capacity')
         const status = document.querySelector('#status')
         const dailyCost = document.querySelector('#daily-cost')
+        const tenure = document.querySelector('#tenure')
         dailyCost.style.display = 'none'
         if(window.ethereum){
             try {
@@ -193,12 +195,16 @@ if(userType.innerHTML === "SO"){
                 console.log("connected")
     
                 const mySellOrder = await contract.getMysellOrder();
+                console.log(mySellOrder)
                 addressText.innerHTML = mySellOrder[1]
                 capacity.innerHTML = mySellOrder[2]
-                cost.innerHTML = mySellOrder[3]
-                if(mySellOrder[5] == 0){
+                cost.innerHTML = ethers.formatEther(mySellOrder[3])
+
+                tenure.innerHTML = mySellOrder[5]
+                
+                if(mySellOrder[6] == 0){
                     status.innerHTML = "Listed"
-                }else if(mySellOrder[5] == 1){
+                }else if(mySellOrder[6] == 1){
                     status.innerHTML = "Bought"
                     editStorageTable.style.display = 'none'
                     getStorageOverview(0)
@@ -263,6 +269,23 @@ editCapacity.addEventListener('click', async ()=>{
             const result = await contract.editMySellOrderVolume(newcapacity);
             await result.wait();
             capacity.innerHTML = newcapacity 
+            console.log('Transaction successful:', result);
+        } catch (error) {
+            console.error('Transaction failed:', error.message);
+            alert('Transaction failed. Please check the console for details.');
+        }
+    }
+})
+
+editTenure.addEventListener('click', async ()=>{
+    const tenure = document.querySelector('#tenure')
+    let newTenure = prompt('Enter new Tenure: ',tenure.innerHTML)
+
+    if(newTenure){
+        try {
+            const result = await contract.editMySellOrderTenure(newTenure);
+            await result.wait();
+            tenure.innerHTML = newTenure 
             console.log('Transaction successful:', result);
         } catch (error) {
             console.error('Transaction failed:', error.message);

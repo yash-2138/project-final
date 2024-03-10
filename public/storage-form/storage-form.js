@@ -28,13 +28,13 @@ addStorage.addEventListener('click', async (event)=>{
     console.log(email, tenure, capacity, price)
     const securityDeposit = '0.00001';
     try {
-    const tx = await contract.createStorageSellOrder(email, capacity, ethers.parseEther(price),ethers.parseEther(securityDeposit), tenure ,{
-        value: ethers.parseEther(securityDeposit)
-    });
-    await tx.wait();
-    console.log('created')
-    alert("Storage Sell Order created successfully!");
-    location.assign("/marketplace")
+        const tx = await contract.createStorageSellOrder(email, capacity, ethers.parseEther(price),ethers.parseEther(securityDeposit), tenure ,{
+            value: ethers.parseEther(securityDeposit)
+        });
+        await tx.wait();
+        console.log('created')
+        alert("Storage Sell Order created successfully!");
+        location.assign("/marketplace")
     } catch (error) {
         console.error("Error creating Storage Sell Order:", error.message);
         

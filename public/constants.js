@@ -1,5 +1,4 @@
-
-export const address = "0x2cC90E6a5c522F3356232c067BEf42326591787B";
+export const address = "0xA3dC02EB2664C39062833Ab975DFa5c1aB5945D9";
 export const abi = [
   {
     "anonymous": false,
@@ -215,6 +214,11 @@ export const abi = [
       {
         "internalType": "uint256",
         "name": "securityDeposit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tenure",
         "type": "uint256"
       },
       {
