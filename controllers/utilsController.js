@@ -117,3 +117,79 @@ exports.requestFile = (req,res)=>{
         });
     });
 }
+
+
+
+
+//contract end notification
+
+const notifyDataOwner = ()=>{
+    const date = new Date('2024-05-05');
+    try {
+        dbClient.query(
+            'SELECT do_id, endDate FROM myStorage where active = 1',
+            (error, results) => {
+                if(error){
+                    onsole.error("Error querying database:", error);
+                    return
+                }
+                if(results.length > 0){
+                    for(let i = 0;i < results.length; i++){
+                        const endDate = new Date(results[i].endDate);
+                        const timeDifference = endDate.getTime() - date.getTime();
+                        const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+                        
+                        if (daysDifference <= 5 && daysDifference >= 0) {
+                            console.log(`Notify data owner for do_id: ${results[i].do_id}`);
+                            dbClient.query(
+                                'SELECT email FROM users where id = ?',
+                                [results[i].do_id],
+                                (errorGettingEmail, resultEmail) => {
+                                if (errorGettingEmail) {
+                                    console.log(errorGettingEmail)
+                                    return 
+                                }
+                                if (resultEmail.length == 0) {
+                                    console.log("No User Found for sending notification mail")
+                                    return 
+                                }
+                                if (resultEmail.length > 0) {
+                                    receiverEmail = resultEmail[0].email;
+                    
+                                    const mailOptions = {
+                                        from: 'ydydyd2138@gmail.com', // Replace with your email
+                                        to: receiverEmail,
+                                        subject: 'Allert !! Contract Ending',
+                                        text: `Your contract is about to end on ${results[i].endDate}!!
+                                                Get your files back !!
+                                        `,
+                                    };
+                    
+                                    transporter.sendMail(mailOptions, (error, info) => {
+                                        if (error) {
+                                            console.error('Error sending email:', error.message);
+                                            return 
+                                        } else {
+                                            console.log('Email sent:', info.response);
+                                            return 
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        else{
+                            // console.log(daysDifference)
+                        }
+    
+                    }
+                }
+            }
+        ) 
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
+// setInterval(notifyDataOwner, 60000)
+setInterval(notifyDataOwner, 86400000)
