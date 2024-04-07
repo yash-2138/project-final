@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 contract StorageMarketplace {
+    address private admin;
+    constructor(){
+        admin = msg.sender;
+    }
+
     enum SellOrderState { Listed, Bought, Canceled }
     struct StorageSellOrder {
         address storageOwner;
@@ -136,8 +141,12 @@ contract StorageMarketplace {
 
         require(!storageContract.isCompleted, "Contract already completed");
         require(storageContract.endTime < block.timestamp, "endTime not achived");
+
+        uint256 adminFees = (storageContract.storageFees/100) * 10;
+        uint256 finalFeesToSO = storageContract.securityDeposit + ((storageContract.storageFees/100) * 90);
         // Transfer security deposit and storage fees back to storage owner
-        payable(storageContract.storageOwner).transfer(storageContract.securityDeposit + storageContract.storageFees);
+        payable(storageContract.storageOwner).transfer(finalFeesToSO);
+        payable(admin).transfer(adminFees);
 
         // Mark the contract as completed
         storageRentalContracts[contractAddress].isCompleted = true;
