@@ -83,6 +83,7 @@ const getStorageOverview = (forDO)=>{
             if(forDO){
                 const dailyCostData = document.querySelector('#daily-cost > div > div > h3')
                 dailyCostData.innerHTML = `${data.price} ETH`
+                checkContractEndDateAlert(data.endDate)
             }
             else{
                 const monthlyRevenueData = document.querySelector('#monthly-revenue > div >div > h3')
@@ -354,5 +355,19 @@ statusDropdown.addEventListener('change', async () => {
 function formatDateString(inputDateString) {
     let inputDate = new Date(inputDateString);
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return inputDate.toLocaleDateString('en-US', options);
-  }
+    return inputDate.toLocaleDateString('en-IN', options);
+}
+
+const checkContractEndDateAlert = (endDate) => {
+    const date = new Date()
+    endDate = new Date(endDate)
+    // console.log("EndDate: ", endDate)
+    const timeDifference = endDate.getTime() - date.getTime();
+    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    console.log(daysDifference)
+    if (daysDifference <= 5 && daysDifference >= 0) {
+        alert(`Contract ending in ${daysDifference} days. Get your files back!!`)
+        const endAlert = document.querySelector('#endAlert')
+        endAlert.innerHTML = `Ending in ${daysDifference} days!!`
+    }
+}

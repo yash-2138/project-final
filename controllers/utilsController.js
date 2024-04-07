@@ -124,7 +124,7 @@ exports.requestFile = (req,res)=>{
 //contract end notification
 
 const notifyDataOwner = ()=>{
-    const date = new Date('2024-05-05');
+    const date = new Date();
     try {
         dbClient.query(
             'SELECT do_id, endDate FROM myStorage where active = 1',
