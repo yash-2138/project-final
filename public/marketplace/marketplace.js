@@ -41,12 +41,12 @@ document.addEventListener('DOMContentLoaded',async() =>{
         cell5.innerHTML = tenureDays
         cell6.innerHTML = `<button class="btn btn-primary buy-btn" id=${storageOwner}>Buy</button>`;
     
-        const finalPrice = ethers.formatEther(price) * tenureDays.toString()
+        const finalPrice = ethers.formatEther(price)
         const currentDate = new Date();
         const currentFormatedDate =  formatDate(currentDate)
         const endDate = formatDate(addDaysToDate(currentDate, parseInt(tenureDays.toString(), 10)))
         const timestamp = Date.now();
-        // console.log(timestamp);
+        // console.log(ethers.parseEther(finalPrice.toString()));
         const enddateTimestamp = new Date(timestamp)
         enddateTimestamp.setDate(enddateTimestamp.getDate() + Number(tenureDays));
           

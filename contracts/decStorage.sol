@@ -101,7 +101,7 @@ contract StorageMarketplace {
     function buyStorage(address orderAddress, string memory _email) external payable onlyWhileListed(orderAddress) {
         StorageSellOrder memory storageOrder = storageSellOrders[orderAddress];
 
-        uint256 totalPrice = storageOrder.price * storageOrder.tenureDays;
+        uint256 totalPrice = storageOrder.price;
         require(msg.value >= totalPrice, "Insufficient payment");
 
         address contractAddress = msg.sender;
