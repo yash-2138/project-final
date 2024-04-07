@@ -5,7 +5,7 @@ exports.addStorage = (req, res)=>{
     try {
       
         const user_id = req.user_id;
-        const {email, address, capacity, startDate, endDate, price} = req.body
+        const {email, sellOrderAddress,contractAddress, capacity, startDate, endDate, price, enddateTimestamp} = req.body
         let so_id;
        
         const capacityBytes = capacity * Math.pow(1024, 3);
@@ -18,12 +18,15 @@ exports.addStorage = (req, res)=>{
             const data = {
               do_id: user_id,
               so_id: so_id,
-              address:address,
+              sellOrderAddress:sellOrderAddress,
+              contractAddress:contractAddress,
               capacity: capacityBytes,
               remainingCapacity: capacityBytes,
+              active: 1,
               startDate:startDate ,
               endDate: endDate,
-              price: price
+              price: price,
+              enddateTimestamp: enddateTimestamp
             };
 
             dbClient.query(
@@ -36,8 +39,21 @@ exports.addStorage = (req, res)=>{
                   } else {
                   if (selectResults.length > 0) {
                       // Record already exists, send a response indicating that it's a duplicate
-                      console.log('Duplicate entry found. Not inserting again.');
-                      res.status(409).json({ message: 'Duplicate entry found.' });
+                      console.log('Duplicate entry found. Updating existing record.');
+                      const existingRecord = selectResults[0]; // Assuming only one record is found
+                      dbClient.query(
+                          'UPDATE myStorage SET ? WHERE id = ?',
+                          [data, existingRecord.id], // Assuming 'id' is the primary key of the table
+                          (updateError, updateResults) => {
+                              if (updateError) {
+                                  console.error(updateError);
+                                  res.status(500).json(updateError);
+                              } else {
+                                  console.log('Data updated successfully!');
+                                  res.status(200).json({ message: 'Data updated successfully!' });
+                              }
+                          }
+                      );
                   } else {
                       // Record doesn't exist, proceed with the insertion
                       dbClient.query(

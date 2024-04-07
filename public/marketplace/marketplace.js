@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded',async() =>{
   if(window.ethereum){
     provider = new ethers.BrowserProvider(window.ethereum)
     signer = await provider.getSigner();
+    const signerAddress = await signer.getAddress();
     contract = new ethers.Contract(address, abi, signer);
     console.log("connected")
 
@@ -44,6 +45,11 @@ document.addEventListener('DOMContentLoaded',async() =>{
         const currentDate = new Date();
         const currentFormatedDate =  formatDate(currentDate)
         const endDate = formatDate(addDaysToDate(currentDate, parseInt(tenureDays.toString(), 10)))
+        const timestamp = Date.now();
+        // console.log(timestamp);
+        const enddateTimestamp = new Date(timestamp)
+        enddateTimestamp.setDate(enddateTimestamp.getDate() + Number(tenureDays));
+          
         
         
         const buyBtn = document.getElementById(`${storageOwner}`)
@@ -60,11 +66,13 @@ document.addEventListener('DOMContentLoaded',async() =>{
             const requestData = {
               // user_id: 2, //remove this
               email: email,
-              address: storageOwner,
+              sellOrderAddress: storageOwner,
+              contractAddress:signerAddress, 
               capacity:volumeGB,
               startDate: currentFormatedDate,
               endDate: endDate,
-              price: ethers.formatEther(price)
+              price: ethers.formatEther(price),
+              enddateTimestamp: Date.parse(enddateTimestamp)/1000
             }
             const replacer = (key, value) => {
               if (typeof value === 'bigint') {

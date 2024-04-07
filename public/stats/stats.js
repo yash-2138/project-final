@@ -70,6 +70,10 @@ const getStorageOverview = (forDO)=>{
             if(response.status == 404){
                 const statsContainer = document.querySelector('#stats-overview-container')
                 statsContainer.style.display= 'none'
+                if(forDO){
+                    alert('You have not bought any storage yet!')
+                    location.assign('/marketplace')
+                }
                 return
             }
             
@@ -216,6 +220,8 @@ if(userType.innerHTML === "SO"){
             } catch (error) {
                 if(error.reason === "Only storage owner can call this function"){
                     editStorageTable.style.display = 'none'
+                    alert('Create a storage sell order first!!')
+                    location.assign('/marketplace')
                 }    
             }
             
@@ -231,9 +237,26 @@ else{
     const monthlyRevenue = document.querySelector('#monthly-revenue')
     monthlyRevenue.style.display = 'none'
     if(window.ethereum){
-        getStorageOverview(1)
-        getFilesDO()
-        
+        try {
+            provider = new ethers.BrowserProvider(window.ethereum)
+            signer = await provider.getSigner();
+            contract = new ethers.Contract(address, abi, signer);
+            console.log("connected")
+            const signerAddress = await signer.getAddress();
+            const myRentalContract = await contract.getStorageRentalContractDetails(signerAddress)
+            console.log(myRentalContract[8])
+            if(!myRentalContract[8]){
+                getStorageOverview(1)
+                getFilesDO()
+            }else{
+                alert('Contract Completed!!')
+                location.assign('/marketplace')
+            }
+            
+        } catch (error) {
+            console.log(error)
+            alert("Error!! Check console.")   
+        }
     }else{
         alert("Install Metamask!!")
     }
