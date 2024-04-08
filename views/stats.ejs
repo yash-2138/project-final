@@ -21,6 +21,7 @@
                 <th>Address</th>
                 <th>Capacity</th>
                 <th>Cost</th>
+                <th>Tenure</th>
                 <th>Status</th>
                 
             </tr>
@@ -37,6 +38,12 @@
                 <td>
                     <span id="cost"></span><span> ETH</span>
                     <button class="edit-button" id="edit-button-cost">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </td>
+                <td>
+                    <span id="tenure"></span><span> Days</span>
+                    <button class="edit-button" id="edit-button-tenure">
                         <i class="fas fa-edit"></i>
                     </button>
                 </td>
@@ -60,7 +67,7 @@
           <div class="col-md-3" id="monthly-revenue">
             <div class="card card-stat" >
               <div class="card-body">
-                <h8 class="card-title"> <i class="bi bi-graph-up-arrow icon"></i>  Monthly Revenue</h8>
+                <h8 class="card-title"> <i class="bi bi-graph-up-arrow icon"></i>Revenue</h8>
                 <h3 class="card-text">Data </h3>
               </div>
             </div>
@@ -68,7 +75,7 @@
           <div class="col-md-3" id="daily-cost">
             <div class="card card-stat">
               <div class="card-body">
-                <h8 class="card-title"> <i class="bi bi-graph-up-arrow icon"></i>  Daily Cost</h8>
+                <h8 class="card-title"> <i class="bi bi-graph-up-arrow icon"></i>Cost</h8>
                 <h3 class="card-text">Data </h3>
               </div>
             </div>
@@ -100,6 +107,7 @@
               <div class="card-body">
                 <h8 class="card-title"> <i class="bi bi-hourglass-split icon "></i>Contract Tenure</h8>
                 <h3 class="card-text" id="end-date">Data </h3>
+                <span id="endAlert"></span>
               </div>
             </div>
           </div>

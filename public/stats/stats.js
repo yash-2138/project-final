@@ -10,6 +10,7 @@ const editCost = document.querySelector('#edit-button-cost')
 const editCapacity = document.querySelector('#edit-button-capacity')
 const editStauts = document.querySelector('#edit-button-status')
 const editStorageTable = document.querySelector('#editStorageTable')
+const editTenure = document.querySelector('#edit-button-tenure')
 const userType = document.querySelector('#userType')
 
 const getFilesSO = ()=>{
@@ -30,14 +31,14 @@ const getFilesSO = ()=>{
             th.innerHTML = cnt;
             td1.innerHTML = `<a href="/sender/?file=${file.fileName}">${file.fileName}</a>`
             
-            if(file.request == 'active'){
+            if(file.possession == 'DO'){
+                td2.innerHTML = "Returned"
+            }
+            else if(file.request == 'active'){
                 td2.innerHTML = `<b style="color: red;">Requested</b>`
             }
             else if(file.possession == 'SO'){
                 td2.innerHTML = `With Me`
-            }
-            else{
-                td2.innerHTML = "Returned"
             }
 
             tr.appendChild(th);
@@ -69,6 +70,10 @@ const getStorageOverview = (forDO)=>{
             if(response.status == 404){
                 const statsContainer = document.querySelector('#stats-overview-container')
                 statsContainer.style.display= 'none'
+                if(forDO){
+                    alert('You have not bought any storage yet!')
+                    location.assign('/marketplace')
+                }
                 return
             }
             
@@ -78,6 +83,7 @@ const getStorageOverview = (forDO)=>{
             if(forDO){
                 const dailyCostData = document.querySelector('#daily-cost > div > div > h3')
                 dailyCostData.innerHTML = `${data.price} ETH`
+                checkContractEndDateAlert(data.endDate)
             }
             else{
                 const monthlyRevenueData = document.querySelector('#monthly-revenue > div >div > h3')
@@ -184,6 +190,7 @@ if(userType.innerHTML === "SO"){
         const capacity = document.querySelector('#capacity')
         const status = document.querySelector('#status')
         const dailyCost = document.querySelector('#daily-cost')
+        const tenure = document.querySelector('#tenure')
         dailyCost.style.display = 'none'
         if(window.ethereum){
             try {
@@ -193,12 +200,16 @@ if(userType.innerHTML === "SO"){
                 console.log("connected")
     
                 const mySellOrder = await contract.getMysellOrder();
+                console.log(mySellOrder)
                 addressText.innerHTML = mySellOrder[1]
                 capacity.innerHTML = mySellOrder[2]
-                cost.innerHTML = mySellOrder[3]
-                if(mySellOrder[5] == 0){
+                cost.innerHTML = ethers.formatEther(mySellOrder[3])
+
+                tenure.innerHTML = mySellOrder[5]
+                
+                if(mySellOrder[6] == 0){
                     status.innerHTML = "Listed"
-                }else if(mySellOrder[5] == 1){
+                }else if(mySellOrder[6] == 1){
                     status.innerHTML = "Bought"
                     editStorageTable.style.display = 'none'
                     getStorageOverview(0)
@@ -210,6 +221,8 @@ if(userType.innerHTML === "SO"){
             } catch (error) {
                 if(error.reason === "Only storage owner can call this function"){
                     editStorageTable.style.display = 'none'
+                    alert('Create a storage sell order first!!')
+                    location.assign('/marketplace')
                 }    
             }
             
@@ -225,9 +238,26 @@ else{
     const monthlyRevenue = document.querySelector('#monthly-revenue')
     monthlyRevenue.style.display = 'none'
     if(window.ethereum){
-        getStorageOverview(1)
-        getFilesDO()
-        
+        try {
+            provider = new ethers.BrowserProvider(window.ethereum)
+            signer = await provider.getSigner();
+            contract = new ethers.Contract(address, abi, signer);
+            console.log("connected")
+            const signerAddress = await signer.getAddress();
+            const myRentalContract = await contract.getStorageRentalContractDetails(signerAddress)
+            console.log(myRentalContract[8])
+            if(!myRentalContract[8]){
+                getStorageOverview(1)
+                getFilesDO()
+            }else{
+                alert('Contract Completed!!')
+                location.assign('/marketplace')
+            }
+            
+        } catch (error) {
+            console.log(error)
+            alert("Error!! Check console.")   
+        }
     }else{
         alert("Install Metamask!!")
     }
@@ -263,6 +293,23 @@ editCapacity.addEventListener('click', async ()=>{
             const result = await contract.editMySellOrderVolume(newcapacity);
             await result.wait();
             capacity.innerHTML = newcapacity 
+            console.log('Transaction successful:', result);
+        } catch (error) {
+            console.error('Transaction failed:', error.message);
+            alert('Transaction failed. Please check the console for details.');
+        }
+    }
+})
+
+editTenure.addEventListener('click', async ()=>{
+    const tenure = document.querySelector('#tenure')
+    let newTenure = prompt('Enter new Tenure: ',tenure.innerHTML)
+
+    if(newTenure){
+        try {
+            const result = await contract.editMySellOrderTenure(newTenure);
+            await result.wait();
+            tenure.innerHTML = newTenure 
             console.log('Transaction successful:', result);
         } catch (error) {
             console.error('Transaction failed:', error.message);
@@ -308,5 +355,19 @@ statusDropdown.addEventListener('change', async () => {
 function formatDateString(inputDateString) {
     let inputDate = new Date(inputDateString);
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return inputDate.toLocaleDateString('en-US', options);
-  }
+    return inputDate.toLocaleDateString('en-IN', options);
+}
+
+const checkContractEndDateAlert = (endDate) => {
+    const date = new Date()
+    endDate = new Date(endDate)
+    // console.log("EndDate: ", endDate)
+    const timeDifference = endDate.getTime() - date.getTime();
+    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    console.log(daysDifference)
+    if (daysDifference <= 5 && daysDifference >= 0) {
+        alert(`Contract ending in ${daysDifference} days. Get your files back!!`)
+        const endAlert = document.querySelector('#endAlert')
+        endAlert.innerHTML = `Ending in ${daysDifference} days!!`
+    }
+}

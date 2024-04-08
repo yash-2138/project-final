@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded',async() =>{
   if(window.ethereum){
     provider = new ethers.BrowserProvider(window.ethereum)
     signer = await provider.getSigner();
+    const signerAddress = await signer.getAddress();
     contract = new ethers.Contract(address, abi, signer);
     console.log("connected")
 
@@ -32,16 +33,23 @@ document.addEventListener('DOMContentLoaded',async() =>{
         let cell3 = newRow.insertCell(2);
         let cell4 = newRow.insertCell(3);
         let cell5 = newRow.insertCell(4);
+        let cell6 = newRow.insertCell(5);
         cell1.innerHTML = email;
         cell2.innerHTML = storageOwner;
-        cell3.innerHTML = volumeGB;
-        cell4.innerHTML = ethers.formatEther(price);
-        cell5.innerHTML = `<button class="btn btn-primary buy-btn" id=${storageOwner}>Buy</button>`;
+        cell3.innerHTML = `${volumeGB} <span>GB</span>`;
+        cell4.innerHTML = `${ethers.formatEther(price)} <span>ETH</span>`;
+        cell5.innerHTML = tenureDays
+        cell6.innerHTML = `<button class="btn btn-primary buy-btn" id=${storageOwner}>Buy</button>`;
     
-        const finalPrice = ethers.formatEther(price) * tenureDays.toString()
+        const finalPrice = ethers.formatEther(price)
         const currentDate = new Date();
         const currentFormatedDate =  formatDate(currentDate)
         const endDate = formatDate(addDaysToDate(currentDate, parseInt(tenureDays.toString(), 10)))
+        const timestamp = Date.now();
+        // console.log(ethers.parseEther(finalPrice.toString()));
+        const enddateTimestamp = new Date(timestamp)
+        enddateTimestamp.setDate(enddateTimestamp.getDate() + Number(tenureDays));
+          
         
         
         const buyBtn = document.getElementById(`${storageOwner}`)
@@ -58,11 +66,13 @@ document.addEventListener('DOMContentLoaded',async() =>{
             const requestData = {
               // user_id: 2, //remove this
               email: email,
-              address: storageOwner,
+              sellOrderAddress: storageOwner,
+              contractAddress:signerAddress, 
               capacity:volumeGB,
               startDate: currentFormatedDate,
               endDate: endDate,
-              price: ethers.formatEther(price)
+              price: ethers.formatEther(price),
+              enddateTimestamp: Date.parse(enddateTimestamp)/1000
             }
             const replacer = (key, value) => {
               if (typeof value === 'bigint') {

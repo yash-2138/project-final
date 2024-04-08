@@ -100,6 +100,10 @@ tbody tr {
     opacity: 0.8;
    
 }
+
+#endAlert{
+  color: red;
+}
 /* 
 #filesTable
 {

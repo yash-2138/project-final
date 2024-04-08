@@ -1,5 +1,4 @@
-
-export const address = "0x2cC90E6a5c522F3356232c067BEf42326591787B";
+export const address = "0x67336F394097EB97B6a74C8bB39025DB2cA4d44A";
 export const abi = [
   {
     "anonymous": false,
@@ -218,6 +217,11 @@ export const abi = [
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "tenure",
+        "type": "uint256"
+      },
+      {
         "internalType": "enum StorageMarketplace.SellOrderState",
         "name": "state",
         "type": "uint8"
@@ -259,6 +263,11 @@ export const abi = [
       {
         "internalType": "uint256",
         "name": "startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endTime",
         "type": "uint256"
       },
       {

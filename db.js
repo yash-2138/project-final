@@ -32,13 +32,17 @@ module.exports = db
 //   capacity BIGINT,
 //   remainingCapacity BIGINT,
 //   active BOOLEAN DEFAULT true,
-//   address VARCHAR(255),
+//   sellOrderAddress VARCHAR(255),
+//   contractAddress VARCHAR(255),
 //   startDate DATE,
 //   endDate DATE,
-//   price FLOAT, -- Adding the new column for storing price
+//   enddateTimestamp BIGINT, 
+//   price FLOAT,
 //   FOREIGN KEY (do_id) REFERENCES users(id),
 //   FOREIGN KEY (so_id) REFERENCES users(id)
 // );
+
+
 
 
 

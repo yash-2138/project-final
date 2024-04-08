@@ -121,7 +121,14 @@ peer.on('connection', (conn) => {
 let file
 let hash = ''
 let chunkSize = 16384; // 16 KB chunks, you can adjust this size based on your requirements
-
+function readFileAsText(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => resolve(event.target.result);
+        reader.onerror = (error) => reject(error);
+        reader.readAsText(file);
+    });
+}
 document.querySelector("#file-input").addEventListener("change",async function (e) {
     file = e.target.files[0];
 
@@ -130,14 +137,8 @@ document.querySelector("#file-input").addEventListener("change",async function (
     }
     let offset = 0;
     
-    const buffer = await file.arrayBuffer();
-    if (window.crypto && window.crypto.subtle) {
-        const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        hash = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-    } else {
-        console.error('Web Cryptography API not supported');
-    }
+    hash = CryptoJS.SHA256(await readFileAsText(file)).toString(CryptoJS.enc.Hex);
+    console.log('File Hash:', hash);
     
     
 
@@ -183,8 +184,8 @@ document.querySelector("#file-input").addEventListener("change",async function (
                 else if(type == 'SO'){
                     updateFilePossession()
                         .then((data) =>{
-                            if(data.msg == 'updated success'){
-                                console.log('Possession updated')
+                            if(data.msg == 'update success'){
+                                console.log('Possession and space updated')
                             }
                         })
                 }
@@ -296,7 +297,7 @@ const updateFilePossession = async () => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({fileName}),
+            body: JSON.stringify({fileName, size: file.size}),
         });
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);

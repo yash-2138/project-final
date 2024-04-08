@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 contract StorageMarketplace {
+    address private admin;
+    constructor(){
+        admin = msg.sender;
+    }
+
     enum SellOrderState { Listed, Bought, Canceled }
     struct StorageSellOrder {
         address storageOwner;
@@ -19,6 +24,7 @@ contract StorageMarketplace {
         string emailStorageOwner;
         uint256 startTime;
         uint256 tenureDays;
+        uint256 endTime;
         uint256 securityDeposit;
         uint256 storageFees;
         bool isCompleted;
@@ -28,6 +34,7 @@ contract StorageMarketplace {
     mapping(address => StorageRentalContract) private storageRentalContracts;
     address[] private sellOrderAddresses; // Maintain an array of sell order addresses
     address[] private rentalContractAddresses; // Maintain an array of rental contract addresses
+   
 
     event StorageSellOrderCreated(address indexed storageOwner, address orderAddress);
     event StorageRentalContractCreated(address indexed storageOwner, address indexed dataOwner, address contractAddress);
@@ -99,7 +106,7 @@ contract StorageMarketplace {
     function buyStorage(address orderAddress, string memory _email) external payable onlyWhileListed(orderAddress) {
         StorageSellOrder memory storageOrder = storageSellOrders[orderAddress];
 
-        uint256 totalPrice = storageOrder.price * storageOrder.tenureDays;
+        uint256 totalPrice = storageOrder.price;
         require(msg.value >= totalPrice, "Insufficient payment");
 
         address contractAddress = msg.sender;
@@ -115,6 +122,7 @@ contract StorageMarketplace {
             emailStorageOwner: storageOrder.email,
             startTime: block.timestamp,
             tenureDays:storageOrder.tenureDays,
+            endTime: endTime,
             securityDeposit: storageOrder.securityDeposit,
             storageFees: totalPrice,
             isCompleted: false
@@ -125,57 +133,20 @@ contract StorageMarketplace {
 
         emit StorageRentalContractCreated(storageOrder.storageOwner, msg.sender, contractAddress);
 
-        // Schedule completion of the contract when the tenure ends
-        scheduleContractCompletion(contractAddress, endTime);
     }   
 
-    function scheduleContractCompletion(address contractAddress, uint256 endTime) internal {
-        require(endTime > block.timestamp, "End time should be in the future");
 
-        // Use a library or external service to schedule a callback or use a timelock mechanism
-        // In this example, I'm simplifying it by updating the contract's completion status when the tenure ends
-        // In a real-world scenario, you might use an external service or a more sophisticated mechanism
-        // to ensure the contract completion when the specified time is reached.
-
-        // Note: The following is a simplified approach, and in a production environment, you should use a more robust solution.
-        // For example, you can use Chainlink VRF to schedule a callback or a timelock contract.
-
-        uint256 gracePeriod = 1 days; // Add a grace period to ensure the contract completes after the tenure ends
-        uint256 completionTime = endTime + gracePeriod;
-
-        // Schedule contract completion
-        // You may implement more sophisticated mechanisms based on your needs
-        // Here, I'm setting a flag to mark the contract as completed after the scheduled time
-        // In practice, you'd need a more advanced solution, like Chainlink VRF or an external service
-        // to trigger the contract completion.
-        // For simplicity, this example uses a flag, but it is not secure in a real-world scenario.
-
-        // WARNING: This is a simplified example. In production, use more secure and robust solutions.
-        // For example, you can use Chainlink VRF or an external service to schedule a callback.
-
-        // Update the contract completion status when the scheduled time arrives
-        // In a real-world scenario, you would need a more secure and decentralized solution.
-        // This example is for educational purposes only.
-
-        // Schedule the completion of the contract
-        // (Note: This is a simplified approach and should not be used in a production environment without proper security measures)
-
-        // WARNING: In a real-world scenario, use Chainlink VRF or another secure solution for scheduling.
-
-        if (block.timestamp >= completionTime) {
-            // Mark the contract as completed
-            storageRentalContracts[contractAddress].isCompleted = true;
-        }
-    }
-
-
-    function completeRentalContract(address contractAddress) external onlyDataOwner(contractAddress) {
+    function completeRentalContract(address contractAddress) public  {
         StorageRentalContract memory storageContract = storageRentalContracts[contractAddress];
 
         require(!storageContract.isCompleted, "Contract already completed");
+        require(storageContract.endTime < block.timestamp, "endTime not achived");
 
+        uint256 adminFees = (storageContract.storageFees/100) * 10;
+        uint256 finalFeesToSO = storageContract.securityDeposit + ((storageContract.storageFees/100) * 90);
         // Transfer security deposit and storage fees back to storage owner
-        payable(storageContract.storageOwner).transfer(storageContract.securityDeposit + storageContract.storageFees);
+        payable(storageContract.storageOwner).transfer(finalFeesToSO);
+        payable(admin).transfer(adminFees);
 
         // Mark the contract as completed
         storageRentalContracts[contractAddress].isCompleted = true;
@@ -245,6 +216,7 @@ contract StorageMarketplace {
             address DO_Address,
             address SO_Address,
             uint256 startTime,
+            uint256 endTime,
             uint256 securityDeposit,
             uint256 storageFees,
             bool isCompleted
@@ -257,6 +229,7 @@ contract StorageMarketplace {
             storageContract.dataOwner,
             storageContract.storageOwner,
             storageContract.startTime,
+            storageContract.endTime,
             storageContract.securityDeposit,
             storageContract.storageFees,
             storageContract.isCompleted
@@ -273,6 +246,7 @@ contract StorageMarketplace {
             uint256 volume,
             uint256 price,
             uint256 securityDeposit,
+            uint256 tenure,
             SellOrderState state
         )
     {
@@ -283,6 +257,7 @@ contract StorageMarketplace {
             storageOrder.volumeGB,
             storageOrder.price,
             storageOrder.securityDeposit,
+            storageOrder.tenureDays,
             storageOrder.state
         );   
     }

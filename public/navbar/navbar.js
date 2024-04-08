@@ -56,10 +56,6 @@ function toggleProfileDropdown() {
     profileDropdown.style.display = (profileDropdown.style.display === "block") ? "none" : "block";
   }
   
-  function logout() {
-    // Add logout functionality here
-    alert("Logout successful");
-  }
   
   
   

@@ -72,7 +72,7 @@ registerBtn.addEventListener('click', async(event)=>{
             return
         }
         if(data.msg == "success"){
-            alert("Registration Success")
+            // alert("Registration Success")
             container.classList.remove('active');
         }
     } catch (error) {
