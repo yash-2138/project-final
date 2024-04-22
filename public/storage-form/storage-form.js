@@ -53,7 +53,7 @@ function updatePrice() {
     const capacity = document.getElementById('capacity').value;
     const tenure = document.getElementById('tenure').value;
 
-    const pricePerGB = 0.00000012; // Price for 1GB storage for 30 days in ETH
+    const pricePerGB = 0.00000333; // Price for 1GB storage for 30 days in ETH
     const totalPrice = pricePerGB * capacity * tenure;
 
     document.getElementById('price').textContent = totalPrice.toFixed(6); // Displaying price up to 6 decimal places
