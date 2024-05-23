@@ -1,4 +1,4 @@
-exports.address = "0x5b66F5106E68C630F6b85F3C119a0c6a3Ca835dd";
+exports.address = "0x84c6D7913F256E9f7d9eA720E90815A28eCf0abA";
 exports.abi =  [
   {
     "anonymous": false,
@@ -45,6 +45,13 @@ exports.abi =  [
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "activateMySellOrder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -63,14 +70,8 @@ exports.abi =  [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "orderAddress",
-        "type": "address"
-      }
-    ],
-    "name": "cancelSellOrder",
+    "inputs": [],
+    "name": "cancelMySellOrder",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -109,11 +110,55 @@ exports.abi =  [
         "internalType": "uint256",
         "name": "_securityDeposit",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tenureDays",
+        "type": "uint256"
       }
     ],
     "name": "createStorageSellOrder",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_price",
+        "type": "uint256"
+      }
+    ],
+    "name": "editMySellOrderPrice",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tenureDays",
+        "type": "uint256"
+      }
+    ],
+    "name": "editMySellOrderTenure",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_volumeGB",
+        "type": "uint256"
+      }
+    ],
+    "name": "editMySellOrderVolume",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -143,6 +188,49 @@ exports.abi =  [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getMysellOrder",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "SO_Address",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "volume",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "securityDeposit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tenure",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum StorageMarketplace.SellOrderState",
+        "name": "state",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -154,42 +242,47 @@ exports.abi =  [
     "outputs": [
       {
         "internalType": "string",
-        "name": "",
+        "name": "email_DO",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "",
+        "name": "email_SO",
         "type": "string"
       },
       {
         "internalType": "address",
-        "name": "",
+        "name": "DO_Address",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "",
+        "name": "SO_Address",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "startTime",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "endTime",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "securityDeposit",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "storageFees",
         "type": "uint256"
       },
       {
         "internalType": "bool",
-        "name": "",
+        "name": "isCompleted",
         "type": "bool"
       }
     ],
@@ -207,34 +300,39 @@ exports.abi =  [
     "name": "getStorageSellOrderDetails",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
         "internalType": "string",
-        "name": "",
+        "name": "email",
         "type": "string"
       },
       {
+        "internalType": "address",
+        "name": "SO_Address",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
-        "name": "",
+        "name": "volume",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "price",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "securityDeposit",
         "type": "uint256"
       },
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "tenureDays",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum StorageMarketplace.SellOrderState",
+        "name": "state",
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",
