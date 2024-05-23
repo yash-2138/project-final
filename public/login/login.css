@@ -19,6 +19,7 @@
     background: var(--primary-color);
 
 }
+
 .container
 {
     position: relative;
@@ -33,26 +34,7 @@
     box-shadow: 0 0 25px #3ed9d9;
 }
 
-@media (min-width : 200px) and (max-width : 500px)
-{
-   
-    .info-content Login{
-        font-size: small;
-        margin-left: 100px;
-    }
-    .info-content Login h2{
-        font-size: small;
-    }
-    .container{
-        width: 350px;
-        
-    }
 
-    .form-box Register
-    {
-        margin-left: 50px;
-    }
-}
 
 .container .form-box
 {
@@ -273,19 +255,6 @@
    
 }
 
-@media((min-width:200px) and (max-width:500px))
-{
-    .info-content.Register .animation
-    {
-        opacity: 0;
-        transition-delay: 0s;
-    }
-
-    .info-content.Login .animation{
-        opacity: 0;
-    }
-
-}
 
 
 .container.active .info-content.Register .animation{
@@ -364,44 +333,77 @@ select {
     margin-left: -70px;
   }
 
-@media((min-width:200px) and (max-width:500px))
+
+
+/* ------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+
+@media (min-width : 200px) and (max-width : 500px)
 {
-    .form-box.Register
-    {
    
-        right: 0;
-        margin: 0px 75px 0px 0px;
-        padding: 0px 0px 0px 0px;
+    .info-content Login{
+        font-size: small;
+        margin-left: 100px;
+    }
+    .info-content Login h2{
+        font-size: small;
+    }
+    .container{
+        width: 350px;
+        
     }
 
-    .info-content Login
-    {
-        
-        margin: 0px 0px 0px 50px;
-        padding: 0 40px 0px 0px;
-    }
+   
 }
 
 @media((min-width:200px) and (max-width:500px))
 {
-     .form-box.Login{
-        /* margin: 0px 0px 0px 75px; */
-        display: flex;
-        /* align-items: center;
-        justify-content: center; */
-     }
-    
+  .info-content.Register .animation
+  {
+      opacity: 0;
+      transition-delay: 0s;
+  }
+
+  .info-content.Login .animation{
+      opacity: 0;
+  }
+
+}
+
+@media((min-width:200px) and (max-width:500px))
+{
+  .form-box.Register
+  {
+ 
+      right: 0;
+      margin: 0px 31px 0px 0px;
+      padding: 0px 0px 0px 0px;
+      width: 50%;
+  }
+
+  .info-content Login
+  {
+      
+      margin: 0px 0px 0px 50px;
+      padding: 0 40px 0px 0px;
+  }
+}
+
+@media((min-width:200px) and (max-width:500px))
+{
+   .form-box.Login{
+     width: 62%;
+   }
+  
 }
 
 @media((min-width:500px) and (max-width:660px))
 {
-    .info-content.Register {
-        
-        
-        padding: 0 24px 60px 40px;
-        
-    } 
+  .info-content.Register {
+      
+      
+      padding: 0 24px 60px 40px;
+      
+  } 
 }
-
-
-
