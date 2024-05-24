@@ -1,5 +1,10 @@
-exports.address = "0x05f915b9639115F16cA23f542725F2e371AC4F0f";
+exports.address = "0xd66d9199B21F6c32b54733d3CFFAC41B805Eb772";
 exports.abi =  [
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
   {
     "anonymous": false,
     "inputs": [
