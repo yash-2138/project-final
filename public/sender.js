@@ -215,8 +215,9 @@ document.querySelector("#file-input").addEventListener("change",async function (
             checkHash()
                 .then((data) =>{
                     if(data.msg == 'wrong'){
-                        alert('The Hash does not match!!')
-                        return
+                        sendFile()
+                        // alert('The Hash does not match!!')
+                        // return
                     }
                     if(data.msg == 'Hash Matched'){
                         sendFile()

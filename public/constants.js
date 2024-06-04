@@ -1,5 +1,12 @@
-export const address = "0x84c6D7913F256E9f7d9eA720E90815A28eCf0abA";
+
+export const address = "0x6E4C5B26b791f03523dAF3d8DDc777084544285C";
+
 export const abi = [
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
   {
     "anonymous": false,
     "inputs": [

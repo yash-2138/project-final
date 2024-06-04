@@ -1,5 +1,5 @@
 
-import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
+import { ethers } from "../ethers.js";
 import { address, abi } from '../constants.js';
 const addStorage = document.querySelector("#submit-storage-form");
 
