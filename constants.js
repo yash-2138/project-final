@@ -1,4 +1,6 @@
+
 exports.address = "0x6E4C5B26b791f03523dAF3d8DDc777084544285C";
+
 exports.abi =  [
   {
     "inputs": [],
